@@ -1,0 +1,55 @@
+{
+  "name": "@sumup/mcp",
+  "version": "0.0.1",
+  "description": "MCP server for interacting with SumUp",
+  "homepage": "https://github.com/sumup/sumup-agent-toolkit",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "SumUp <support@sumup.com> (https://sumup.com/)",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": "dist/index.js",
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "build": "rslib build",
+    "build:watch": "rslib build --watch",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "bugs": {
+    "url": "https://github.com/sumup/sumup-agent-toolkit/issues"
+  },
+  "keywords": [
+    "sumup",
+    "payments",
+    "mcp",
+    "mcp-server",
+    "modelcontextprotocol"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "@sumup/agent-toolkit": "file:../typescript/sumup-agent-toolkit-0.0.1.tgz",
+    "@sumup/sdk": "^0.0.1-beta.8",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@rslib/core": "^0.6.1",
+    "@types/node": "^22.13.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
