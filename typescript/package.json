@@ -1,0 +1,81 @@
+{
+  "name": "@sumup/agent-toolkit",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sumup/sumup-agent-toolkit",
+  "license": "Apache-2.0",
+  "author": "SumUp <support@sumup.com> (https://sumup.com/)",
+  "type": "commonjs",
+  "scripts": {
+    "prebuild": "rm -rf ./dist",
+    "build": "tsup",
+    "postbuild": "publint",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "changeset": "changeset",
+    "changeset:publish": "npm run build && changeset publish",
+    "changeset:version": "changeset version",
+    "prepublish": "ts-node ./.changeset/bump-version.ts",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumup/sumup-agent-toolkit.git"
+  },
+  "exports": {
+    "./langchain": {
+      "types": "./dist/langchain/index.d.ts",
+      "require": "./dist/langchain/index.js",
+      "import": "./dist/langchain/index.mjs"
+    },
+    "./openai": {
+      "types": "./dist/openai/index.d.ts",
+      "require": "./dist/openai/index.js",
+      "import": "./dist/openai/index.mjs"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "require": "./dist/mcp/index.js",
+      "import": "./dist/mcp/index.mjs"
+    },
+    "./ai": {
+      "types": "./dist/ai/index.d.ts",
+      "require": "./dist/ai/index.js",
+      "import": "./dist/ai/index.mjs"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@sumup/sdk": "^0.0.1-beta.8",
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.24.3",
+    "@langchain/core": "^0.3.6",
+    "@modelcontextprotocol/sdk": "^1.4.1",
+    "ai": "^4.0.0",
+    "openai": "^4.86.1"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.28.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
+    "globals": "^15.14.0",
+    "publint": "^0.3.9",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.2"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "dist/**/*"
+  ]
+}
