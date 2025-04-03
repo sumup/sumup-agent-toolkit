@@ -20,6 +20,9 @@
     "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
     "build": "rslib build",
     "build:watch": "rslib build --watch",
+    "changeset": "changeset",
+    "changeset:publish": "npm run build && changeset publish",
+    "changeset:version": "changeset version",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "bugs": {
@@ -41,12 +44,12 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
-    "@sumup/agent-toolkit": "^0.0.1",
-    "@sumup/sdk": "^0.0.1-beta.8",
-    "zod": "^3.24.2"
+    "@sumup/agent-toolkit": "^0.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.28.1",
     "@rslib/core": "^0.6.1",
     "@types/node": "^22.13.14",
     "ts-node": "^10.9.2",

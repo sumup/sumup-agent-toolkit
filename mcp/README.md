@@ -4,7 +4,6 @@
 
 ![MCP SumUp](https://img.shields.io/badge/MCP-SumUp-blue)
 [![NPM Version](https://img.shields.io/npm/v/@sumup/mcp.svg)](https://www.npmjs.com/package/@sumup/mcp)
-[![JSR Version](https://jsr.io/badges/@sumup/mcp)](https://jsr.io/@sumup/mcp)
 
 </div>
 

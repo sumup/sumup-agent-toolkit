@@ -1,12 +1,12 @@
-name: Version and Publish Typescript SDK
+name: Version and Publish MCP
 
 on:
   push:
     branches:
       - main
     paths:
-      - "typescript/**"
-      - ".github/workflows/publish.yaml"
+      - "mcp/**"
+      - ".github/workflows/publish-mcp.yaml"
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./typescript
+        working-directory: ./mcp
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -34,7 +34,7 @@ jobs:
           node-version: 22
           registry-url: "https://registry.npmjs.org"
           cache: npm
-          cache-dependency-path: ./typescript
+          cache-dependency-path: ./mcp
 
       - name: Install dependencies
         run: npm ci
@@ -42,14 +42,11 @@ jobs:
       - name: Version and/or Publish to NPM
         uses: changesets/action@06245a4e0a36c064a573d4150030f5ec548e4fcc # v4.1.10
         with:
-          commit: "chore: version typescript packages"
-          title: "chore: version typescript packages"
+          commit: "chore: version mcp"
+          title: "chore: version mcp"
           version: npm run changeset:version
           publish: npm run changeset:publish
-          cwd: ./typescript
+          cwd: ./mcp
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to JSR
-        run: npx jsr publish
