@@ -44,7 +44,7 @@ jobs:
           commit: "chore: version typescript packages"
           title: "chore: version typescript packages"
           version: npm run version
-          publish: npm run publish
+          publish: npm run release
           cwd: ./typescript
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

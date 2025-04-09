@@ -24,8 +24,8 @@
     "build": "rslib build",
     "build:watch": "rslib build --watch",
     "changeset": "changeset",
-    "prepublish": "npm run build",
-    "publish": "changeset publish",
+    "prerelease": "npm run build",
+    "release": "changeset publish",
     "version": "changeset version",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
