@@ -1,5 +1,11 @@
 # @sumup/mcp
 
+## 0.0.4
+
+### Patch Changes
+
+- [#19](https://github.com/sumup/sumup-agent-toolkit/pull/19) [`f4a0b4d`](https://github.com/sumup/sumup-agent-toolkit/commit/f4a0b4db8240f3ecf9319f5f18c24c7b27d911ac) Thanks [@matoous](https://github.com/matoous)! - Improved packaging.
+
 ## 0.0.3
 
 ### Patch Changes
