@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
           node-version: 22
-          registry-url: "https://registry.npmjs.org"
           cache: npm
           cache-dependency-path: ./mcp
 
@@ -44,8 +43,8 @@ jobs:
         with:
           commit: "chore: version mcp"
           title: "chore: version mcp"
-          version: npm run changeset:version
-          publish: npm run changeset:publish
+          version: npm run version
+          publish: npm run publish
           cwd: ./mcp
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
