@@ -23,7 +23,7 @@
   },
   "javascript": {
     "formatter": {
-      "quoteProperties": "preserve",
+      "quoteProperties": "asNeeded",
       "quoteStyle": "double"
     }
   },
