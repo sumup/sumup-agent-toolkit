@@ -13,7 +13,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   id-token: write # Needed for provenance
-  packages: write # Needed to publish package to GitHub package registry
+  packages: write # Needed to publish to GitHub package registry and container registry
   contents: write # For changeset
   pull-requests: write # For changeset
 
@@ -39,6 +39,7 @@ jobs:
         run: npm ci
 
       - name: Version and/or Publish to NPM
+        id: publish
         uses: changesets/action@06245a4e0a36c064a573d4150030f5ec548e4fcc # v4.1.10
         with:
           commit: "chore: version mcp"
@@ -49,3 +50,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Log in to GitHub Container Registry
+        if: steps.publish.outputs.published
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+      - name: Extract short Git SHA
+        if: steps.publish.outputs.published
+        run: echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build the Docker image
+        if: steps.publish.outputs.published
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/mcp:latest \
+                       -t ghcr.io/${{ github.repository_owner }}/mcp:${{ env.GIT_SHA }} .
+
+      - name: Push the images
+        if: steps.publish.outputs.published
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/mcp:latest
+          docker push ghcr.io/${{ github.repository_owner }}/mcp:${{ env.GIT_SHA }}
