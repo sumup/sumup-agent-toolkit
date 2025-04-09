@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { SumUpAgentToolkit } from "@sumup/agent-toolkit/mcp";
 

@@ -4,7 +4,6 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "sourceRoot": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
