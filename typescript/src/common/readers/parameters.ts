@@ -119,15 +119,6 @@ export const createReaderParameters = z.object({
 });
 
 export const getReaderParameters = z.object({
-  "If-Modified-Since": z
-    .string()
-    .describe(`Return the reader only if it has been modified after the specified timestamp given in the headers.
-
-Timestamps are accepted in the following formats:
-
- - HTTP Standard: [IMF format (RFC 5322)](https://www.rfc-editor.org/rfc/rfc5322#section-3.3), sometimes also referred to as [RFC 7231](https://www.rfc-editor.org/rfc/rfc7231#section-7.1.1.1).
- - RFC 3339: Used for timestamps in JSON payloads on this API.`)
-    .optional(),
   merchant_code: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
