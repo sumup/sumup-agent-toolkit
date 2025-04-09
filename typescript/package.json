@@ -12,9 +12,10 @@
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "changeset": "changeset",
-    "changeset:publish": "npm run build && changeset publish",
-    "changeset:version": "changeset version",
-    "prepublish": "ts-node ./.changeset/bump-version.ts",
+    "prepublish": "npm run build",
+    "publish": "changeset publish",
+    "version": "changeset version",
+    "postversion": "ts-node ./.changeset/bump-version.ts",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "publishConfig": {
