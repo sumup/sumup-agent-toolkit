@@ -14,6 +14,10 @@
     "provenance": true,
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumup/sumup-agent-toolkit.git"
+  },
   "scripts": {
     "lint": "biome check",
     "lint:fix": "biome check --write",
