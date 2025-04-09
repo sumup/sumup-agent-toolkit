@@ -21,8 +21,9 @@
     "build": "rslib build",
     "build:watch": "rslib build --watch",
     "changeset": "changeset",
-    "changeset:publish": "npm run build && changeset publish",
-    "changeset:version": "changeset version",
+    "prepublish": "npm run build",
+    "publish": "changeset publish",
+    "version": "changeset version",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "bugs": {
@@ -44,7 +45,7 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
-    "@sumup/agent-toolkit": "^0.0.1"
+    "@sumup/agent-toolkit": "^0.0.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
