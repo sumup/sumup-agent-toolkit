@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const listSubAccountsParameters = {
+export const listSubAccountsParameters = z.object({
   query: z
     .string()
     .describe(`Search query used to filter users that match given query term.
@@ -15,9 +15,9 @@ All operators whos email address contains the query string are returned.
       `If true the list of operators will include also the primary user.`,
     )
     .optional(),
-};
+});
 
-export const createSubAccountParameters = {
+export const createSubAccountParameters = z.object({
   username: z.string(),
   password: z.string(),
   nickname: z.string().optional(),
@@ -29,13 +29,13 @@ export const createSubAccountParameters = {
       refund_transactions: z.boolean(),
     })
     .optional(),
-};
+});
 
-export const compatGetOperatorParameters = {
+export const compatGetOperatorParameters = z.object({
   operator_id: z.number().int(),
-};
+});
 
-export const updateSubAccountParameters = {
+export const updateSubAccountParameters = z.object({
   password: z.string().optional(),
   username: z.string().optional(),
   disabled: z.boolean().optional(),
@@ -49,8 +49,8 @@ export const updateSubAccountParameters = {
     })
     .optional(),
   operator_id: z.number().int(),
-};
+});
 
-export const deactivateSubAccountParameters = {
+export const deactivateSubAccountParameters = z.object({
   operator_id: z.number().int(),
-};
+});

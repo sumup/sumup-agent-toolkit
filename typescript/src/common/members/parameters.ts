@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const listMerchantMembersParameters = {
+export const listMerchantMembersParameters = z.object({
   offset: z
     .number()
     .int()
@@ -25,9 +25,9 @@ export const listMerchantMembersParameters = {
     .describe(`Filter the returned members by role.`)
     .optional(),
   merchant_code: z.string().describe(`Merchant code.`),
-};
+});
 
-export const createMerchantMemberParameters = {
+export const createMerchantMemberParameters = z.object({
   is_managed_user: z
     .boolean()
     .describe(
@@ -69,14 +69,14 @@ export const createMerchantMemberParameters = {
     .describe(`Object attributes that modifiable only by SumUp applications.`)
     .optional(),
   merchant_code: z.string().describe(`Merchant code.`),
-};
+});
 
-export const getMerchantMemberParameters = {
+export const getMerchantMemberParameters = z.object({
   merchant_code: z.string().describe(`Merchant code.`),
   member_id: z.string().describe(`The ID of the member to retrieve.`),
-};
+});
 
-export const updateMerchantMemberParameters = {
+export const updateMerchantMemberParameters = z.object({
   roles: z.array(z.string()).optional(),
   metadata: z
     .object({})
@@ -103,9 +103,9 @@ export const updateMerchantMemberParameters = {
     .optional(),
   merchant_code: z.string().describe(`Merchant code.`),
   member_id: z.string().describe(`The ID of the member to retrieve.`),
-};
+});
 
-export const deleteMerchantMemberParameters = {
+export const deleteMerchantMemberParameters = z.object({
   merchant_code: z.string().describe(`Merchant code.`),
   member_id: z.string().describe(`The ID of the member to retrieve.`),
-};
+});

@@ -1,6 +1,5 @@
 import SumUp from "@sumup/sdk";
 import { type Tool, tool } from "ai";
-import z from "zod";
 import { tools } from "../common";
 
 class SumUpAgentToolkit {
@@ -19,7 +18,7 @@ class SumUpAgentToolkit {
     for (const t of tools) {
       this.tools[t.name] = tool({
         description: t.description,
-        parameters: z.object(t.parameters),
+        parameters: t.parameters,
         execute: async (args) => {
           return await t.callback(this._sumup, args);
         },

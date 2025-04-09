@@ -4,7 +4,6 @@ import {
   tool,
 } from "@langchain/core/tools";
 import SumUp from "@sumup/sdk";
-import z from "zod";
 import { tools } from "../common";
 
 class SumUpAgentToolkit implements BaseToolkit {
@@ -29,7 +28,7 @@ class SumUpAgentToolkit implements BaseToolkit {
         {
           name: t.name,
           description: t.description,
-          schema: z.object(t.parameters),
+          schema: t.parameters,
         },
       ),
     );

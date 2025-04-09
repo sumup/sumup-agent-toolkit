@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createCustomerParameters = {
+export const createCustomerParameters = z.object({
   customer_id: z.string().describe(`Unique ID of the customer.`),
   personal_details: z
     .object({
@@ -39,13 +39,13 @@ export const createCustomerParameters = {
     })
     .describe(`Personal details for the customer.`)
     .optional(),
-};
+});
 
-export const getCustomerParameters = {
+export const getCustomerParameters = z.object({
   customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
-};
+});
 
-export const updateCustomerParameters = {
+export const updateCustomerParameters = z.object({
   personal_details: z
     .object({
       first_name: z.string().describe(`First name of the customer.`),
@@ -84,17 +84,17 @@ export const updateCustomerParameters = {
     .describe(`Personal details for the customer.`)
     .optional(),
   customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
-};
+});
 
-export const listPaymentInstrumentsParameters = {
+export const listPaymentInstrumentsParameters = z.object({
   customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
-};
+});
 
-export const deactivatePaymentInstrumentParameters = {
+export const deactivatePaymentInstrumentParameters = z.object({
   customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
   token: z
     .string()
     .describe(
       `Unique token identifying the card saved as a payment instrument resource.`,
     ),
-};
+});

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const listPayoutsV1Parameters = {
+export const listPayoutsV1Parameters = z.object({
   merchant_code: z.string(),
   start_date: z
     .string()
@@ -15,9 +15,9 @@ export const listPayoutsV1Parameters = {
   format: z.enum(["json", "csv"]).optional(),
   limit: z.number().int().optional(),
   order: z.enum(["desc", "asc"]).optional(),
-};
+});
 
-export const listPayoutsParameters = {
+export const listPayoutsParameters = z.object({
   start_date: z
     .string()
     .describe(
@@ -31,4 +31,4 @@ export const listPayoutsParameters = {
   format: z.enum(["json", "csv"]).optional(),
   limit: z.number().int().optional(),
   order: z.enum(["desc", "asc"]).optional(),
-};
+});
