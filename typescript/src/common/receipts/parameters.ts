@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const getReceiptParameters = {
+export const getReceiptParameters = z.object({
   id: z
     .string()
     .describe(
@@ -12,4 +12,4 @@ export const getReceiptParameters = {
     .int()
     .describe(`The ID of the transaction event (refund).`)
     .optional(),
-};
+});

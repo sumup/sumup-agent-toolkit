@@ -1,16 +1,18 @@
 import { z } from "zod";
 
-export const refundTransactionParameters = {
-  amount: z
-    .number()
-    .describe(
-      `Amount to be refunded. Eligible amount can't exceed the amount of the transaction and varies based on country and currency. If you do not specify a value, the system performs a full refund of the transaction.`,
-    )
-    .optional(),
-  txn_id: z.string().describe(`Unique ID of the transaction.`),
-}.describe(`Optional amount for partial refunds of transactions.`);
+export const refundTransactionParameters = z
+  .object({
+    amount: z
+      .number()
+      .describe(
+        `Amount to be refunded. Eligible amount can't exceed the amount of the transaction and varies based on country and currency. If you do not specify a value, the system performs a full refund of the transaction.`,
+      )
+      .optional(),
+    txn_id: z.string().describe(`Unique ID of the transaction.`),
+  })
+  .describe(`Optional amount for partial refunds of transactions.`);
 
-export const getTransactionV2_1Parameters = {
+export const getTransactionV2_1Parameters = z.object({
   merchant_code: z.string(),
   id: z
     .string()
@@ -30,9 +32,9 @@ export const getTransactionV2_1Parameters = {
       `Retrieves the transaction resource with the specified transaction code.`,
     )
     .optional(),
-};
+});
 
-export const getTransactionParameters = {
+export const getTransactionParameters = z.object({
   id: z
     .string()
     .describe(
@@ -51,9 +53,9 @@ export const getTransactionParameters = {
       `Retrieves the transaction resource with the specified transaction code.`,
     )
     .optional(),
-};
+});
 
-export const listTransactionsV2_1Parameters = {
+export const listTransactionsV2_1Parameters = z.object({
   merchant_code: z.string(),
   transaction_code: z
     .string()
@@ -130,9 +132,9 @@ export const listTransactionsV2_1Parameters = {
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the \`oldest_time\` parameter (if both are provided in the request).`,
     )
     .optional(),
-};
+});
 
-export const listTransactionsParameters = {
+export const listTransactionsParameters = z.object({
   transaction_code: z
     .string()
     .describe(
@@ -208,4 +210,4 @@ export const listTransactionsParameters = {
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the \`oldest_time\` parameter (if both are provided in the request).`,
     )
     .optional(),
-};
+});

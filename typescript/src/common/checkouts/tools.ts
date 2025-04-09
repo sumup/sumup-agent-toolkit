@@ -1,3 +1,5 @@
+import type SumUp from "@sumup/sdk";
+import type z from "zod";
 import type { Tool } from "../types";
 
 import {
@@ -13,7 +15,10 @@ export const getPaymentMethods: Tool = {
   name: "get_payment_methods",
   description: `Get payment methods available for the given merchant to use with a checkout.`,
   parameters: getPaymentMethodsParameters,
-  callback: async (sumup, { merchant_code, ...args }) => {
+  callback: async (
+    sumup: SumUp,
+    { merchant_code, ...args }: z.infer<typeof getPaymentMethodsParameters>,
+  ) => {
     const res = await sumup.checkouts.listAvailablePaymentMethods(
       merchant_code,
       args,
@@ -31,7 +36,10 @@ For 3DS checkouts, add the \`redirect_url\` parameter to your request body schem
 Follow by processing a checkout to charge the provided payment instrument.
 `,
   parameters: createCheckoutParameters,
-  callback: async (sumup, args) => {
+  callback: async (
+    sumup: SumUp,
+    args: z.infer<typeof createCheckoutParameters>,
+  ) => {
     const res = await sumup.checkouts.create(args);
     return JSON.stringify(res);
   },
@@ -41,7 +49,10 @@ export const listCheckouts: Tool = {
   name: "list_checkouts",
   description: `Lists created checkout resources according to the applied \`checkout_reference\`.`,
   parameters: listCheckoutsParameters,
-  callback: async (sumup, args) => {
+  callback: async (
+    sumup: SumUp,
+    args: z.infer<typeof listCheckoutsParameters>,
+  ) => {
     const res = await sumup.checkouts.list(args);
     return JSON.stringify(res);
   },
@@ -51,7 +62,10 @@ export const getCheckout: Tool = {
   name: "get_checkout",
   description: `Retrieves an identified checkout resource. Use this request after processing a checkout to confirm its status and inform the end user respectively.`,
   parameters: getCheckoutParameters,
-  callback: async (sumup, { id, ...args }) => {
+  callback: async (
+    sumup: SumUp,
+    { id, ...args }: z.infer<typeof getCheckoutParameters>,
+  ) => {
     const res = await sumup.checkouts.get(id, args);
     return JSON.stringify(res);
   },
@@ -64,7 +78,10 @@ export const processCheckout: Tool = {
 Follow this request with \`Retrieve a checkout\` to confirm its status.
 `,
   parameters: processCheckoutParameters,
-  callback: async (sumup, { id, ...args }) => {
+  callback: async (
+    sumup: SumUp,
+    { id, ...args }: z.infer<typeof processCheckoutParameters>,
+  ) => {
     const res = await sumup.checkouts.process(id, args);
     return JSON.stringify(res);
   },
@@ -74,7 +91,10 @@ export const deactivateCheckout: Tool = {
   name: "deactivate_checkout",
   description: `Deactivates an identified checkout resource. If the checkout has already been processed it can not be deactivated.`,
   parameters: deactivateCheckoutParameters,
-  callback: async (sumup, { id, ...args }) => {
+  callback: async (
+    sumup: SumUp,
+    { id, ...args }: z.infer<typeof deactivateCheckoutParameters>,
+  ) => {
     const res = await sumup.checkouts.deactivate(id, args);
     return JSON.stringify(res);
   },

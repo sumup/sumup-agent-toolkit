@@ -1,22 +1,12 @@
 import type SumUp from "@sumup/sdk";
-import type { ZodTypeAny } from "zod";
-import type { ZodRawShape, z } from "zod";
+import type { z } from "zod";
 
-export interface Action<TActionSchema extends z.ZodSchema = z.ZodSchema> {
-  name: string;
-  description: string;
-  schema: TActionSchema;
-  invoke: (sumup: SumUp, args: z.infer<TActionSchema>) => Promise<string>;
-}
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+type ZodObjectAny = z.ZodObject<any, any, any, any>;
 
-export type ToolCallback<Args extends ZodRawShape = ZodRawShape> = (
-  sumup: SumUp,
-  args: z.objectOutputType<Args, ZodTypeAny>,
-) => Promise<string>;
-
-export type Tool<Args extends ZodRawShape = ZodRawShape> = {
+export type Tool<Args extends ZodObjectAny = ZodObjectAny> = {
   name: string;
   description: string;
   parameters: Args;
-  callback: ToolCallback<Args>;
+  callback: (sumup: SumUp, args: z.output<Args>) => Promise<string>;
 };

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const listMembershipsParameters = {
+export const listMembershipsParameters = z.object({
   offset: z
     .number()
     .int()
@@ -21,4 +21,4 @@ export const listMembershipsParameters = {
       `Filter memberships by the sandbox status of the resource the membership is in.`,
     )
     .optional(),
-};
+});

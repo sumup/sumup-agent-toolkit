@@ -4,7 +4,6 @@ import type {
   ChatCompletionTool,
   ChatCompletionToolMessageParam,
 } from "openai/resources";
-import z from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { tools } from "../common";
 
@@ -29,7 +28,7 @@ class SumUpAgentToolkit {
           function: {
             name,
             description,
-            parameters: zodToJsonSchema(z.object(parameters)),
+            parameters: zodToJsonSchema(parameters),
           },
         }) as ChatCompletionTool,
     );
