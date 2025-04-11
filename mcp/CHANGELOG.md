@@ -1,5 +1,11 @@
 # @sumup/mcp
 
+## 0.0.5
+
+### Patch Changes
+
+- [#22](https://github.com/sumup/sumup-agent-toolkit/pull/22) [`995936a`](https://github.com/sumup/sumup-agent-toolkit/commit/995936ab9c34413336aa28d1a6319a2efaf53c8a) Thanks [@matoous](https://github.com/matoous)! - Adds Dockerfile to allow running MCP in a Docker.
+
 ## 0.0.4
 
 ### Patch Changes
