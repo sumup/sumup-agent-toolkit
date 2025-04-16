@@ -57,7 +57,7 @@
     "zod-to-json-schema": "^3.24.3",
     "@langchain/core": "^0.3.44",
     "@modelcontextprotocol/sdk": "^1.4.1",
-    "ai": "^4.3.4",
+    "ai": "^4.3.5",
     "openai": "^4.93.0"
   },
   "devDependencies": {
