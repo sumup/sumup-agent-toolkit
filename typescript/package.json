@@ -67,7 +67,7 @@
     "@types/node": "^22.10.5",
     "globals": "^15.14.0",
     "publint": "^0.3.10",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
