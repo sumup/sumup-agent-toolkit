@@ -58,7 +58,7 @@
     "@langchain/core": "^0.3.44",
     "@modelcontextprotocol/sdk": "^1.4.1",
     "ai": "^4.3.5",
-    "openai": "^4.93.0"
+    "openai": "^4.95.1"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
