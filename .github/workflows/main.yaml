@@ -37,10 +37,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Build
         run: npm run build
 
-      - name: Lint code
+      - name: Lint
         run: biome ci --diagnostic-level=error --reporter=github
 
   test-typescript:
@@ -63,10 +63,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Build
         run: npm run build
 
-      - name: Run tests
+      - name: Test
         run: npm run test
 
   lint-mcp:
@@ -92,10 +92,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Build
         run: npm run build
 
-      - name: Lint code
+      - name: Lint
         run: biome ci --diagnostic-level=error --reporter=github
 
   test-mcp:
@@ -118,8 +118,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
+      - name: Build
         run: npm run build
 
-      - name: Run tests
+      - name: Test
         run: npm run test
