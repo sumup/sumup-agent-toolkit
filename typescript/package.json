@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@sumup/sdk": "^0.0.1-beta.8",
-    "zod": "^3.24.1",
+    "zod": "^3.24.3",
     "zod-to-json-schema": "^3.24.3",
     "@langchain/core": "^0.3.44",
     "@modelcontextprotocol/sdk": "^1.4.1",
