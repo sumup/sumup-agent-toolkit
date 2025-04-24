@@ -29,9 +29,9 @@ export const getCustomer: Tool = {
   parameters: getCustomerParameters,
   callback: async (
     sumup: SumUp,
-    { customer_id, ...args }: z.infer<typeof getCustomerParameters>,
+    { customerId, ...args }: z.infer<typeof getCustomerParameters>,
   ) => {
-    const res = await sumup.customers.get(customer_id, args);
+    const res = await sumup.customers.get(customerId, args);
     return JSON.stringify(res);
   },
 };
@@ -45,9 +45,9 @@ The request only overwrites the parameters included in the request, all other pa
   parameters: updateCustomerParameters,
   callback: async (
     sumup: SumUp,
-    { customer_id, ...args }: z.infer<typeof updateCustomerParameters>,
+    { customerId, ...args }: z.infer<typeof updateCustomerParameters>,
   ) => {
-    const res = await sumup.customers.update(customer_id, args);
+    const res = await sumup.customers.update(customerId, args);
     return JSON.stringify(res);
   },
 };
@@ -58,9 +58,9 @@ export const listPaymentInstruments: Tool = {
   parameters: listPaymentInstrumentsParameters,
   callback: async (
     sumup: SumUp,
-    { customer_id, ...args }: z.infer<typeof listPaymentInstrumentsParameters>,
+    { customerId, ...args }: z.infer<typeof listPaymentInstrumentsParameters>,
   ) => {
-    const res = await sumup.customers.listPaymentInstruments(customer_id, args);
+    const res = await sumup.customers.listPaymentInstruments(customerId, args);
     return JSON.stringify(res);
   },
 };
@@ -72,13 +72,13 @@ export const deactivatePaymentInstrument: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      customer_id,
+      customerId,
       token,
       ...args
     }: z.infer<typeof deactivatePaymentInstrumentParameters>,
   ) => {
     const res = await sumup.customers.deactivatePaymentInstrument(
-      customer_id,
+      customerId,
       token,
       args,
     );

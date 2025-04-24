@@ -9,7 +9,7 @@ Current implementation allow querying only over the email address.
 All operators whos email address contains the query string are returned.
 `)
     .optional(),
-  include_primary: z
+  includePrimary: z
     .boolean()
     .describe(
       `If true the list of operators will include also the primary user.`,
@@ -32,7 +32,7 @@ export const createSubAccountParameters = z.object({
 });
 
 export const compatGetOperatorParameters = z.object({
-  operator_id: z.number().int(),
+  operatorId: z.number().int(),
 });
 
 export const updateSubAccountParameters = z.object({
@@ -48,9 +48,9 @@ export const updateSubAccountParameters = z.object({
       refund_transactions: z.boolean(),
     })
     .optional(),
-  operator_id: z.number().int(),
+  operatorId: z.number().int(),
 });
 
 export const deactivateSubAccountParameters = z.object({
-  operator_id: z.number().int(),
+  operatorId: z.number().int(),
 });

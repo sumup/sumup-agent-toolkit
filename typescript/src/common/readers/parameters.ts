@@ -79,20 +79,20 @@ It is key-value object that can be associated with the transaction.
 It is an optional field that allow for integrators to track the source of the transaction.
 `)
       .optional(),
-    merchant_code: z.string(),
+    merchantCode: z.string(),
     id: z.string().describe(`The unique identifier of the reader.
 `),
   })
   .describe(`Reader Checkout`);
 
 export const createReaderTerminateParameters = z.object({
-  merchant_code: z.string(),
+  merchantCode: z.string(),
   id: z.string().describe(`The unique identifier of the reader.
 `),
 });
 
 export const listReadersParameters = z.object({
-  merchant_code: z
+  merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
 });
@@ -113,20 +113,20 @@ export const createReaderParameters = z.object({
     .object({})
     .describe(`Set of user-defined key-value pairs attached to the object.`)
     .optional(),
-  merchant_code: z
+  merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
 });
 
 export const getReaderParameters = z.object({
-  merchant_code: z
+  merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
   id: z.string().describe(`The unique identifier of the reader.`),
 });
 
 export const deleteReaderParameters = z.object({
-  merchant_code: z
+  merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
   id: z.string().describe(`The unique identifier of the reader.`),
@@ -143,7 +143,7 @@ export const updateReaderParameters = z.object({
     .object({})
     .describe(`Set of user-defined key-value pairs attached to the object.`)
     .optional(),
-  merchant_code: z
+  merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
   id: z.string().describe(`The unique identifier of the reader.`),

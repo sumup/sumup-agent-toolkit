@@ -16,9 +16,9 @@ export const refundTransaction: Tool = {
   parameters: refundTransactionParameters,
   callback: async (
     sumup: SumUp,
-    { txn_id, ...args }: z.infer<typeof refundTransactionParameters>,
+    { txnId, ...args }: z.infer<typeof refundTransactionParameters>,
   ) => {
-    const res = await sumup.transactions.refund(txn_id, args);
+    const res = await sumup.transactions.refund(txnId, args);
     return JSON.stringify(res);
   },
 };
@@ -36,9 +36,9 @@ export const getTransactionV2_1: Tool = {
   parameters: getTransactionV2_1Parameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof getTransactionV2_1Parameters>,
+    { merchantCode, ...args }: z.infer<typeof getTransactionV2_1Parameters>,
   ) => {
-    const res = await sumup.transactions.get(merchant_code, args);
+    const res = await sumup.transactions.get(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -69,9 +69,9 @@ export const listTransactionsV2_1: Tool = {
   parameters: listTransactionsV2_1Parameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listTransactionsV2_1Parameters>,
+    { merchantCode, ...args }: z.infer<typeof listTransactionsV2_1Parameters>,
   ) => {
-    const res = await sumup.transactions.list(merchant_code, args);
+    const res = await sumup.transactions.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };

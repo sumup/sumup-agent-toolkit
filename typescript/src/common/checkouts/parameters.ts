@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const getPaymentMethodsParameters = z.object({
-  merchant_code: z.string().describe(`The SumUp merchant code.`),
+  merchantCode: z.string().describe(`The SumUp merchant code.`),
   amount: z
     .number()
     .describe(
@@ -105,7 +105,7 @@ export const createCheckoutParameters = z
   .describe(`Details of the payment checkout.`);
 
 export const listCheckoutsParameters = z.object({
-  checkout_reference: z
+  checkoutReference: z
     .string()
     .describe(
       `Filters the list of checkout resources by the unique ID of the checkout.`,

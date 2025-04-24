@@ -7,7 +7,7 @@ export const getReceiptParameters = z.object({
       `SumUp unique transaction ID or transaction code, e.g. TS7HDYLSKD.`,
     ),
   mid: z.string().describe(`Merchant code.`),
-  tx_event_id: z
+  txEventId: z
     .number()
     .int()
     .describe(`The ID of the transaction event (refund).`)

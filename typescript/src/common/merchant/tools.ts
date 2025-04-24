@@ -70,9 +70,9 @@ export const listBankAccountsV11: Tool = {
   parameters: listBankAccountsV11Parameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listBankAccountsV11Parameters>,
+    { merchantCode, ...args }: z.infer<typeof listBankAccountsV11Parameters>,
   ) => {
-    const res = await sumup.merchant.listBankAccounts(merchant_code, args);
+    const res = await sumup.merchant.listBankAccounts(merchantCode, args);
     return JSON.stringify(res);
   },
 };

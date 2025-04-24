@@ -16,9 +16,9 @@ export const listMerchantRoles: Tool = {
   parameters: listMerchantRolesParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listMerchantRolesParameters>,
+    { merchantCode, ...args }: z.infer<typeof listMerchantRolesParameters>,
   ) => {
-    const res = await sumup.roles.list(merchant_code, args);
+    const res = await sumup.roles.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -29,9 +29,9 @@ export const createMerchantRole: Tool = {
   parameters: createMerchantRoleParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof createMerchantRoleParameters>,
+    { merchantCode, ...args }: z.infer<typeof createMerchantRoleParameters>,
   ) => {
-    const res = await sumup.roles.create(merchant_code, args);
+    const res = await sumup.roles.create(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -43,12 +43,12 @@ export const getMerchantRole: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      role_id,
+      merchantCode,
+      roleId,
       ...args
     }: z.infer<typeof getMerchantRoleParameters>,
   ) => {
-    const res = await sumup.roles.get(merchant_code, role_id, args);
+    const res = await sumup.roles.get(merchantCode, roleId, args);
     return JSON.stringify(res);
   },
 };
@@ -60,12 +60,12 @@ export const deleteMerchantRole: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      role_id,
+      merchantCode,
+      roleId,
       ...args
     }: z.infer<typeof deleteMerchantRoleParameters>,
   ) => {
-    const res = await sumup.roles.delete(merchant_code, role_id, args);
+    const res = await sumup.roles.delete(merchantCode, roleId, args);
     return JSON.stringify(res);
   },
 };
@@ -77,12 +77,12 @@ export const updateMerchantRole: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      role_id,
+      merchantCode,
+      roleId,
       ...args
     }: z.infer<typeof updateMerchantRoleParameters>,
   ) => {
-    const res = await sumup.roles.update(merchant_code, role_id, args);
+    const res = await sumup.roles.update(merchantCode, roleId, args);
     return JSON.stringify(res);
   },
 };

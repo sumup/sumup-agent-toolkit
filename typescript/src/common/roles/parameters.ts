@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const listMerchantRolesParameters = z.object({
-  merchant_code: z.string().describe(`Merchant code.`),
+  merchantCode: z.string().describe(`Merchant code.`),
 });
 
 export const createMerchantRoleParameters = z.object({
@@ -17,17 +17,17 @@ export const createMerchantRoleParameters = z.object({
     .string()
     .describe(`User-defined description of the role.`)
     .optional(),
-  merchant_code: z.string().describe(`Merchant code.`),
+  merchantCode: z.string().describe(`Merchant code.`),
 });
 
 export const getMerchantRoleParameters = z.object({
-  merchant_code: z.string().describe(`Merchant code.`),
-  role_id: z.string().describe(`The ID of the role to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  roleId: z.string().describe(`The ID of the role to retrieve.`),
 });
 
 export const deleteMerchantRoleParameters = z.object({
-  merchant_code: z.string().describe(`Merchant code.`),
-  role_id: z.string().describe(`The ID of the role to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  roleId: z.string().describe(`The ID of the role to retrieve.`),
 });
 
 export const updateMerchantRoleParameters = z.object({
@@ -37,6 +37,6 @@ export const updateMerchantRoleParameters = z.object({
     .string()
     .describe(`User-defined description of the role.`)
     .optional(),
-  merchant_code: z.string().describe(`Merchant code.`),
-  role_id: z.string().describe(`The ID of the role to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  roleId: z.string().describe(`The ID of the role to retrieve.`),
 });

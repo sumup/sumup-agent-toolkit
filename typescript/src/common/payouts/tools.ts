@@ -10,9 +10,9 @@ export const listPayoutsV1: Tool = {
   parameters: listPayoutsV1Parameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listPayoutsV1Parameters>,
+    { merchantCode, ...args }: z.infer<typeof listPayoutsV1Parameters>,
   ) => {
-    const res = await sumup.payouts.list(merchant_code, args);
+    const res = await sumup.payouts.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };
