@@ -17,10 +17,10 @@ export const getPaymentMethods: Tool = {
   parameters: getPaymentMethodsParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof getPaymentMethodsParameters>,
+    { merchantCode, ...args }: z.infer<typeof getPaymentMethodsParameters>,
   ) => {
     const res = await sumup.checkouts.listAvailablePaymentMethods(
-      merchant_code,
+      merchantCode,
       args,
     );
     return JSON.stringify(res);

@@ -16,9 +16,9 @@ export const listMerchantMembers: Tool = {
   parameters: listMerchantMembersParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listMerchantMembersParameters>,
+    { merchantCode, ...args }: z.infer<typeof listMerchantMembersParameters>,
   ) => {
-    const res = await sumup.members.list(merchant_code, args);
+    const res = await sumup.members.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -29,9 +29,9 @@ export const createMerchantMember: Tool = {
   parameters: createMerchantMemberParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof createMerchantMemberParameters>,
+    { merchantCode, ...args }: z.infer<typeof createMerchantMemberParameters>,
   ) => {
-    const res = await sumup.members.create(merchant_code, args);
+    const res = await sumup.members.create(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -43,12 +43,12 @@ export const getMerchantMember: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      member_id,
+      merchantCode,
+      memberId,
       ...args
     }: z.infer<typeof getMerchantMemberParameters>,
   ) => {
-    const res = await sumup.members.get(merchant_code, member_id, args);
+    const res = await sumup.members.get(merchantCode, memberId, args);
     return JSON.stringify(res);
   },
 };
@@ -60,12 +60,12 @@ export const updateMerchantMember: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      member_id,
+      merchantCode,
+      memberId,
       ...args
     }: z.infer<typeof updateMerchantMemberParameters>,
   ) => {
-    const res = await sumup.members.update(merchant_code, member_id, args);
+    const res = await sumup.members.update(merchantCode, memberId, args);
     return JSON.stringify(res);
   },
 };
@@ -77,12 +77,12 @@ export const deleteMerchantMember: Tool = {
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
-      member_id,
+      merchantCode,
+      memberId,
       ...args
     }: z.infer<typeof deleteMerchantMemberParameters>,
   ) => {
-    const res = await sumup.members.delete(merchant_code, member_id, args);
+    const res = await sumup.members.delete(merchantCode, memberId, args);
     return JSON.stringify(res);
   },
 };

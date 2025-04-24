@@ -24,7 +24,7 @@ export const listMerchantMembersParameters = z.object({
     .array(z.string())
     .describe(`Filter the returned members by role.`)
     .optional(),
-  merchant_code: z.string().describe(`Merchant code.`),
+  merchantCode: z.string().describe(`Merchant code.`),
 });
 
 export const createMerchantMemberParameters = z.object({
@@ -68,12 +68,12 @@ export const createMerchantMemberParameters = z.object({
     .object({})
     .describe(`Object attributes that modifiable only by SumUp applications.`)
     .optional(),
-  merchant_code: z.string().describe(`Merchant code.`),
+  merchantCode: z.string().describe(`Merchant code.`),
 });
 
 export const getMerchantMemberParameters = z.object({
-  merchant_code: z.string().describe(`Merchant code.`),
-  member_id: z.string().describe(`The ID of the member to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
 
 export const updateMerchantMemberParameters = z.object({
@@ -101,11 +101,11 @@ export const updateMerchantMemberParameters = z.object({
     })
     .describe(`Allows you to update user data of managed users.`)
     .optional(),
-  merchant_code: z.string().describe(`Merchant code.`),
-  member_id: z.string().describe(`The ID of the member to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
 
 export const deleteMerchantMemberParameters = z.object({
-  merchant_code: z.string().describe(`Merchant code.`),
-  member_id: z.string().describe(`The ID of the member to retrieve.`),
+  merchantCode: z.string().describe(`Merchant code.`),
+  memberId: z.string().describe(`The ID of the member to retrieve.`),
 });

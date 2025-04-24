@@ -42,9 +42,9 @@ export const compatGetOperator: Tool = {
   parameters: compatGetOperatorParameters,
   callback: async (
     sumup: SumUp,
-    { operator_id, ...args }: z.infer<typeof compatGetOperatorParameters>,
+    { operatorId, ...args }: z.infer<typeof compatGetOperatorParameters>,
   ) => {
-    const res = await sumup.subaccounts.compatGetOperator(operator_id, args);
+    const res = await sumup.subaccounts.compatGetOperator(operatorId, args);
     return JSON.stringify(res);
   },
 };
@@ -55,9 +55,9 @@ export const updateSubAccount: Tool = {
   parameters: updateSubAccountParameters,
   callback: async (
     sumup: SumUp,
-    { operator_id, ...args }: z.infer<typeof updateSubAccountParameters>,
+    { operatorId, ...args }: z.infer<typeof updateSubAccountParameters>,
   ) => {
-    const res = await sumup.subaccounts.updateSubAccount(operator_id, args);
+    const res = await sumup.subaccounts.updateSubAccount(operatorId, args);
     return JSON.stringify(res);
   },
 };
@@ -68,9 +68,9 @@ export const deactivateSubAccount: Tool = {
   parameters: deactivateSubAccountParameters,
   callback: async (
     sumup: SumUp,
-    { operator_id, ...args }: z.infer<typeof deactivateSubAccountParameters>,
+    { operatorId, ...args }: z.infer<typeof deactivateSubAccountParameters>,
   ) => {
-    const res = await sumup.subaccounts.deactivateSubAccount(operator_id, args);
+    const res = await sumup.subaccounts.deactivateSubAccount(operatorId, args);
     return JSON.stringify(res);
   },
 };

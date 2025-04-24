@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const listPayoutsV1Parameters = z.object({
-  merchant_code: z.string(),
-  start_date: z
+  merchantCode: z.string(),
+  startDate: z
     .string()
     .describe(
       `Start date (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     ),
-  end_date: z
+  endDate: z
     .string()
     .describe(
       `End date (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
@@ -18,12 +18,12 @@ export const listPayoutsV1Parameters = z.object({
 });
 
 export const listPayoutsParameters = z.object({
-  start_date: z
+  startDate: z
     .string()
     .describe(
       `Start date (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     ),
-  end_date: z
+  endDate: z
     .string()
     .describe(
       `End date (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,

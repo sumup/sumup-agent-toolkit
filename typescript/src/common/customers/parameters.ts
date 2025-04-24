@@ -42,7 +42,7 @@ export const createCustomerParameters = z.object({
 });
 
 export const getCustomerParameters = z.object({
-  customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
+  customerId: z.string().describe(`Unique ID of the saved customer resource.`),
 });
 
 export const updateCustomerParameters = z.object({
@@ -83,15 +83,15 @@ export const updateCustomerParameters = z.object({
     })
     .describe(`Personal details for the customer.`)
     .optional(),
-  customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
+  customerId: z.string().describe(`Unique ID of the saved customer resource.`),
 });
 
 export const listPaymentInstrumentsParameters = z.object({
-  customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
+  customerId: z.string().describe(`Unique ID of the saved customer resource.`),
 });
 
 export const deactivatePaymentInstrumentParameters = z.object({
-  customer_id: z.string().describe(`Unique ID of the saved customer resource.`),
+  customerId: z.string().describe(`Unique ID of the saved customer resource.`),
   token: z
     .string()
     .describe(

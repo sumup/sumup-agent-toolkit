@@ -29,12 +29,12 @@ There are some caveats when using this endpoint:
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
+      merchantCode,
       id,
       ...args
     }: z.infer<typeof createReaderCheckoutParameters>,
   ) => {
-    const res = await sumup.readers.createCheckout(merchant_code, id, args);
+    const res = await sumup.readers.createCheckout(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };
@@ -61,12 +61,12 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
   callback: async (
     sumup: SumUp,
     {
-      merchant_code,
+      merchantCode,
       id,
       ...args
     }: z.infer<typeof createReaderTerminateParameters>,
   ) => {
-    const res = await sumup.readers.terminateCheckout(merchant_code, id, args);
+    const res = await sumup.readers.terminateCheckout(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };
@@ -77,9 +77,9 @@ export const listReaders: Tool = {
   parameters: listReadersParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof listReadersParameters>,
+    { merchantCode, ...args }: z.infer<typeof listReadersParameters>,
   ) => {
-    const res = await sumup.readers.list(merchant_code, args);
+    const res = await sumup.readers.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -90,9 +90,9 @@ export const createReader: Tool = {
   parameters: createReaderParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, ...args }: z.infer<typeof createReaderParameters>,
+    { merchantCode, ...args }: z.infer<typeof createReaderParameters>,
   ) => {
-    const res = await sumup.readers.create(merchant_code, args);
+    const res = await sumup.readers.create(merchantCode, args);
     return JSON.stringify(res);
   },
 };
@@ -103,9 +103,9 @@ export const getReader: Tool = {
   parameters: getReaderParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, id, ...args }: z.infer<typeof getReaderParameters>,
+    { merchantCode, id, ...args }: z.infer<typeof getReaderParameters>,
   ) => {
-    const res = await sumup.readers.get(merchant_code, id, args);
+    const res = await sumup.readers.get(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };
@@ -116,9 +116,9 @@ export const deleteReader: Tool = {
   parameters: deleteReaderParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, id, ...args }: z.infer<typeof deleteReaderParameters>,
+    { merchantCode, id, ...args }: z.infer<typeof deleteReaderParameters>,
   ) => {
-    const res = await sumup.readers.deleteReader(merchant_code, id, args);
+    const res = await sumup.readers.deleteReader(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };
@@ -129,9 +129,9 @@ export const updateReader: Tool = {
   parameters: updateReaderParameters,
   callback: async (
     sumup: SumUp,
-    { merchant_code, id, ...args }: z.infer<typeof updateReaderParameters>,
+    { merchantCode, id, ...args }: z.infer<typeof updateReaderParameters>,
   ) => {
-    const res = await sumup.readers.update(merchant_code, id, args);
+    const res = await sumup.readers.update(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };

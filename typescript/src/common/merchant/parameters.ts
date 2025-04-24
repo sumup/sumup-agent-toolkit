@@ -24,7 +24,7 @@ export const getMerchantProfileParameters = z.object({});
 export const getDoingBusinessAsParameters = z.object({});
 
 export const listBankAccountsV11Parameters = z.object({
-  merchant_code: z.string(),
+  merchantCode: z.string(),
   primary: z
     .boolean()
     .describe(
