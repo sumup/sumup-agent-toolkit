@@ -1,5 +1,11 @@
 # @sumup/agent-toolkit
 
+## 0.0.4
+
+### Patch Changes
+
+- [#59](https://github.com/sumup/sumup-agent-toolkit/pull/59) [`43b3483`](https://github.com/sumup/sumup-agent-toolkit/commit/43b3483871299a922fcdd47e815f98a84fc54fd5) Thanks [@matoous](https://github.com/matoous)! - Fixed query parameteres incorrectly using camel case instead of snake case.
+
 ## 0.0.3
 
 ### Patch Changes
