@@ -15,10 +15,4 @@ export const listMembershipsParameters = z.object({
     .enum(["merchant"])
     .describe(`Filter memberships by resource kind.`)
     .optional(),
-  resourceAttributesSandbox: z
-    .boolean()
-    .describe(
-      `Filter memberships by the sandbox status of the resource the membership is in.`,
-    )
-    .optional(),
 });
