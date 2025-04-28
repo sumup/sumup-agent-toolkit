@@ -48,7 +48,7 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
-    "@sumup/agent-toolkit": "^0.0.2"
+    "@sumup/agent-toolkit": "^0.0.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
