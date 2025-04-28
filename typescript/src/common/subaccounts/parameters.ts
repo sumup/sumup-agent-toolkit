@@ -9,7 +9,7 @@ Current implementation allow querying only over the email address.
 All operators whos email address contains the query string are returned.
 `)
     .optional(),
-  includePrimary: z
+  include_primary: z
     .boolean()
     .describe(
       `If true the list of operators will include also the primary user.`,
