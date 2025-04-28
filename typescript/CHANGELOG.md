@@ -1,5 +1,13 @@
 # @sumup/agent-toolkit
 
+## 0.0.3
+
+### Patch Changes
+
+- [#58](https://github.com/sumup/sumup-agent-toolkit/pull/58) [`ab53d0c`](https://github.com/sumup/sumup-agent-toolkit/commit/ab53d0c575edaba4dc1d2968ba4f893dafebaa1f) Thanks [@matoous](https://github.com/matoous)! - Removed unsupported parameters. `.` and `[]` are not supported by MCP and would require re-mapping between MCP objects and data passed to SumUp SDK.
+
+- [#47](https://github.com/sumup/sumup-agent-toolkit/pull/47) [`3408f43`](https://github.com/sumup/sumup-agent-toolkit/commit/3408f4354438f48912879061c1063c086b137076) Thanks [@matoous](https://github.com/matoous)! - Fixed query parameters handling for tools and updated path parameters to use camelCase instead of snake_case.
+
 ## 0.0.2
 
 ### Patch Changes
