@@ -105,7 +105,7 @@ export const createCheckoutParameters = z
   .describe(`Details of the payment checkout.`);
 
 export const listCheckoutsParameters = z.object({
-  checkoutReference: z
+  checkout_reference: z
     .string()
     .describe(
       `Filters the list of checkout resources by the unique ID of the checkout.`,

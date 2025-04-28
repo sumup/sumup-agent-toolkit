@@ -20,13 +20,13 @@ export const getTransactionV2_1Parameters = z.object({
       `Retrieves the transaction resource with the specified transaction ID (the \`id\` parameter in the transaction resource).`,
     )
     .optional(),
-  internalId: z
+  internal_id: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified internal transaction ID (the \`internal_id\` parameter in the transaction resource).`,
     )
     .optional(),
-  transactionCode: z
+  transaction_code: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified transaction code.`,
@@ -41,13 +41,13 @@ export const getTransactionParameters = z.object({
       `Retrieves the transaction resource with the specified transaction ID (the \`id\` parameter in the transaction resource).`,
     )
     .optional(),
-  internalId: z
+  internal_id: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified internal transaction ID (the \`internal_id\` parameter in the transaction resource).`,
     )
     .optional(),
-  transactionCode: z
+  transaction_code: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified transaction code.`,
@@ -57,7 +57,7 @@ export const getTransactionParameters = z.object({
 
 export const listTransactionsV2_1Parameters = z.object({
   merchantCode: z.string(),
-  transactionCode: z
+  transaction_code: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified transaction code.`,
@@ -88,7 +88,7 @@ export const listTransactionsV2_1Parameters = z.object({
       `Filters the returned results by the specified list of final statuses of the transactions.`,
     )
     .optional(),
-  paymentTypes: z
+  payment_types: z
     .array(
       z.enum(["CASH", "POS", "ECOM", "BALANCE", "MOTO", "BOLETO", "UNKNOWN"]),
     )
@@ -102,31 +102,31 @@ export const listTransactionsV2_1Parameters = z.object({
       `Filters the returned results by the specified list of transaction types.`,
     )
     .optional(),
-  changesSince: z
+  changes_since: z
     .string()
     .describe(
       `Filters the results by the latest modification time of resources and returns only transactions that are modified *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  newestTime: z
+  newest_time: z
     .string()
     .describe(
       `Filters the results by the creation time of resources and returns only transactions that are created *before* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  newestRef: z
+  newest_ref: z
     .string()
     .describe(
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *smaller* than the specified value. This parameters supersedes the \`newest_time\` parameter (if both are provided in the request).`,
     )
     .optional(),
-  oldestTime: z
+  oldest_time: z
     .string()
     .describe(
       `Filters the results by the creation time of resources and returns only transactions that are created *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  oldestRef: z
+  oldest_ref: z
     .string()
     .describe(
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the \`oldest_time\` parameter (if both are provided in the request).`,
@@ -135,7 +135,7 @@ export const listTransactionsV2_1Parameters = z.object({
 });
 
 export const listTransactionsParameters = z.object({
-  transactionCode: z
+  transaction_code: z
     .string()
     .describe(
       `Retrieves the transaction resource with the specified transaction code.`,
@@ -166,7 +166,7 @@ export const listTransactionsParameters = z.object({
       `Filters the returned results by the specified list of final statuses of the transactions.`,
     )
     .optional(),
-  paymentTypes: z
+  payment_types: z
     .array(
       z.enum(["CASH", "POS", "ECOM", "BALANCE", "MOTO", "BOLETO", "UNKNOWN"]),
     )
@@ -180,31 +180,31 @@ export const listTransactionsParameters = z.object({
       `Filters the returned results by the specified list of transaction types.`,
     )
     .optional(),
-  changesSince: z
+  changes_since: z
     .string()
     .describe(
       `Filters the results by the latest modification time of resources and returns only transactions that are modified *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  newestTime: z
+  newest_time: z
     .string()
     .describe(
       `Filters the results by the creation time of resources and returns only transactions that are created *before* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  newestRef: z
+  newest_ref: z
     .string()
     .describe(
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *smaller* than the specified value. This parameters supersedes the \`newest_time\` parameter (if both are provided in the request).`,
     )
     .optional(),
-  oldestTime: z
+  oldest_time: z
     .string()
     .describe(
       `Filters the results by the creation time of resources and returns only transactions that are created *at or after* the specified timestamp (in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) format).`,
     )
     .optional(),
-  oldestRef: z
+  oldest_ref: z
     .string()
     .describe(
       `Filters the results by the reference ID of transaction events and returns only transactions with events whose IDs are *greater* than the specified value. This parameters supersedes the \`oldest_time\` parameter (if both are provided in the request).`,
