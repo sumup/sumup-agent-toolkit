@@ -52,7 +52,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.44",
+    "@langchain/core": "^0.3.53",
     "@modelcontextprotocol/sdk": "^1.10.2",
     "@sumup/sdk": "^0.0.2",
     "ai": "^4.3.13",
