@@ -65,7 +65,7 @@
     "@changesets/cli": "^2.29.4",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.17",
-    "globals": "^15.14.0",
+    "globals": "^16.2.0",
     "publint": "^0.3.12",
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
