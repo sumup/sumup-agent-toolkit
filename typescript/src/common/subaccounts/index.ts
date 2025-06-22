@@ -1,14 +1,14 @@
 export {
-  listSubAccountsParameters,
-  createSubAccountParameters,
   compatGetOperatorParameters,
-  updateSubAccountParameters,
+  createSubAccountParameters,
   deactivateSubAccountParameters,
+  listSubAccountsParameters,
+  updateSubAccountParameters,
 } from "./parameters";
 export {
-  listSubAccounts,
-  createSubAccount,
   compatGetOperator,
-  updateSubAccount,
+  createSubAccount,
   deactivateSubAccount,
+  listSubAccounts,
+  updateSubAccount,
 } from "./tools";

@@ -1,14 +1,14 @@
 export {
   createCustomerParameters,
-  getCustomerParameters,
-  updateCustomerParameters,
-  listPaymentInstrumentsParameters,
   deactivatePaymentInstrumentParameters,
+  getCustomerParameters,
+  listPaymentInstrumentsParameters,
+  updateCustomerParameters,
 } from "./parameters";
 export {
   createCustomer,
-  getCustomer,
-  updateCustomer,
-  listPaymentInstruments,
   deactivatePaymentInstrument,
+  getCustomer,
+  listPaymentInstruments,
+  updateCustomer,
 } from "./tools";
