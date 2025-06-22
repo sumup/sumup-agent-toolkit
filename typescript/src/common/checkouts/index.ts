@@ -1,16 +1,16 @@
 export {
-  getPaymentMethodsParameters,
   createCheckoutParameters,
-  listCheckoutsParameters,
-  getCheckoutParameters,
-  processCheckoutParameters,
   deactivateCheckoutParameters,
+  getCheckoutParameters,
+  getPaymentMethodsParameters,
+  listCheckoutsParameters,
+  processCheckoutParameters,
 } from "./parameters";
 export {
-  getPaymentMethods,
   createCheckout,
-  listCheckouts,
-  getCheckout,
-  processCheckout,
   deactivateCheckout,
+  getCheckout,
+  getPaymentMethods,
+  listCheckouts,
+  processCheckout,
 } from "./tools";

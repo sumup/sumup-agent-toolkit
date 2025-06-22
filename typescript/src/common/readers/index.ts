@@ -1,18 +1,18 @@
 export {
   createReaderCheckoutParameters,
-  createReaderTerminateParameters,
-  listReadersParameters,
   createReaderParameters,
-  getReaderParameters,
+  createReaderTerminateParameters,
   deleteReaderParameters,
+  getReaderParameters,
+  listReadersParameters,
   updateReaderParameters,
 } from "./parameters";
 export {
+  createReader,
   createReaderCheckout,
   createReaderTerminate,
-  listReaders,
-  createReader,
-  getReader,
   deleteReader,
+  getReader,
+  listReaders,
   updateReader,
 } from "./tools";

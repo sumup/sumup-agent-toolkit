@@ -33,6 +33,8 @@ jobs:
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@a9763ed3d2388f5746f9dc3e1a55df7f4609bc89 # v2.5.1
+        with:
+          working-dir: ./typescript
 
       - name: Install dependencies
         run: npm ci
@@ -88,6 +90,8 @@ jobs:
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@a9763ed3d2388f5746f9dc3e1a55df7f4609bc89 # v2.5.1
+        with:
+          working-dir: ./mcp
 
       - name: Install dependencies
         run: npm ci

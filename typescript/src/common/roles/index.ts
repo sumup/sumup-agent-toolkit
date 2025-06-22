@@ -1,14 +1,14 @@
 export {
-  listMerchantRolesParameters,
   createMerchantRoleParameters,
-  getMerchantRoleParameters,
   deleteMerchantRoleParameters,
+  getMerchantRoleParameters,
+  listMerchantRolesParameters,
   updateMerchantRoleParameters,
 } from "./parameters";
 export {
-  listMerchantRoles,
   createMerchantRole,
-  getMerchantRole,
   deleteMerchantRole,
+  getMerchantRole,
+  listMerchantRoles,
   updateMerchantRole,
 } from "./tools";

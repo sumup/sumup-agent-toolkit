@@ -1,14 +1,14 @@
 export {
-  listMerchantMembersParameters,
   createMerchantMemberParameters,
-  getMerchantMemberParameters,
-  updateMerchantMemberParameters,
   deleteMerchantMemberParameters,
+  getMerchantMemberParameters,
+  listMerchantMembersParameters,
+  updateMerchantMemberParameters,
 } from "./parameters";
 export {
-  listMerchantMembers,
   createMerchantMember,
-  getMerchantMember,
-  updateMerchantMember,
   deleteMerchantMember,
+  getMerchantMember,
+  listMerchantMembers,
+  updateMerchantMember,
 } from "./tools";

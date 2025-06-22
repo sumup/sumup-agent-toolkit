@@ -1,4 +1,5 @@
 export { VERSION } from "./const";
+
 import {
   createCheckout,
   deactivateCheckout,

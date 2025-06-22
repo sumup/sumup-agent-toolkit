@@ -2,7 +2,7 @@ import type { ServerOptions } from "@modelcontextprotocol/sdk/server/index.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import SumUp from "@sumup/sdk";
 import type z from "zod";
-import { VERSION, tools } from "../common";
+import { tools, VERSION } from "../common";
 
 class SumUpAgentToolkit extends McpServer {
   private _sumup: SumUp;
