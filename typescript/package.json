@@ -63,7 +63,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.0.4",
     "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.4",
+    "@changesets/cli": "^2.29.6",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.17",
     "globals": "^16.2.0",
