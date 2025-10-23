@@ -1,0 +1,44 @@
+name: Changeset Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changeset:
+    name: Check for changeset
+    runs-on: ubuntu-latest
+    # Skip this check if the PR has a "skip-changeset" label
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip-changeset')"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --global @changesets/cli
+
+      - name: Check for changeset
+        run: |
+          if [ "$(changeset status --output=.changeset-status.json 2>&1 | grep -c 'No changesets present')" -eq 1 ]; then
+            echo "::error::This PR is missing a changeset. Please add one by running 'npx changeset' or add the 'skip-changeset' label if this PR doesn't require a changelog entry."
+            exit 1
+          fi
+          echo "✅ Changeset found"
