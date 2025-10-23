@@ -46,12 +46,6 @@ export const createCheckoutParameters = z
     merchant_code: z
       .string()
       .describe(`Unique identifying code of the merchant profile.`),
-    pay_to_email: z
-      .string()
-      .describe(
-        `Email address of the registered user (merchant) to whom the payment is made.`,
-      )
-      .optional(),
     description: z
       .string()
       .describe(

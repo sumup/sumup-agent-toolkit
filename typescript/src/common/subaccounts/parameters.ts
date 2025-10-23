@@ -6,8 +6,7 @@ export const listSubAccountsParameters = z.object({
     .describe(`Search query used to filter users that match given query term.
 
 Current implementation allow querying only over the email address.
-All operators whos email address contains the query string are returned.
-`)
+All operators whos email address contains the query string are returned.`)
     .optional(),
   include_primary: z
     .boolean()
@@ -32,7 +31,10 @@ export const createSubAccountParameters = z.object({
 });
 
 export const compatGetOperatorParameters = z.object({
-  operatorId: z.number().int(),
+  operatorId: z
+    .number()
+    .int()
+    .describe(`The unique identifier for the operator.`),
 });
 
 export const updateSubAccountParameters = z.object({
@@ -48,9 +50,15 @@ export const updateSubAccountParameters = z.object({
       refund_transactions: z.boolean(),
     })
     .optional(),
-  operatorId: z.number().int(),
+  operatorId: z
+    .number()
+    .int()
+    .describe(`The unique identifier for the operator.`),
 });
 
 export const deactivateSubAccountParameters = z.object({
-  operatorId: z.number().int(),
+  operatorId: z
+    .number()
+    .int()
+    .describe(`The unique identifier for the operator.`),
 });
