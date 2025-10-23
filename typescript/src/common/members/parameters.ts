@@ -34,12 +34,6 @@ export const createMerchantMemberParameters = z.object({
       `True if the user is managed by the merchant. In this case, we'll created a virtual user with the provided password and nickname.`,
     )
     .optional(),
-  is_service_account: z
-    .boolean()
-    .describe(
-      `True if the user is a service account. It can later be used to create OAuth2 clients.`,
-    )
-    .optional(),
   email: z.string().describe(`Email address of the member to add.`),
   password: z
     .string()
@@ -66,7 +60,9 @@ export const createMerchantMemberParameters = z.object({
     .optional(),
   attributes: z
     .object({})
-    .describe(`Object attributes that modifiable only by SumUp applications.`)
+    .describe(
+      `Object attributes that are modifiable only by SumUp applications.`,
+    )
     .optional(),
   merchantCode: z.string().describe(`Merchant code.`),
 });
@@ -86,7 +82,9 @@ export const updateMerchantMemberParameters = z.object({
     .optional(),
   attributes: z
     .object({})
-    .describe(`Object attributes that modifiable only by SumUp applications.`)
+    .describe(
+      `Object attributes that are modifiable only by SumUp applications.`,
+    )
     .optional(),
   user: z
     .object({

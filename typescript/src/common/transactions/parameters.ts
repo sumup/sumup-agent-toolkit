@@ -32,6 +32,14 @@ export const getTransactionV2_1Parameters = z.object({
       `Retrieves the transaction resource with the specified transaction code.`,
     )
     .optional(),
+  foreign_transaction_id: z
+    .string()
+    .describe(`External/foreign transaction id (passed by clients).`)
+    .optional(),
+  client_transaction_id: z
+    .string()
+    .describe(`Client transaction id.`)
+    .optional(),
 });
 
 export const getTransactionParameters = z.object({

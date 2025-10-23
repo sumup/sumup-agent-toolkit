@@ -64,7 +64,7 @@ export const updateSubAccount: Tool = {
 
 export const deactivateSubAccount: Tool = {
   name: "deactivate_sub_account",
-  description: `undefined`,
+  description: `Disable the specified operator for the merchant account.`,
   parameters: deactivateSubAccountParameters,
   callback: async (
     sumup: SumUp,

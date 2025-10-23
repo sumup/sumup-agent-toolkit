@@ -11,8 +11,5 @@ export const listMembershipsParameters = z.object({
     .int()
     .describe(`Maximum number of members to return.`)
     .optional(),
-  kind: z
-    .enum(["merchant"])
-    .describe(`Filter memberships by resource kind.`)
-    .optional(),
+  kind: z.string().describe(`Filter memberships by resource kind.`).optional(),
 });

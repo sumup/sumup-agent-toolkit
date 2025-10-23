@@ -12,65 +12,6 @@ import {
   updateReaderParameters,
 } from "./parameters";
 
-export const createReaderCheckout: Tool = {
-  name: "create_reader_checkout",
-  description: `Create a Checkout for a Reader.
-
-This process is asynchronous and the actual transaction may take some time to be stared on the device.
-
-
-There are some caveats when using this endpoint:
-* The target device must be online, otherwise checkout won't be accepted
-* After the checkout is accepted, the system has 60 seconds to start the payment on the target device. During this time, any other checkout for the same device will be rejected.
-
-**Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.
-`,
-  parameters: createReaderCheckoutParameters,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      id,
-      ...args
-    }: z.infer<typeof createReaderCheckoutParameters>,
-  ) => {
-    const res = await sumup.readers.createCheckout(merchantCode, id, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const createReaderTerminate: Tool = {
-  name: "create_reader_terminate",
-  description: `Create a Terminate action for a Reader.
-
-It stops the current transaction on the target device.
-
-This process is asynchronous and the actual termination may take some time to be performed on the device.
-
-
-There are some caveats when using this endpoint:
-* The target device must be online, otherwise terminate won't be accepted
-* The action will succeed only if the device is waiting for cardholder action: e.g: waiting for card, waiting for PIN, etc.
-* There is no confirmation of the termination.
-
-If a transaction is successfully terminated and \`return_url\` was provided on Checkout, the transaction status will be sent as \`failed\` to the provided URL.
-
-**Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.
-`,
-  parameters: createReaderTerminateParameters,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      id,
-      ...args
-    }: z.infer<typeof createReaderTerminateParameters>,
-  ) => {
-    const res = await sumup.readers.terminateCheckout(merchantCode, id, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const listReaders: Tool = {
   name: "list_readers",
   description: `List all readers of the merchant.`,
@@ -132,6 +73,75 @@ export const updateReader: Tool = {
     { merchantCode, id, ...args }: z.infer<typeof updateReaderParameters>,
   ) => {
     const res = await sumup.readers.update(merchantCode, id, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const createReaderCheckout: Tool = {
+  name: "create_reader_checkout",
+  description: `Create a Checkout for a Reader.
+
+This process is asynchronous and the actual transaction may take some time to be stared on the device.
+
+
+There are some caveats when using this endpoint:
+* The target device must be online, otherwise checkout won't be accepted
+* After the checkout is accepted, the system has 60 seconds to start the payment on the target device. During this time, any other checkout for the same device will be rejected.
+
+
+**Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.
+`,
+  parameters: createReaderCheckoutParameters,
+  callback: async (
+    sumup: SumUp,
+    {
+      merchantCode,
+      readerId,
+      ...args
+    }: z.infer<typeof createReaderCheckoutParameters>,
+  ) => {
+    const res = await sumup.readers.createReaderCheckout(
+      merchantCode,
+      readerId,
+      args,
+    );
+    return JSON.stringify(res);
+  },
+};
+
+export const createReaderTerminate: Tool = {
+  name: "create_reader_terminate",
+  description: `Create a Terminate action for a Reader.
+
+It stops the current transaction on the target device.
+
+This process is asynchronous and the actual termination may take some time to be performed on the device.
+
+
+There are some caveats when using this endpoint:
+* The target device must be online, otherwise terminate won't be accepted
+* The action will succeed only if the device is waiting for cardholder action: e.g: waiting for card, waiting for PIN, etc.
+* There is no confirmation of the termination.
+
+If a transaction is successfully terminated and \`return_url\` was provided on Checkout, the transaction status will be sent as \`failed\` to the provided URL.
+
+
+**Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.
+`,
+  parameters: createReaderTerminateParameters,
+  callback: async (
+    sumup: SumUp,
+    {
+      merchantCode,
+      readerId,
+      ...args
+    }: z.infer<typeof createReaderTerminateParameters>,
+  ) => {
+    const res = await sumup.readers.createReaderTerminate(
+      merchantCode,
+      readerId,
+      args,
+    );
     return JSON.stringify(res);
   },
 };

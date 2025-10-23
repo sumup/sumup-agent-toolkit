@@ -32,6 +32,7 @@ import {
   listBankAccounts,
   listBankAccountsV11,
 } from "./merchant";
+import { getMerchant, getPerson, listPersons } from "./merchants";
 import { listPayouts, listPayoutsV1 } from "./payouts";
 import {
   createReader,
@@ -108,11 +109,14 @@ export const tools = [
   getMerchantRole,
   deleteMerchantRole,
   updateMerchantRole,
-  createReaderCheckout,
-  createReaderTerminate,
+  getMerchant,
+  listPersons,
+  getPerson,
   listReaders,
   createReader,
   getReader,
   deleteReader,
   updateReader,
+  createReaderCheckout,
+  createReaderTerminate,
 ];
