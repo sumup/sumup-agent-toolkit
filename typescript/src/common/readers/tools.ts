@@ -79,7 +79,7 @@ export const updateReader: Tool = {
 
 export const createReaderCheckout: Tool = {
   name: "create_reader_checkout",
-  description: `Create a Checkout for a Reader.
+  description: `Creates a Checkout for a Reader.
 
 This process is asynchronous and the actual transaction may take some time to be stared on the device.
 
@@ -100,7 +100,7 @@ There are some caveats when using this endpoint:
       ...args
     }: z.infer<typeof createReaderCheckoutParameters>,
   ) => {
-    const res = await sumup.readers.createReaderCheckout(
+    const res = await sumup.readers.createCheckout(
       merchantCode,
       readerId,
       args,
@@ -111,9 +111,7 @@ There are some caveats when using this endpoint:
 
 export const createReaderTerminate: Tool = {
   name: "create_reader_terminate",
-  description: `Create a Terminate action for a Reader.
-
-It stops the current transaction on the target device.
+  description: `Terminate a Reader Checkout stops the current transaction on the target device.
 
 This process is asynchronous and the actual termination may take some time to be performed on the device.
 
@@ -137,7 +135,7 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
       ...args
     }: z.infer<typeof createReaderTerminateParameters>,
   ) => {
-    const res = await sumup.readers.createReaderTerminate(
+    const res = await sumup.readers.terminateCheckout(
       merchantCode,
       readerId,
       args,
