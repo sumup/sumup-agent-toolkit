@@ -49,7 +49,7 @@
     }
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "dependencies": {
     "@langchain/core": "^0.3.62",
@@ -61,18 +61,18 @@
     "zod-to-json-schema": "^3.24.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.6",
+    "@biomejs/biome": "^2.2.7",
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.7",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^29.4.5",
     "@types/node": "^22.15.17",
     "globals": "^16.4.0",
-    "publint": "^0.3.12",
-    "ts-jest": "^29.3.2",
+    "publint": "^0.3.15",
+    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
-    "typedoc": "^0.28.3",
-    "typescript": "^5.8.3"
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3"
   },
   "files": [
     "CHANGELOG.md",

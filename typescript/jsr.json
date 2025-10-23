@@ -8,10 +8,5 @@
     "./ai": "./src/ai/index.ts",
     "./mcp": "./src/mcp/index.ts"
   },
-  "include": [
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md",
-    "src/**/*.ts"
-  ]
+  "include": ["CHANGELOG.md", "LICENSE", "README.md", "src/**/*.ts"]
 }
