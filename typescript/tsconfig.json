@@ -10,11 +10,6 @@
     "strict": true,
     "module": "NodeNext"
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "examples"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "examples"]
 }
