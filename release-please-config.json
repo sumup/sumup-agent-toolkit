@@ -6,6 +6,8 @@
 			"path": "mcp",
 			"release-type": "node",
 			"component": "mcp",
+			"draft": true,
+			"extra-label": "release",
 			"extra-files": [
 				{
 					"type": "json",
@@ -23,6 +25,8 @@
 			"path": "typescript",
 			"release-type": "node",
 			"component": "agent-toolkit",
+			"draft": true,
+			"extra-label": "release",
 			"extra-files": ["typescript/src/common/const.ts"]
 		}
 	}
