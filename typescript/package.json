@@ -51,7 +51,7 @@
     "@langchain/core": "^0.3.62",
     "@modelcontextprotocol/sdk": "^1.11.0",
     "@sumup/sdk": "^0.0.5",
-    "ai": "^4.3.13",
+    "ai": "^5.0.86",
     "openai": "^4.96.0",
     "zod": "^3.24.4",
     "zod-to-json-schema": "^3.24.3"
