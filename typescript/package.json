@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.7",
-    "@types/jest": "^29.4.5",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.15.17",
     "globals": "^16.4.0",
     "publint": "^0.3.15",
