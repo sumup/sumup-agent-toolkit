@@ -1,0 +1,29 @@
+{
+	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+	"include-component-in-tag": true,
+	"packages": {
+		"mcp": {
+			"path": "mcp",
+			"release-type": "node",
+			"component": "mcp",
+			"extra-files": [
+				{
+					"type": "json",
+					"path": "mcp/server.json",
+					"jsonpath": "$.version"
+				},
+				{
+					"type": "json",
+					"path": "mcp/server.json",
+					"jsonpath": "$.packages[*].version"
+				}
+			]
+		},
+		"agent-toolkit": {
+			"path": "typescript",
+			"release-type": "node",
+			"component": "agent-toolkit",
+			"extra-files": ["typescript/src/common/const.ts"]
+		}
+	}
+}
