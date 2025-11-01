@@ -51,6 +51,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Sync server manifest version
+        if: steps.publish.outputs.published == 'true'
+        run: node scripts/sync-server-json-version.mjs
+
       - name: Log in to GitHub Container Registry
         if: steps.publish.outputs.published
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
@@ -70,3 +74,19 @@ jobs:
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/mcp:latest
           docker push ghcr.io/${{ github.repository_owner }}/mcp:${{ env.GIT_SHA }}
+
+      - name: Install MCP Publisher
+        if: steps.publish.outputs.published == 'true'
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" -o mcp-publisher.tar.gz
+          tar xzf mcp-publisher.tar.gz mcp-publisher
+          rm mcp-publisher.tar.gz
+          chmod +x mcp-publisher
+
+      - name: Login to MCP Registry
+        if: steps.publish.outputs.published == 'true'
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to MCP Registry
+        if: steps.publish.outputs.published == 'true'
+        run: ./mcp-publisher publish
