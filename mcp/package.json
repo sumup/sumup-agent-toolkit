@@ -1,6 +1,6 @@
 {
   "name": "@sumup/mcp",
-  "version": "0.2.0",
+  "version": "0.0.5",
   "description": "MCP server for interacting with SumUp",
   "homepage": "https://github.com/sumup/sumup-agent-toolkit",
   "license": "Apache-2.0",

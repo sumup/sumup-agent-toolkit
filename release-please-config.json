@@ -11,13 +11,13 @@
 			"extra-files": [
 				{
 					"type": "json",
-					"path": "mcp/server.json",
+					"path": "server.json",
 					"jsonpath": "$.version"
 				},
 				{
 					"type": "json",
-					"path": "mcp/server.json",
-					"jsonpath": "$.packages[*].version"
+					"path": "server.json",
+					"jsonpath": "$.packages[0].version"
 				}
 			]
 		},
@@ -27,7 +27,7 @@
 			"component": "agent-toolkit",
 			"draft": true,
 			"extra-label": "release",
-			"extra-files": ["typescript/src/common/const.ts"]
+			"extra-files": ["src/common/const.ts"]
 		}
 	}
 }
