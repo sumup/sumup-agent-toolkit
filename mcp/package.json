@@ -1,6 +1,6 @@
 {
   "name": "@sumup/mcp",
-  "version": "0.2.0",
+  "version": "0.0.5",
   "description": "MCP server for interacting with SumUp",
   "homepage": "https://github.com/sumup/sumup-agent-toolkit",
   "license": "Apache-2.0",
@@ -50,6 +50,8 @@
   "devDependencies": {
     "@biomejs/biome": "^2.0.4",
     "@rslib/core": "^0.16.1",
+    "@rspack/cli": "^1.6.0",
+    "@rspack/core": "^1.6.0",
     "@types/node": "^24.3.0",
     "rsbuild-plugin-publint": "^0.3.0",
     "ts-node": "^10.9.2",
