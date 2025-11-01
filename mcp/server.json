@@ -3,7 +3,6 @@
   "name": "io.github.sumup/mcp",
   "title": "SumUp MCP Server",
   "description": "Tools to explore SumUp accounts, payments, customers, and payouts.",
-  "websiteUrl": "https://developer.sumup.com",
   "repository": {
     "url": "https://github.com/sumup/sumup-agent-toolkit",
     "source": "github",

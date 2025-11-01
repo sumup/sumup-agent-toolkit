@@ -17,7 +17,7 @@
 				{
 					"type": "json",
 					"path": "mcp/server.json",
-					"jsonpath": "$.packages[*].version"
+					"jsonpath": "$.packages[0].version"
 				}
 			]
 		},
