@@ -11,11 +11,7 @@
     "postbuild": "publint",
     "lint": "biome check",
     "lint:fix": "biome check --write",
-    "changeset": "changeset",
-    "prerelease": "npm run build",
-    "release": "changeset publish",
-    "version": "changeset version",
-    "postversion": "ts-node ./.changeset/bump-version.ts",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "publishConfig": {
@@ -62,8 +58,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.7",
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
     "@types/jest": "^29.4.5",
     "@types/node": "^22.15.17",
     "globals": "^16.4.0",

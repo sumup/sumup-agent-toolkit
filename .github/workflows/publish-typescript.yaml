@@ -1,32 +1,30 @@
-name: Version and Publish Typescript SDK
+name: Publish Typescript SDK
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "typescript/**"
-      - ".github/workflows/publish-typescript.yaml"
-  workflow_dispatch:
+  release:
+    types:
+      - published
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
-  id-token: write # Needed for provenance
-  packages: write # Needed to publish package to GitHub package registry
-  contents: write # For changeset
-  pull-requests: write # For changeset
+  contents: read
+  packages: write
+  id-token: write
 
 jobs:
-  version-and-publish:
-    name: Version and Publish
+  publish:
+    if: startsWith(github.event.release.tag_name, 'agent-toolkit-v')
+    name: Publish
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./typescript
     steps:
-      - name: Checkout code
+      - name: Checkout release tag
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -38,17 +36,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Version and/or Publish to NPM
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
-        with:
-          commit: "chore: version typescript packages"
-          title: "chore: version typescript packages"
-          version: npm run version
-          publish: npm run release
+      - name: Build package
+        run: npm run build
+
+      - name: Publish to npm
+        id: publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          CHANGESETS_WORKDIR: ${{ github.workspace }}/typescript
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public
+          echo "published=true" >> "$GITHUB_OUTPUT"
 
       - name: Publish to JSR
+        if: steps.publish.outputs.published == 'true'
         run: npx jsr publish
