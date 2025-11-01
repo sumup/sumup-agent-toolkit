@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
+  "name": "io.github.sumup/mcp",
+  "title": "SumUp MCP Server",
+  "description": "Tools to explore SumUp accounts, payments, customers, and payouts.",
+  "websiteUrl": "https://developer.sumup.com",
+  "repository": {
+    "url": "https://github.com/sumup/sumup-agent-toolkit",
+    "source": "github",
+    "subfolder": "mcp"
+  },
+  "version": "0.0.5",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@sumup/mcp",
+      "version": "0.0.5",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "SUMUP_API_KEY",
+          "description": "SumUp API key with permissions for the requested operations.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
