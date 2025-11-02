@@ -8,13 +8,13 @@
     "source": "github",
     "subfolder": "mcp"
   },
-  "version": "0.0.5",
+  "version": "0.1.0",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@sumup/mcp",
-      "version": "0.0.5",
+      "version": "0.1.0",
       "transport": {
         "type": "stdio"
       },
