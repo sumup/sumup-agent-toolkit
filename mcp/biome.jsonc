@@ -22,14 +22,5 @@
       "quoteProperties": "preserve",
       "quoteStyle": "double"
     }
-  },
-  "overrides": [
-    {
-      "includes": ["**/package.json", "**/jsr.json"],
-      "formatter": {
-        "lineWidth": 1,
-        "indentStyle": "space"
-      }
-    }
-  ]
+  }
 }

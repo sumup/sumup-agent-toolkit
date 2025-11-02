@@ -5,6 +5,7 @@
   "homepage": "https://github.com/sumup/sumup-agent-toolkit",
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
+  "mcpName": "io.github.sumup/mcp",
   "main": "dist/index.mjs",
   "bin": {
     "mcp": "dist/index.mjs"
