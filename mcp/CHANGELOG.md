@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/sumup/sumup-agent-toolkit/compare/mcp-v0.1.0...mcp-v0.1.1) (2025-11-02)
+
+
+### Bug Fixes
+
+* **mcp:** publishing ([5e24da2](https://github.com/sumup/sumup-agent-toolkit/commit/5e24da29081863ceb8c16a222e9a1a90ae4f8431))
+
 ## [0.1.0](https://github.com/sumup/sumup-agent-toolkit/compare/mcp-v0.0.5...mcp-v0.1.0) (2025-11-02)
 
 
