@@ -21,10 +21,10 @@
 				}
 			]
 		},
-		"agent-toolkit": {
+		"typescript": {
 			"path": "typescript",
 			"release-type": "node",
-			"component": "agent-toolkit",
+			"component": "typescript",
 			"draft": true,
 			"extra-label": "release",
 			"extra-files": ["src/common/const.ts"]
