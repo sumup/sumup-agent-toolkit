@@ -7,9 +7,6 @@ import {
   getDoingBusinessAsParameters,
   getMerchantProfileParameters,
   getPersonalProfileParameters,
-  getSettingsParameters,
-  listBankAccountsParameters,
-  listBankAccountsV11Parameters,
 } from "./parameters";
 
 export const getAccount: Tool = {
@@ -60,45 +57,6 @@ export const getDoingBusinessAs: Tool = {
     args: z.infer<typeof getDoingBusinessAsParameters>,
   ) => {
     const res = await sumup.merchant.getDoingBusinessAs(args);
-    return JSON.stringify(res);
-  },
-};
-
-export const listBankAccountsV11: Tool = {
-  name: "list_bank_accounts_v11",
-  description: `Retrieves bank accounts of the merchant.`,
-  parameters: listBankAccountsV11Parameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listBankAccountsV11Parameters>,
-  ) => {
-    const res = await sumup.merchant.listBankAccounts(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const listBankAccounts: Tool = {
-  name: "list_bank_accounts",
-  description: `Retrieves bank accounts of the merchant.`,
-  parameters: listBankAccountsParameters,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof listBankAccountsParameters>,
-  ) => {
-    const res = await sumup.merchant.listBankAccountsDeprecated(args);
-    return JSON.stringify(res);
-  },
-};
-
-export const getSettings: Tool = {
-  name: "get_settings",
-  description: `Retrieves merchant settings.`,
-  parameters: getSettingsParameters,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getSettingsParameters>,
-  ) => {
-    const res = await sumup.merchant.getSettings(args);
     return JSON.stringify(res);
   },
 };

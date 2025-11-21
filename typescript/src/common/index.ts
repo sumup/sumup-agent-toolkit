@@ -28,9 +28,6 @@ import {
   getDoingBusinessAs,
   getMerchantProfile,
   getPersonalProfile,
-  getSettings,
-  listBankAccounts,
-  listBankAccountsV11,
 } from "./merchant";
 import { getMerchant, getPerson, listPersons } from "./merchants";
 import { listPayouts, listPayoutsV1 } from "./payouts";
@@ -90,9 +87,6 @@ export const tools = [
   getPersonalProfile,
   getMerchantProfile,
   getDoingBusinessAs,
-  listBankAccountsV11,
-  listBankAccounts,
-  getSettings,
   listSubAccounts,
   createSubAccount,
   compatGetOperator,

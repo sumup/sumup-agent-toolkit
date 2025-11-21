@@ -6,24 +6,29 @@
     "useIgnoreFile": true
   },
   "formatter": {
-    "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space"
   },
   "linter": {
-    "enabled": true,
     "rules": {
       "recommended": true,
       "style": {
         "noUnusedTemplateLiteral": "off"
       }
-    },
-    "includes": ["**", "!**/.rslib"]
+    }
   },
   "javascript": {
     "formatter": {
       "quoteProperties": "asNeeded",
       "quoteStyle": "double"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
     }
   },
   "overrides": [

@@ -16,7 +16,7 @@ export const getMerchant: Tool = {
     sumup: SumUp,
     { merchantCode, ...args }: z.infer<typeof getMerchantParameters>,
   ) => {
-    const res = await sumup.merchants.getMerchant(merchantCode, args);
+    const res = await sumup.merchants.get(merchantCode, args);
     return JSON.stringify(res);
   },
 };

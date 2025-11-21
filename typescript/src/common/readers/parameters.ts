@@ -16,8 +16,7 @@ export const createReaderParameters = z.object({
     .string()
     .describe(
       `Custom human-readable, user-defined name for easier identification of the reader.`,
-    )
-    .optional(),
+    ),
   meta: z
     .object({})
     .describe(`A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
