@@ -1,5 +1,13 @@
 # @sumup/agent-toolkit
 
+## [0.3.0](https://github.com/sumup/sumup-agent-toolkit/compare/typescript-v0.2.0...typescript-v0.3.0) (2025-11-21)
+
+
+### Features
+
+* **ts:** match latest SumUp API state ([11109d4](https://github.com/sumup/sumup-agent-toolkit/commit/11109d4d39e64bc3c5ce03be634f54620efe1c0f))
+* **typescript:** major update ([#280](https://github.com/sumup/sumup-agent-toolkit/issues/280)) ([3e767d8](https://github.com/sumup/sumup-agent-toolkit/commit/3e767d888690a487f0b2d10caaa7eeb179c252a4))
+
 ## [0.2.0](https://github.com/sumup/sumup-agent-toolkit/compare/typescript-v0.1.0...typescript-v0.2.0) (2025-11-21)
 
 
