@@ -2,12 +2,12 @@
 
 # SumUp Agent Toolkit
 
+Enable AI Agents to interact with SumUp for smarter payment worfklows.
+
 [![Documentation][docs-badge]](https://developer.sumup.com)
 [![License](https://img.shields.io/github/license/sumup/sumup-agent-toolkit)](./LICENSE)
 
 </div>
-
-Enable AI Agents to interact with SumUp for smarter payment worfklows.
 
 AgentKit is a toolkit that enhances AI applications like [Claude](https://claude.ai), [Cursor](https://www.cursor.com/) and other agentic AI applications with SumUp capabilities.
 

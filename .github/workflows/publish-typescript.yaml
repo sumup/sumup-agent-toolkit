@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   publish:
-    if: startsWith(github.event.release.tag_name, 'agent-toolkit-v') && github.event.release.draft == false && github.event.release.prerelease == false
+    if: startsWith(github.event.release.tag_name, 'typescript-v') && github.event.release.draft == false && github.event.release.prerelease == false
     name: Publish
     runs-on: ubuntu-latest
     env:
