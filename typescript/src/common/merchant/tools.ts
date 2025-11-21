@@ -1,5 +1,4 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
 import type { Tool } from "../types";
 import {
   getAccountParameters,
@@ -21,10 +20,7 @@ export const getAccount: Tool<
   description: `Returns user profile information.`,
   parameters: getAccountParameters,
   result: getAccountResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getAccountParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.merchant.get(args);
   },
   annotations: {

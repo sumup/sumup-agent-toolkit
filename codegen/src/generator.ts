@@ -334,6 +334,7 @@ function buildResultSchema(operation: OperationDetails) {
   const schema = json.schema as OpenAPIV3_1.SchemaObject;
   const schemaResult = schemaToZod(schema, {
     allowNullableAdditionalProperties: true,
+    passthroughObjects: true,
   });
 
   let expr = schemaResult.code;

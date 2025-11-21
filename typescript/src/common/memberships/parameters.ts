@@ -80,10 +80,10 @@ Possible values are:
             .describe(`The status of the membership.`),
           metadata: z
             .object({})
-            .catchall(z.record(z.unknown()))
+            .catchall(z.unknown())
             .nullable()
             .describe(
-              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
             )
             .optional(),
           attributes: z
@@ -136,4 +136,5 @@ Possible values are:
     ),
     total_count: z.number().int(),
   })
+  .passthrough()
   .describe(`Returns a list of Membership objects.`);

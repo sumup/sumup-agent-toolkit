@@ -61,54 +61,6 @@ import {
 } from "./transactions";
 import type { Tool } from "./types";
 
-export const tools = [
-  getPaymentMethods,
-  createCheckout,
-  listCheckouts,
-  getCheckout,
-  deactivateCheckout,
-  createCustomer,
-  getCustomer,
-  updateCustomer,
-  listPaymentInstruments,
-  deactivatePaymentInstrument,
-  refundTransaction,
-  getTransactionV2_1,
-  listTransactionsV2_1,
-  listPayoutsV1,
-  getReceipt,
-  getAccount,
-  getPersonalProfile,
-  getMerchantProfile,
-  getDoingBusinessAs,
-  listSubAccounts,
-  createSubAccount,
-  compatGetOperator,
-  updateSubAccount,
-  deactivateSubAccount,
-  listMerchantMembers,
-  createMerchantMember,
-  getMerchantMember,
-  updateMerchantMember,
-  deleteMerchantMember,
-  listMemberships,
-  listMerchantRoles,
-  createMerchantRole,
-  getMerchantRole,
-  deleteMerchantRole,
-  updateMerchantRole,
-  getMerchant,
-  listPersons,
-  getPerson,
-  listReaders,
-  createReader,
-  getReader,
-  deleteReader,
-  updateReader,
-  createReaderCheckout,
-  createReaderTerminate,
-];
-
 export const registerTools = (reg: (t: Tool) => void) => {
   reg(getPaymentMethods);
   reg(createCheckout);
@@ -122,6 +74,8 @@ export const registerTools = (reg: (t: Tool) => void) => {
   reg(deactivatePaymentInstrument);
   reg(refundTransaction);
   reg(getTransactionV2_1);
+  reg(listTransactionsV2_1);
+  reg(listPayoutsV1);
   reg(listTransactionsV2_1);
   reg(listPayoutsV1);
   reg(getReceipt);

@@ -1,17 +1,6 @@
 import type { OpenAPIV3_1 } from "openapi-types";
 import { formatPropertyKey, toTemplateLiteral } from "./utils";
 
-const PROPERTY_OVERRIDES: Record<string, OpenAPIV3_1.SchemaObject> = {
-  vat_rates: {
-    type: "array",
-    items: {
-      type: "object",
-      additionalProperties: true,
-      "x-codegen-skip-nullable-additional-properties": true,
-    } as OpenAPIV3_1.SchemaObject,
-  },
-};
-
 export type SchemaResult = {
   code: string;
   hasDescription: boolean;
@@ -30,23 +19,8 @@ type BuildObjectResult = {
 
 type SchemaToZodOptions = {
   allowNullableAdditionalProperties?: boolean;
+  passthroughObjects?: boolean;
 };
-
-function applyPropertyOverrides(
-  name: string,
-  schema: OpenAPIV3_1.SchemaObject,
-): OpenAPIV3_1.SchemaObject {
-  const override = PROPERTY_OVERRIDES[name];
-  if (!override) {
-    return schema;
-  }
-
-  return {
-    ...schema,
-    ...override,
-    description: schema.description ?? override.description,
-  };
-}
 
 function shouldSkipNullableAdditionalProperties(
   schema: OpenAPIV3_1.SchemaObject,
@@ -64,6 +38,11 @@ export function schemaToZod(
   schema: OpenAPIV3_1.SchemaObject,
   options: SchemaToZodOptions = {},
 ): SchemaResult {
+  const shouldPassthroughObjects = Boolean(options.passthroughObjects);
+  const nestedOptions = shouldPassthroughObjects
+    ? { ...options, passthroughObjects: false }
+    : options;
+
   if (schema.enum && schema.enum.length > 0) {
     const allStrings = schema.enum.every((value) => typeof value === "string");
     if (allStrings) {
@@ -85,7 +64,7 @@ export function schemaToZod(
     const variants = schema.oneOf
       .map(
         (variant) =>
-          schemaToZod(variant as OpenAPIV3_1.SchemaObject, options).code,
+          schemaToZod(variant as OpenAPIV3_1.SchemaObject, nestedOptions).code,
       )
       .join(", ");
     return finalize(`z.union([${variants}])`, schema);
@@ -95,7 +74,7 @@ export function schemaToZod(
     const variants = schema.anyOf
       .map(
         (variant) =>
-          schemaToZod(variant as OpenAPIV3_1.SchemaObject, options).code,
+          schemaToZod(variant as OpenAPIV3_1.SchemaObject, nestedOptions).code,
       )
       .join(", ");
     return finalize(`z.union([${variants}])`, schema);
@@ -126,7 +105,7 @@ export function schemaToZod(
         mergedSchema.additionalProperties = true;
       }
 
-      const objectResult = buildObject(mergedSchema, options);
+      const objectResult = buildObject(mergedSchema, nestedOptions);
       let expr = objectResult.code;
       if (
         objectResult.hasOnlyAdditionalProperties &&
@@ -136,20 +115,24 @@ export function schemaToZod(
         // Temporary workaround for incorrect response schemas that only contain additionalProperties.
         expr += ".nullable()";
       }
+      if (shouldPassthroughObjects) {
+        expr += ".passthrough()";
+      }
       return finalize(expr, schema);
     }
 
     const [first, ...rest] = schema.allOf as OpenAPIV3_1.SchemaObject[];
-    let expression = schemaToZod(first, options).code;
+    let expression = schemaToZod(first, nestedOptions).code;
     for (const part of rest) {
-      expression = `z.intersection(${expression}, ${schemaToZod(part, options).code})`;
+      expression = `z.intersection(${expression}, ${schemaToZod(part, nestedOptions).code})`;
     }
     return finalize(expression, schema);
   }
 
   if (schema.type === "array") {
     const itemSchema = schema.items
-      ? schemaToZod(schema.items as OpenAPIV3_1.SchemaObject, options).code
+      ? schemaToZod(schema.items as OpenAPIV3_1.SchemaObject, nestedOptions)
+          .code
       : "z.any()";
     let expr = `z.array(${itemSchema})`;
     if (typeof schema.minItems === "number") {
@@ -166,7 +149,7 @@ export function schemaToZod(
     schema.properties ||
     schema.additionalProperties
   ) {
-    const objectResult = buildObject(schema, options);
+    const objectResult = buildObject(schema, nestedOptions);
     let expr = objectResult.code;
     if (
       objectResult.hasOnlyAdditionalProperties &&
@@ -175,6 +158,9 @@ export function schemaToZod(
     ) {
       // Temporary workaround for incorrect response schemas that only contain additionalProperties.
       expr += ".nullable()";
+    }
+    if (shouldPassthroughObjects) {
+      expr += ".passthrough()";
     }
     return finalize(expr, schema);
   }
@@ -225,13 +211,9 @@ export function collectObjectFields(
       const required = new Set(node.required ?? []);
       for (const [name, propSchema] of Object.entries(node.properties ?? {})) {
         const existing = map.get(name);
-        const resolved = applyPropertyOverrides(
-          name,
-          propSchema as OpenAPIV3_1.SchemaObject,
-        );
         const entry: ObjectField = {
           name,
-          schema: resolved,
+          schema: propSchema,
           required: required.has(name) || existing?.required === true,
         };
         if (existing) {
@@ -269,11 +251,7 @@ function buildObject(
   const lines: string[] = [];
 
   for (const [name, propSchema] of Object.entries(schema.properties ?? {})) {
-    const normalized = applyPropertyOverrides(
-      name,
-      propSchema as OpenAPIV3_1.SchemaObject,
-    );
-    const prop = schemaToZod(normalized, options);
+    const prop = schemaToZod(propSchema, options);
     let expr = prop.code;
     if (!required.has(name)) {
       expr += ".optional()";

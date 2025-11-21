@@ -385,6 +385,7 @@ export const getAccountResult = z
       .describe(`User permissions`)
       .optional(),
   })
+  .passthrough()
   .describe(`Details of the merchant account.`);
 
 export const getDoingBusinessAsParameters = z.object({});
@@ -411,6 +412,7 @@ export const getDoingBusinessAsResult = z
       })
       .optional(),
   })
+  .passthrough()
   .describe(`Doing Business As information`);
 
 export const getMerchantProfileParameters = z.object({});
@@ -628,6 +630,7 @@ export const getMerchantProfileResult = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(`Account's merchant profile`);
 
 export const getPersonalProfileParameters = z.object({});
@@ -675,4 +678,5 @@ export const getPersonalProfileResult = z
       .optional(),
     complete: z.boolean().optional(),
   })
+  .passthrough()
   .describe(`Account's personal profile.`);

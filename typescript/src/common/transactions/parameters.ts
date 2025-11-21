@@ -279,7 +279,7 @@ export const getTransactionV2_1Result = z
       )
       .optional(),
     vat_rates: z
-      .array(z.object({}).catchall(z.unknown()))
+      .array(z.record(z.unknown()))
       .describe(`List of VAT rates applicable to the transaction.`)
       .optional(),
     transaction_events: z
@@ -477,6 +477,7 @@ export const getTransactionV2_1Result = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(`OK`);
 
 export const listTransactionsV2_1Parameters = z.object({
@@ -712,6 +713,7 @@ export const listTransactionsV2_1Result = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(`OK`);
 
 export const refundTransactionParameters = z

@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const createMerchantMemberParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   is_managed_user: z
     .boolean()
     .describe(
@@ -27,9 +29,9 @@ export const createMerchantMemberParameters = z.object({
     .describe(`List of roles to assign to the new member.`),
   metadata: z
     .object({})
-    .catchall(z.record(z.unknown()))
+    .catchall(z.unknown())
     .describe(
-      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
     )
     .optional(),
   attributes: z
@@ -108,10 +110,10 @@ export const createMerchantMemberResult = z
       .describe(`The status of the membership.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     attributes: z
@@ -123,19 +125,24 @@ export const createMerchantMemberResult = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(
     `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
   );
 
 export const deleteMerchantMemberParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
 
 export const deleteMerchantMemberResult = z.any();
 
 export const getMerchantMemberParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
 
@@ -206,10 +213,10 @@ export const getMerchantMemberResult = z
       .describe(`The status of the membership.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     attributes: z
@@ -221,12 +228,15 @@ export const getMerchantMemberResult = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(
     `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
   );
 
 export const listMerchantMembersParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   offset: z
     .number()
     .int()
@@ -327,10 +337,10 @@ export const listMerchantMembersResult = z
             .describe(`The status of the membership.`),
           metadata: z
             .object({})
-            .catchall(z.record(z.unknown()))
+            .catchall(z.unknown())
             .nullable()
             .describe(
-              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
             )
             .optional(),
           attributes: z
@@ -348,17 +358,20 @@ export const listMerchantMembersResult = z
     ),
     total_count: z.number().int().optional(),
   })
+  .passthrough()
   .describe(`Returns a list of Member objects.`);
 
 export const updateMerchantMemberParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   memberId: z.string().describe(`The ID of the member to retrieve.`),
   roles: z.array(z.string()).optional(),
   metadata: z
     .object({})
-    .catchall(z.record(z.unknown()))
+    .catchall(z.unknown())
     .describe(
-      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
     )
     .optional(),
   attributes: z
@@ -453,10 +466,10 @@ export const updateMerchantMemberResult = z
       .describe(`The status of the membership.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     attributes: z
@@ -468,6 +481,7 @@ export const updateMerchantMemberResult = z
       )
       .optional(),
   })
+  .passthrough()
   .describe(
     `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
   );
