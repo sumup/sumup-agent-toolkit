@@ -52,7 +52,7 @@
     "@modelcontextprotocol/sdk": "^1.22.0",
     "@sumup/sdk": "^0.0.6",
     "ai": "^5.0.98",
-    "openai": "^4.96.0",
+    "openai": "^6.9.1",
     "zod": "^4.1.12",
     "zod-to-json-schema": "^3.24.6"
   },
