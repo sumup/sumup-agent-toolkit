@@ -1,44 +1,36 @@
+import { Agent, run, withTrace } from "@openai/agents";
 import { SumUpAgentToolkit } from "@sumup/agent-toolkit/openai";
-import OpenAI from "openai";
-import type { ChatCompletionMessageParam } from "openai/resources";
 
 require("dotenv").config();
-
-const openai = new OpenAI();
 
 const sumupAgentToolkit = new SumUpAgentToolkit({
   apiKey: process.env.SUMUP_API_KEY!,
 });
 
-(async (): Promise<void> => {
-  let messages: ChatCompletionMessageParam[] = [
-    {
-      role: "user",
-      content: "Tell me about my last 10 transactions please.",
-    },
-  ];
+async function main() {
+  const agent = new Agent({
+    name: "Transactions reporter",
+    instructions: "You are a helpful agent.",
+    tools: sumupAgentToolkit.getTools(),
+  });
 
-  while (true) {
-    // eslint-disable-next-line no-await-in-loop
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      tools: sumupAgentToolkit.getTools(),
+  await withTrace("Web search example", async () => {
+    const result = await run(agent, "tell me about my last 10 transactions");
+    console.log(result.finalOutput);
+
+    const messages = result.history;
+    messages.push({
+      role: "user",
+      content: "tell me more about the last transaction",
     });
 
-    const message = completion.choices[0].message;
+    const result2 = await run(agent, messages);
+    console.log();
+    console.log(result2.finalOutput);
+  });
+}
 
-    messages.push(message);
-
-    if (message.tool_calls) {
-      // eslint-disable-next-line no-await-in-loop
-      const toolMessages = await Promise.all(
-        message.tool_calls.map((tc) => sumupAgentToolkit.handleToolCall(tc)),
-      );
-      messages = [...messages, ...toolMessages];
-    } else {
-      console.log(completion.choices[0].message);
-      break;
-    }
-  }
-})();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

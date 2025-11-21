@@ -9,9 +9,8 @@
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
   "dependencies": {
-    "@ai-sdk/openai": "^1.3.6",
-    "@sumup/agent-toolkit": "file:../../",
-    "ai": "^4.2.10",
-    "dotenv": "^16.4.7"
+    "@sumup/agent-toolkit": "file:../..",
+    "ai": "^5.0.98",
+    "dotenv": "^17.2.3"
   }
 }

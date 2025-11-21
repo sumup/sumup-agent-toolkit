@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
   "dependencies": {
-    "openai": "^4.91.1",
-    "@sumup/agent-toolkit": "file:../../"
+    "@openai/agents": "^0.3.3",
+    "@sumup/agent-toolkit": "file:../.."
   }
 }

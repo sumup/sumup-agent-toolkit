@@ -4,7 +4,8 @@ import type { z } from "zod";
 // biome-ignore lint/suspicious/noExplicitAny: necessary evil
 type ZodObjectAny = z.ZodObject<any, any>;
 
-export type Tool<Args extends ZodObjectAny = ZodObjectAny> = {
+// biome-ignore lint/suspicious/noExplicitAny: necessary evil
+export type Tool<Args extends ZodObjectAny = any> = {
   name: string;
   description: string;
   parameters: Args;
