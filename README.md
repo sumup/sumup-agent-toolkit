@@ -5,7 +5,7 @@
 Enable AI Agents to interact with SumUp for smarter payment workflows.
 
 [![Documentation][docs-badge]](https://developer.sumup.com)
-[![License](https://img.shields.io/github/license/sumup/sumup-agent-toolkit)](./LICENSE)
+[![License](https://img.shields.io/github/license/sumup/sumup-ai)](./LICENSE)
 
 </div>
 

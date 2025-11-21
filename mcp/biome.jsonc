@@ -1,21 +1,18 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
   "formatter": {
-    "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space"
   },
   "linter": {
-    "enabled": true,
     "rules": {
       "recommended": true
-    },
-    "includes": ["**", "!**/.rslib"]
+    }
   },
   "javascript": {
     "formatter": {

@@ -5,7 +5,7 @@
 ![MCP SumUp](https://img.shields.io/badge/MCP-SumUp-blue)
 [![NPM Version](https://img.shields.io/npm/v/@sumup/mcp.svg)](https://www.npmjs.com/package/@sumup/mcp)
 [![Documentation][docs-badge]](https://developer.sumup.com)
-[![License](https://img.shields.io/github/license/sumup/sumup-agent-toolkit)](../LICENSE)
+[![License](https://img.shields.io/github/license/sumup/sumup-ai)](../LICENSE)
 
 </div>
 

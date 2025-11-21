@@ -2,13 +2,13 @@
 
 # SumUp Agent Toolkit - Typescript
 
-Allow LLM agents to integrate with the SumUp API using function calling from frameworks such as [LangChain](https://www.langchain.com/), and [Vercel's AI SDK](https://sdk.vercel.ai/). For full documentation, see [sumup.github.io/sumup-agent-toolkit](https://sumup.github.io/sumup-agent-toolkit/).
+Allow LLM agents to integrate with the SumUp API using function calling from frameworks such as [LangChain](https://www.langchain.com/), and [Vercel's AI SDK](https://sdk.vercel.ai/). For full documentation, see [sumup.github.io/sumup-ai](https://sumup.github.io/sumup-ai/).
 
 [![NPM Version](https://img.shields.io/npm/v/@sumup/agent-toolkit.svg)](https://www.npmjs.org/package/@sumup/agent-toolkit)
 [![JSR Version](https://jsr.io/badges/@sumup/agent-toolkit)](https://jsr.io/@sumup/agent-toolkit)
 [![Documentation][docs-badge]](https://developer.sumup.com)
 [![Downloads](https://img.shields.io/npm/dm/@sumup/agent-toolkit.svg)](https://www.npmjs.com/package/@sumup/agent-toolkit)
-[![License](https://img.shields.io/github/license/sumup/sumup-agent-toolkit)](../LICENSE)
+[![License](https://img.shields.io/github/license/sumup/sumup-ai)](../LICENSE)
 
 </div>
 

@@ -1,7 +1,7 @@
 {
   "name": "@sumup/agent-toolkit",
   "version": "0.3.0",
-  "homepage": "https://github.com/sumup/sumup-agent-toolkit",
+  "homepage": "https://github.com/sumup/sumup-ai",
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
   "type": "module",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sumup/sumup-agent-toolkit.git"
+    "url": "git+https://github.com/sumup/sumup-ai.git"
   },
   "exports": {
     "./langchain": {

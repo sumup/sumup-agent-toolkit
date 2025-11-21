@@ -2,7 +2,7 @@
   "name": "@sumup/mcp",
   "version": "0.1.1",
   "description": "MCP server for interacting with SumUp",
-  "homepage": "https://github.com/sumup/sumup-agent-toolkit",
+  "homepage": "https://github.com/sumup/sumup-ai",
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
   "mcpName": "io.github.sumup/mcp",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sumup/sumup-agent-toolkit.git"
+    "url": "git+https://github.com/sumup/sumup-ai.git"
   },
   "scripts": {
     "lint": "biome check",
@@ -28,7 +28,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "bugs": {
-    "url": "https://github.com/sumup/sumup-agent-toolkit/issues"
+    "url": "https://github.com/sumup/sumup-ai/issues"
   },
   "keywords": [
     "sumup",
@@ -46,11 +46,11 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
-    "@sumup/agent-toolkit": "^0.0.4"
+    "@sumup/agent-toolkit": "^0.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.4",
-    "@rslib/core": "^0.17.1",
+    "@biomejs/biome": "^2.3.7",
+    "@rslib/core": "^0.18.0",
     "@types/node": "^24.3.0",
     "rsbuild-plugin-publint": "^0.3.0",
     "ts-node": "^10.9.2",
