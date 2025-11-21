@@ -21,19 +21,6 @@ export const getMerchant: Tool = {
   },
 };
 
-export const listPersons: Tool = {
-  name: "list_persons",
-  description: `Returns a list of persons related to the merchant.`,
-  parameters: listPersonsParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listPersonsParameters>,
-  ) => {
-    const res = await sumup.merchants.listPersons(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const getPerson: Tool = {
   name: "get_person",
   description: `Returns a single person related to the merchant.`,
@@ -43,6 +30,19 @@ export const getPerson: Tool = {
     { merchantCode, personId, ...args }: z.infer<typeof getPersonParameters>,
   ) => {
     const res = await sumup.merchants.getPerson(merchantCode, personId, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const listPersons: Tool = {
+  name: "list_persons",
+  description: `Returns a list of persons related to the merchant.`,
+  parameters: listPersonsParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, ...args }: z.infer<typeof listPersonsParameters>,
+  ) => {
+    const res = await sumup.merchants.listPersons(merchantCode, args);
     return JSON.stringify(res);
   },
 };

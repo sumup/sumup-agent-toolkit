@@ -12,19 +12,6 @@ import {
   updateReaderParameters,
 } from "./parameters";
 
-export const listReaders: Tool = {
-  name: "list_readers",
-  description: `List all readers of the merchant.`,
-  parameters: listReadersParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listReadersParameters>,
-  ) => {
-    const res = await sumup.readers.list(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const createReader: Tool = {
   name: "create_reader",
   description: `Create a new Reader for the merchant account.`,
@@ -34,45 +21,6 @@ export const createReader: Tool = {
     { merchantCode, ...args }: z.infer<typeof createReaderParameters>,
   ) => {
     const res = await sumup.readers.create(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const getReader: Tool = {
-  name: "get_reader",
-  description: `Retrieve a Reader.`,
-  parameters: getReaderParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof getReaderParameters>,
-  ) => {
-    const res = await sumup.readers.get(merchantCode, id, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const deleteReader: Tool = {
-  name: "delete_reader",
-  description: `Delete a reader.`,
-  parameters: deleteReaderParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof deleteReaderParameters>,
-  ) => {
-    const res = await sumup.readers.deleteReader(merchantCode, id, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const updateReader: Tool = {
-  name: "update_reader",
-  description: `Update a Reader.`,
-  parameters: updateReaderParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof updateReaderParameters>,
-  ) => {
-    const res = await sumup.readers.update(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };
@@ -89,8 +37,7 @@ There are some caveats when using this endpoint:
 * After the checkout is accepted, the system has 60 seconds to start the payment on the target device. During this time, any other checkout for the same device will be rejected.
 
 
-**Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.
-`,
+**Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.`,
   parameters: createReaderCheckoutParameters,
   callback: async (
     sumup: SumUp,
@@ -124,8 +71,7 @@ There are some caveats when using this endpoint:
 If a transaction is successfully terminated and \`return_url\` was provided on Checkout, the transaction status will be sent as \`failed\` to the provided URL.
 
 
-**Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.
-`,
+**Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.`,
   parameters: createReaderTerminateParameters,
   callback: async (
     sumup: SumUp,
@@ -140,6 +86,58 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
       readerId,
       args,
     );
+    return JSON.stringify(res);
+  },
+};
+
+export const deleteReader: Tool = {
+  name: "delete_reader",
+  description: `Delete a reader.`,
+  parameters: deleteReaderParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, id, ...args }: z.infer<typeof deleteReaderParameters>,
+  ) => {
+    const res = await sumup.readers.deleteReader(merchantCode, id, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const getReader: Tool = {
+  name: "get_reader",
+  description: `Retrieve a Reader.`,
+  parameters: getReaderParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, id, ...args }: z.infer<typeof getReaderParameters>,
+  ) => {
+    const res = await sumup.readers.get(merchantCode, id, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const listReaders: Tool = {
+  name: "list_readers",
+  description: `List all readers of the merchant.`,
+  parameters: listReadersParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, ...args }: z.infer<typeof listReadersParameters>,
+  ) => {
+    const res = await sumup.readers.list(merchantCode, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const updateReader: Tool = {
+  name: "update_reader",
+  description: `Update a Reader.`,
+  parameters: updateReaderParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, id, ...args }: z.infer<typeof updateReaderParameters>,
+  ) => {
+    const res = await sumup.readers.update(merchantCode, id, args);
     return JSON.stringify(res);
   },
 };

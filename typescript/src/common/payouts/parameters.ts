@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-export const listPayoutsV1Parameters = z.object({
-  merchantCode: z.string(),
+export const listPayoutsParameters = z.object({
   start_date: z
     .string()
     .describe(
@@ -17,7 +16,8 @@ export const listPayoutsV1Parameters = z.object({
   order: z.enum(["desc", "asc"]).optional(),
 });
 
-export const listPayoutsParameters = z.object({
+export const listPayoutsV1Parameters = z.object({
+  merchantCode: z.string(),
   start_date: z
     .string()
     .describe(

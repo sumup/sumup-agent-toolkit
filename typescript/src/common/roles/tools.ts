@@ -10,19 +10,6 @@ import {
   updateMerchantRoleParameters,
 } from "./parameters";
 
-export const listMerchantRoles: Tool = {
-  name: "list_merchant_roles",
-  description: `List merchant's custom roles.`,
-  parameters: listMerchantRolesParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listMerchantRolesParameters>,
-  ) => {
-    const res = await sumup.roles.list(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const createMerchantRole: Tool = {
   name: "create_merchant_role",
   description: `Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to.`,
@@ -32,6 +19,23 @@ export const createMerchantRole: Tool = {
     { merchantCode, ...args }: z.infer<typeof createMerchantRoleParameters>,
   ) => {
     const res = await sumup.roles.create(merchantCode, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const deleteMerchantRole: Tool = {
+  name: "delete_merchant_role",
+  description: `Delete a custom role.`,
+  parameters: deleteMerchantRoleParameters,
+  callback: async (
+    sumup: SumUp,
+    {
+      merchantCode,
+      roleId,
+      ...args
+    }: z.infer<typeof deleteMerchantRoleParameters>,
+  ) => {
+    const res = await sumup.roles.delete(merchantCode, roleId, args);
     return JSON.stringify(res);
   },
 };
@@ -53,19 +57,15 @@ export const getMerchantRole: Tool = {
   },
 };
 
-export const deleteMerchantRole: Tool = {
-  name: "delete_merchant_role",
-  description: `Delete a custom role.`,
-  parameters: deleteMerchantRoleParameters,
+export const listMerchantRoles: Tool = {
+  name: "list_merchant_roles",
+  description: `List merchant's custom roles.`,
+  parameters: listMerchantRolesParameters,
   callback: async (
     sumup: SumUp,
-    {
-      merchantCode,
-      roleId,
-      ...args
-    }: z.infer<typeof deleteMerchantRoleParameters>,
+    { merchantCode, ...args }: z.infer<typeof listMerchantRolesParameters>,
   ) => {
-    const res = await sumup.roles.delete(merchantCode, roleId, args);
+    const res = await sumup.roles.list(merchantCode, args);
     return JSON.stringify(res);
   },
 };

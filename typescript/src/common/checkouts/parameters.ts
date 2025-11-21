@@ -1,23 +1,10 @@
 import { z } from "zod";
 
-export const getPaymentMethodsParameters = z.object({
-  merchantCode: z.string().describe(`The SumUp merchant code.`),
-  amount: z
-    .number()
-    .describe(
-      `The amount for which the payment methods should be eligible, in major units. Note that currency must also be provided when filtering by amount.`,
-    )
-    .optional(),
-  currency: z
-    .string()
-    .describe(`The currency for which the payment methods should be eligible.`)
-    .optional(),
-});
-
 export const createCheckoutParameters = z
   .object({
     checkout_reference: z
       .string()
+      .max(90)
       .describe(
         `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
       ),
@@ -86,7 +73,108 @@ export const createCheckoutParameters = z
       )
       .optional(),
     transactions: z
-      .array(z.any())
+      .array(
+        z.intersection(
+          z
+            .object({
+              id: z
+                .string()
+                .describe(`Unique ID of the transaction.`)
+                .optional(),
+              transaction_code: z
+                .string()
+                .describe(
+                  `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+                )
+                .optional(),
+              amount: z
+                .number()
+                .describe(`Total amount of the transaction.`)
+                .optional(),
+              currency: z
+                .enum([
+                  "BGN",
+                  "BRL",
+                  "CHF",
+                  "CLP",
+                  "CZK",
+                  "DKK",
+                  "EUR",
+                  "GBP",
+                  "HRK",
+                  "HUF",
+                  "NOK",
+                  "PLN",
+                  "RON",
+                  "SEK",
+                  "USD",
+                ])
+                .describe(
+                  `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+                )
+                .optional(),
+              timestamp: z
+                .string()
+                .describe(
+                  `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+                )
+                .optional(),
+              status: z
+                .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+                .describe(`Current status of the transaction.`)
+                .optional(),
+              payment_type: z
+                .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+                .describe(`Payment type used for the transaction.`)
+                .optional(),
+              installments_count: z
+                .number()
+                .int()
+                .describe(
+                  `Current number of the installment for deferred payments.`,
+                )
+                .optional(),
+            })
+            .describe(`Details of the transaction.`),
+          z.object({
+            merchant_code: z
+              .string()
+              .describe(
+                `Unique code of the registered merchant to whom the payment is made.`,
+              )
+              .optional(),
+            vat_amount: z
+              .number()
+              .describe(
+                `Amount of the applicable VAT (out of the total transaction amount).`,
+              )
+              .optional(),
+            tip_amount: z
+              .number()
+              .describe(
+                `Amount of the tip (out of the total transaction amount).`,
+              )
+              .optional(),
+            entry_mode: z
+              .enum(["CUSTOMER_ENTRY", "BOLETO"])
+              .describe(`Entry mode of the payment details.`)
+              .optional(),
+            auth_code: z
+              .string()
+              .describe(
+                `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+              )
+              .optional(),
+            internal_id: z
+              .number()
+              .int()
+              .describe(
+                `Internal unique ID of the transaction on the SumUp platform.`,
+              )
+              .optional(),
+          }),
+        ),
+      )
       .describe(`List of transactions related to the payment.`)
       .optional(),
     redirect_url: z
@@ -98,21 +186,40 @@ export const createCheckoutParameters = z
   })
   .describe(`Details of the payment checkout.`);
 
-export const listCheckoutsParameters = z.object({
-  checkout_reference: z
-    .string()
-    .describe(
-      `Filters the list of checkout resources by the unique ID of the checkout.`,
-    )
-    .optional(),
+export const deactivateCheckoutParameters = z.object({
+  id: z.string().describe(`Unique ID of the checkout resource.`),
 });
 
 export const getCheckoutParameters = z.object({
   id: z.string().describe(`Unique ID of the checkout resource.`),
 });
 
+export const getPaymentMethodsParameters = z.object({
+  merchantCode: z.string().describe(`The SumUp merchant code.`),
+  amount: z
+    .number()
+    .optional()
+    .describe(
+      `The amount for which the payment methods should be eligible, in major units. Note that currency must also be provided when filtering by amount.`,
+    ),
+  currency: z
+    .string()
+    .optional()
+    .describe(`The currency for which the payment methods should be eligible.`),
+});
+
+export const listCheckoutsParameters = z.object({
+  checkout_reference: z
+    .string()
+    .optional()
+    .describe(
+      `Filters the list of checkout resources by the unique ID of the checkout.`,
+    ),
+});
+
 export const processCheckoutParameters = z
   .object({
+    id: z.string().describe(`Unique ID of the checkout resource.`),
     payment_type: z
       .enum(["card", "boleto", "ideal", "blik", "bancontact"])
       .describe(`Describes the payment method used to attempt processing`),
@@ -148,6 +255,8 @@ export const processCheckoutParameters = z
           .describe(`Number of the payment card (without spaces).`),
         expiry_year: z
           .string()
+          .min(2)
+          .max(4)
           .describe(
             `Year from the expiration time of the payment card. Accepted formats are \`YY\` and \`YYYY\`.`,
           ),
@@ -171,17 +280,23 @@ export const processCheckoutParameters = z
           ),
         cvv: z
           .string()
+          .min(3)
+          .max(4)
           .describe(
             `Three or four-digit card verification value (security code) of the payment card.`,
           ),
         zip_code: z
           .string()
+          .min(5)
+          .max(5)
           .describe(
             `Required five-digit ZIP code. Applicable only to merchant users in the USA.`,
           )
           .optional(),
         last_4_digits: z
           .string()
+          .min(4)
+          .max(4)
           .describe(`Last 4 digits of the payment card number.`),
         type: z
           .enum([
@@ -220,47 +335,56 @@ export const processCheckoutParameters = z
       .optional(),
     personal_details: z
       .object({
-        first_name: z.string().describe(`First name of the customer.`),
-        last_name: z.string().describe(`Last name of the customer.`),
-        email: z.string().describe(`Email address of the customer.`),
-        phone: z.string().describe(`Phone number of the customer.`),
-        birth_date: z.string().describe(`Date of birth of the customer.`),
+        first_name: z
+          .string()
+          .describe(`First name of the customer.`)
+          .optional(),
+        last_name: z.string().describe(`Last name of the customer.`).optional(),
+        email: z.string().describe(`Email address of the customer.`).optional(),
+        phone: z.string().describe(`Phone number of the customer.`).optional(),
+        birth_date: z
+          .string()
+          .describe(`Date of birth of the customer.`)
+          .optional(),
         tax_id: z
           .string()
-          .describe(
-            `An identification number user for tax purposes (e.g. CPF)`,
-          ),
+          .max(255)
+          .describe(`An identification number user for tax purposes (e.g. CPF)`)
+          .optional(),
         address: z
           .object({
-            city: z.string().describe(`City name from the address.`),
+            city: z.string().describe(`City name from the address.`).optional(),
             country: z
               .string()
               .describe(
                 `Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).`,
-              ),
+              )
+              .optional(),
             line_1: z
               .string()
               .describe(
                 `First line of the address with details of the street name and number.`,
-              ),
+              )
+              .optional(),
             line_2: z
               .string()
               .describe(
                 `Second line of the address with details of the building, unit, apartment, and floor numbers.`,
-              ),
-            postal_code: z.string().describe(`Postal code from the address.`),
+              )
+              .optional(),
+            postal_code: z
+              .string()
+              .describe(`Postal code from the address.`)
+              .optional(),
             state: z
               .string()
-              .describe(`State name or abbreviation from the address.`),
+              .describe(`State name or abbreviation from the address.`)
+              .optional(),
           })
-          .describe(`Profile's personal address information.`),
+          .describe(`Profile's personal address information.`)
+          .optional(),
       })
       .describe(`Personal details for the customer.`)
       .optional(),
-    id: z.string().describe(`Unique ID of the checkout resource.`),
   })
   .describe(`Details of the payment instrument for processing the checkout.`);
-
-export const deactivateCheckoutParameters = z.object({
-  id: z.string().describe(`Unique ID of the checkout resource.`),
-});

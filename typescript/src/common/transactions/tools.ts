@@ -10,15 +10,21 @@ import {
   refundTransactionParameters,
 } from "./parameters";
 
-export const refundTransaction: Tool = {
-  name: "refund_transaction",
-  description: `Refunds an identified transaction either in full or partially.`,
-  parameters: refundTransactionParameters,
+export const getTransaction: Tool = {
+  name: "get_transaction",
+  description: `Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:
+
+ *  \`id\`
+ *  \`internal_id\`
+ *  \`transaction_code\`
+ *  \`foreign_transaction_id\`
+ *  \`client_transaction_id\``,
+  parameters: getTransactionParameters,
   callback: async (
     sumup: SumUp,
-    { txnId, ...args }: z.infer<typeof refundTransactionParameters>,
+    args: z.infer<typeof getTransactionParameters>,
   ) => {
-    const res = await sumup.transactions.refund(txnId, args);
+    const res = await sumup.transactions.getDeprecated(args);
     return JSON.stringify(res);
   },
 };
@@ -31,8 +37,7 @@ export const getTransactionV2_1: Tool = {
  *  \`internal_id\`
  *  \`transaction_code\`
  *  \`foreign_transaction_id\`
- *  \`client_transaction_id\`
-`,
+ *  \`client_transaction_id\``,
   parameters: getTransactionV2_1Parameters,
   callback: async (
     sumup: SumUp,
@@ -43,22 +48,15 @@ export const getTransactionV2_1: Tool = {
   },
 };
 
-export const getTransaction: Tool = {
-  name: "get_transaction",
-  description: `Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:
-
- *  \`id\`
- *  \`internal_id\`
- *  \`transaction_code\`
- *  \`foreign_transaction_id\`
- *  \`client_transaction_id\`
-`,
-  parameters: getTransactionParameters,
+export const listTransactions: Tool = {
+  name: "list_transactions",
+  description: `Lists detailed history of all transactions associated with the merchant profile.`,
+  parameters: listTransactionsParameters,
   callback: async (
     sumup: SumUp,
-    args: z.infer<typeof getTransactionParameters>,
+    args: z.infer<typeof listTransactionsParameters>,
   ) => {
-    const res = await sumup.transactions.getDeprecated(args);
+    const res = await sumup.transactions.listDeprecated(args);
     return JSON.stringify(res);
   },
 };
@@ -76,15 +74,15 @@ export const listTransactionsV2_1: Tool = {
   },
 };
 
-export const listTransactions: Tool = {
-  name: "list_transactions",
-  description: `Lists detailed history of all transactions associated with the merchant profile.`,
-  parameters: listTransactionsParameters,
+export const refundTransaction: Tool = {
+  name: "refund_transaction",
+  description: `Refunds an identified transaction either in full or partially.`,
+  parameters: refundTransactionParameters,
   callback: async (
     sumup: SumUp,
-    args: z.infer<typeof listTransactionsParameters>,
+    { txnId, ...args }: z.infer<typeof refundTransactionParameters>,
   ) => {
-    const res = await sumup.transactions.listDeprecated(args);
+    const res = await sumup.transactions.refund(txnId, args);
     return JSON.stringify(res);
   },
 };

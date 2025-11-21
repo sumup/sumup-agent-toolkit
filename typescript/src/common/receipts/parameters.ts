@@ -10,6 +10,6 @@ export const getReceiptParameters = z.object({
   tx_event_id: z
     .number()
     .int()
-    .describe(`The ID of the transaction event (refund).`)
-    .optional(),
+    .optional()
+    .describe(`The ID of the transaction event (refund).`),
 });

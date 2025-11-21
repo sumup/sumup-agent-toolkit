@@ -10,19 +10,6 @@ import {
   updateMerchantMemberParameters,
 } from "./parameters";
 
-export const listMerchantMembers: Tool = {
-  name: "list_merchant_members",
-  description: `Lists merchant members.`,
-  parameters: listMerchantMembersParameters,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listMerchantMembersParameters>,
-  ) => {
-    const res = await sumup.members.list(merchantCode, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const createMerchantMember: Tool = {
   name: "create_merchant_member",
   description: `Create a merchant member.`,
@@ -32,6 +19,23 @@ export const createMerchantMember: Tool = {
     { merchantCode, ...args }: z.infer<typeof createMerchantMemberParameters>,
   ) => {
     const res = await sumup.members.create(merchantCode, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const deleteMerchantMember: Tool = {
+  name: "delete_merchant_member",
+  description: `Deletes a merchant member.`,
+  parameters: deleteMerchantMemberParameters,
+  callback: async (
+    sumup: SumUp,
+    {
+      merchantCode,
+      memberId,
+      ...args
+    }: z.infer<typeof deleteMerchantMemberParameters>,
+  ) => {
+    const res = await sumup.members.delete(merchantCode, memberId, args);
     return JSON.stringify(res);
   },
 };
@@ -53,6 +57,19 @@ export const getMerchantMember: Tool = {
   },
 };
 
+export const listMerchantMembers: Tool = {
+  name: "list_merchant_members",
+  description: `Lists merchant members.`,
+  parameters: listMerchantMembersParameters,
+  callback: async (
+    sumup: SumUp,
+    { merchantCode, ...args }: z.infer<typeof listMerchantMembersParameters>,
+  ) => {
+    const res = await sumup.members.list(merchantCode, args);
+    return JSON.stringify(res);
+  },
+};
+
 export const updateMerchantMember: Tool = {
   name: "update_merchant_member",
   description: `Update the merchant member.`,
@@ -66,23 +83,6 @@ export const updateMerchantMember: Tool = {
     }: z.infer<typeof updateMerchantMemberParameters>,
   ) => {
     const res = await sumup.members.update(merchantCode, memberId, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const deleteMerchantMember: Tool = {
-  name: "delete_merchant_member",
-  description: `Deletes a merchant member.`,
-  parameters: deleteMerchantMemberParameters,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      memberId,
-      ...args
-    }: z.infer<typeof deleteMerchantMemberParameters>,
-  ) => {
-    const res = await sumup.members.delete(merchantCode, memberId, args);
     return JSON.stringify(res);
   },
 };

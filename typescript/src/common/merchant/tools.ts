@@ -22,15 +22,15 @@ export const getAccount: Tool = {
   },
 };
 
-export const getPersonalProfile: Tool = {
-  name: "get_personal_profile",
-  description: `Retrieves personal profile data.`,
-  parameters: getPersonalProfileParameters,
+export const getDoingBusinessAs: Tool = {
+  name: "get_doing_business_as",
+  description: `Retrieves Doing Business As profile.`,
+  parameters: getDoingBusinessAsParameters,
   callback: async (
     sumup: SumUp,
-    args: z.infer<typeof getPersonalProfileParameters>,
+    args: z.infer<typeof getDoingBusinessAsParameters>,
   ) => {
-    const res = await sumup.merchant.getPersonalProfile(args);
+    const res = await sumup.merchant.getDoingBusinessAs(args);
     return JSON.stringify(res);
   },
 };
@@ -48,15 +48,15 @@ export const getMerchantProfile: Tool = {
   },
 };
 
-export const getDoingBusinessAs: Tool = {
-  name: "get_doing_business_as",
-  description: `Retrieves Doing Business As profile.`,
-  parameters: getDoingBusinessAsParameters,
+export const getPersonalProfile: Tool = {
+  name: "get_personal_profile",
+  description: `Retrieves personal profile data.`,
+  parameters: getPersonalProfileParameters,
   callback: async (
     sumup: SumUp,
-    args: z.infer<typeof getDoingBusinessAsParameters>,
+    args: z.infer<typeof getPersonalProfileParameters>,
   ) => {
-    const res = await sumup.merchant.getDoingBusinessAs(args);
+    const res = await sumup.merchant.getPersonalProfile(args);
     return JSON.stringify(res);
   },
 };

@@ -23,48 +23,6 @@ export const createCustomer: Tool = {
   },
 };
 
-export const getCustomer: Tool = {
-  name: "get_customer",
-  description: `Retrieves an identified saved customer resource through the unique \`customer_id\` parameter, generated upon customer creation.`,
-  parameters: getCustomerParameters,
-  callback: async (
-    sumup: SumUp,
-    { customerId, ...args }: z.infer<typeof getCustomerParameters>,
-  ) => {
-    const res = await sumup.customers.get(customerId, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const updateCustomer: Tool = {
-  name: "update_customer",
-  description: `Updates an identified saved customer resource's personal details.
-
-The request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned values.
-`,
-  parameters: updateCustomerParameters,
-  callback: async (
-    sumup: SumUp,
-    { customerId, ...args }: z.infer<typeof updateCustomerParameters>,
-  ) => {
-    const res = await sumup.customers.update(customerId, args);
-    return JSON.stringify(res);
-  },
-};
-
-export const listPaymentInstruments: Tool = {
-  name: "list_payment_instruments",
-  description: `Lists all payment instrument resources that are saved for an identified customer.`,
-  parameters: listPaymentInstrumentsParameters,
-  callback: async (
-    sumup: SumUp,
-    { customerId, ...args }: z.infer<typeof listPaymentInstrumentsParameters>,
-  ) => {
-    const res = await sumup.customers.listPaymentInstruments(customerId, args);
-    return JSON.stringify(res);
-  },
-};
-
 export const deactivatePaymentInstrument: Tool = {
   name: "deactivate_payment_instrument",
   description: `Deactivates an identified card payment instrument resource for a customer.`,
@@ -82,6 +40,47 @@ export const deactivatePaymentInstrument: Tool = {
       token,
       args,
     );
+    return JSON.stringify(res);
+  },
+};
+
+export const getCustomer: Tool = {
+  name: "get_customer",
+  description: `Retrieves an identified saved customer resource through the unique \`customer_id\` parameter, generated upon customer creation.`,
+  parameters: getCustomerParameters,
+  callback: async (
+    sumup: SumUp,
+    { customerId, ...args }: z.infer<typeof getCustomerParameters>,
+  ) => {
+    const res = await sumup.customers.get(customerId, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const listPaymentInstruments: Tool = {
+  name: "list_payment_instruments",
+  description: `Lists all payment instrument resources that are saved for an identified customer.`,
+  parameters: listPaymentInstrumentsParameters,
+  callback: async (
+    sumup: SumUp,
+    { customerId, ...args }: z.infer<typeof listPaymentInstrumentsParameters>,
+  ) => {
+    const res = await sumup.customers.listPaymentInstruments(customerId, args);
+    return JSON.stringify(res);
+  },
+};
+
+export const updateCustomer: Tool = {
+  name: "update_customer",
+  description: `Updates an identified saved customer resource's personal details.
+
+The request only overwrites the parameters included in the request, all other parameters will remain with their initially assigned values.`,
+  parameters: updateCustomerParameters,
+  callback: async (
+    sumup: SumUp,
+    { customerId, ...args }: z.infer<typeof updateCustomerParameters>,
+  ) => {
+    const res = await sumup.customers.update(customerId, args);
     return JSON.stringify(res);
   },
 };
