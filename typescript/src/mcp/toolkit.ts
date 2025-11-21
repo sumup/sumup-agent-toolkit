@@ -30,7 +30,7 @@ class SumUpAgentToolkit extends McpServer {
       apiKey,
     });
 
-    this.resource(
+    this.registerResource(
       "SumUp developer documentation",
       "https://developer.sumup.com/llms.txt",
       {
@@ -51,7 +51,7 @@ class SumUpAgentToolkit extends McpServer {
       },
     );
 
-    this.resource(
+    this.registerResource(
       "SumUp API OpenAPI specification",
       "https://developer.sumup.com/openapi.json",
       {
@@ -75,10 +75,12 @@ class SumUpAgentToolkit extends McpServer {
     );
 
     for (const tool of tools) {
-      this.tool(
+      this.registerTool(
         tool.name,
-        tool.description,
-        tool.parameters.shape,
+        {
+          description: tool.description,
+          inputSchema: tool.parameters.shape,
+        },
         async (args: z.infer<typeof tool.parameters>) => {
           const result = await tool.callback(this._sumup, args);
           return {
