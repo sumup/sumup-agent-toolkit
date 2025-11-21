@@ -1,6 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import {
   createReaderCheckoutParameters,
@@ -19,16 +18,16 @@ import {
   updateReaderResult,
 } from "./parameters";
 
-export const createReader: Tool = {
+export const createReader: ToolDefinition<
+  typeof createReaderParameters,
+  typeof createReaderResult
+> = {
   name: "create_reader",
   title: `Create a Reader`,
   description: `Create a new Reader for the merchant account.`,
   parameters: createReaderParameters,
   result: createReaderResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof createReaderParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.readers.create(merchantCode, args);
   },
   annotations: {
@@ -39,7 +38,10 @@ export const createReader: Tool = {
   },
 };
 
-export const createReaderCheckout: Tool = {
+export const createReaderCheckout: ToolDefinition<
+  typeof createReaderCheckoutParameters,
+  typeof createReaderCheckoutResult
+> = {
   name: "create_reader_checkout",
   title: `Create a Reader Checkout`,
   description: `Creates a Checkout for a Reader.
@@ -55,14 +57,7 @@ There are some caveats when using this endpoint:
 **Note**: If the target device is a Solo, it must be in version 3.3.24.3 or higher.`,
   parameters: createReaderCheckoutParameters,
   result: createReaderCheckoutResult,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      readerId,
-      ...args
-    }: z.infer<typeof createReaderCheckoutParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, readerId, ...args }) => {
     return await sumup.readers.createCheckout(merchantCode, readerId, args);
   },
   annotations: {
@@ -73,7 +68,10 @@ There are some caveats when using this endpoint:
   },
 };
 
-export const createReaderTerminate: Tool = {
+export const createReaderTerminate: ToolDefinition<
+  typeof createReaderTerminateParameters,
+  typeof createReaderTerminateResult
+> = {
   name: "create_reader_terminate",
   title: `Terminate a Reader Checkout`,
   description: `Terminate a Reader Checkout stops the current transaction on the target device.
@@ -92,14 +90,7 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
 **Note**: If the target device is a Solo, it must be in version 3.3.28.0 or higher.`,
   parameters: createReaderTerminateParameters,
   result: createReaderTerminateResult,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      readerId,
-      ...args
-    }: z.infer<typeof createReaderTerminateParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, readerId, ...args }) => {
     return await sumup.readers.terminateCheckout(merchantCode, readerId, args);
   },
   annotations: {
@@ -110,16 +101,16 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
   },
 };
 
-export const deleteReader: Tool = {
+export const deleteReader: ToolDefinition<
+  typeof deleteReaderParameters,
+  typeof deleteReaderResult
+> = {
   name: "delete_reader",
   title: `Delete a reader`,
   description: `Delete a reader.`,
   parameters: deleteReaderParameters,
   result: deleteReaderResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof deleteReaderParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, id, ...args }) => {
     return await sumup.readers.deleteReader(merchantCode, id, args);
   },
   annotations: {
@@ -130,16 +121,16 @@ export const deleteReader: Tool = {
   },
 };
 
-export const getReader: Tool = {
+export const getReader: ToolDefinition<
+  typeof getReaderParameters,
+  typeof getReaderResult
+> = {
   name: "get_reader",
   title: `Retrieve a Reader`,
   description: `Retrieve a Reader.`,
   parameters: getReaderParameters,
   result: getReaderResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof getReaderParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, id, ...args }) => {
     return await sumup.readers.get(merchantCode, id, args);
   },
   annotations: {
@@ -150,16 +141,16 @@ export const getReader: Tool = {
   },
 };
 
-export const listReaders: Tool = {
+export const listReaders: ToolDefinition<
+  typeof listReadersParameters,
+  typeof listReadersResult
+> = {
   name: "list_readers",
   title: `List Readers`,
   description: `List all readers of the merchant.`,
   parameters: listReadersParameters,
   result: listReadersResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listReadersParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.readers.list(merchantCode, args);
   },
   annotations: {
@@ -170,16 +161,16 @@ export const listReaders: Tool = {
   },
 };
 
-export const updateReader: Tool = {
+export const updateReader: ToolDefinition<
+  typeof updateReaderParameters,
+  typeof updateReaderResult
+> = {
   name: "update_reader",
   title: `Update a Reader`,
   description: `Update a Reader.`,
   parameters: updateReaderParameters,
   result: updateReaderResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, id, ...args }: z.infer<typeof updateReaderParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, id, ...args }) => {
     return await sumup.readers.update(merchantCode, id, args);
   },
   annotations: {

@@ -1,19 +1,18 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import { listMembershipsParameters, listMembershipsResult } from "./parameters";
 
-export const listMemberships: Tool = {
+export const listMemberships: ToolDefinition<
+  typeof listMembershipsParameters,
+  typeof listMembershipsResult
+> = {
   name: "list_memberships",
   title: `List memberships`,
   description: `List memberships of the current user.`,
   parameters: listMembershipsParameters,
   result: listMembershipsResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof listMembershipsParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.memberships.list(args);
   },
   annotations: {

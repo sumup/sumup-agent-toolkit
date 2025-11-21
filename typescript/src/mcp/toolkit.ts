@@ -1,8 +1,9 @@
 import type { ServerOptions } from "@modelcontextprotocol/sdk/server/index.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import SumUp from "@sumup/sdk";
 import type z from "zod";
-import { tools, VERSION } from "../common";
+import { registerTools, VERSION } from "../common";
 
 class SumUpAgentToolkit extends McpServer {
   private _sumup: SumUp;
@@ -77,14 +78,14 @@ class SumUpAgentToolkit extends McpServer {
       },
     );
 
-    for (const tool of tools) {
+    registerTools((tool) => {
       this.registerTool(
         tool.name,
         {
           title: tool.title,
           description: tool.description,
-          inputSchema: tool.parameters,
-          outputSchema: tool.result,
+          inputSchema: tool.parameters.shape,
+          outputSchema: tool.result.shape,
           annotations: {
             title: tool.annotations?.title,
             readOnlyHint: tool.annotations?.readOnly,
@@ -92,19 +93,23 @@ class SumUpAgentToolkit extends McpServer {
             idempotentHint: tool.annotations?.idempotent,
           },
         },
-        async (args: z.infer<typeof tool.parameters>) => {
+        async (
+          args: z.infer<typeof tool.parameters>,
+        ): Promise<CallToolResult> => {
           const result = await tool.callback(this._sumup, args);
+
           return {
+            structuredContent: result,
             content: [
               {
                 type: "text" as const,
-                text: result,
+                text: JSON.stringify(result),
               },
             ],
           };
         },
       );
-    }
+    });
   }
 }
 

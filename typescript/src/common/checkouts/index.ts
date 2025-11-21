@@ -4,7 +4,6 @@ export {
   getCheckoutParameters,
   getPaymentMethodsParameters,
   listCheckoutsParameters,
-  processCheckoutParameters,
 } from "./parameters";
 export {
   createCheckout,
@@ -12,5 +11,4 @@ export {
   getCheckout,
   getPaymentMethods,
   listCheckouts,
-  processCheckout,
 } from "./tools";

@@ -11,7 +11,7 @@ export const compatGetOperatorResult = z
   .object({
     id: z.number().int(),
     username: z.string(),
-    nickname: z.string().optional(),
+    nickname: z.string().nullable().optional(),
     disabled: z.boolean(),
     created_at: z
       .string()
@@ -50,7 +50,7 @@ export const createSubAccountResult = z
   .object({
     id: z.number().int(),
     username: z.string(),
-    nickname: z.string().optional(),
+    nickname: z.string().nullable().optional(),
     disabled: z.boolean(),
     created_at: z
       .string()
@@ -82,7 +82,7 @@ export const deactivateSubAccountResult = z
   .object({
     id: z.number().int(),
     username: z.string(),
-    nickname: z.string().optional(),
+    nickname: z.string().nullable().optional(),
     disabled: z.boolean(),
     created_at: z
       .string()
@@ -125,7 +125,7 @@ export const listSubAccountsResult = z
       .object({
         id: z.number().int(),
         username: z.string(),
-        nickname: z.string().optional(),
+        nickname: z.string().nullable().optional(),
         disabled: z.boolean(),
         created_at: z
           .string()
@@ -171,7 +171,7 @@ export const updateSubAccountResult = z
   .object({
     id: z.number().int(),
     username: z.string(),
-    nickname: z.string().optional(),
+    nickname: z.string().nullable().optional(),
     disabled: z.boolean(),
     created_at: z
       .string()

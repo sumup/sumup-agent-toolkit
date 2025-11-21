@@ -1,7 +1,6 @@
 import type SumUp from "@sumup/sdk";
 import type z from "zod";
-import type { Tool } from "../types";
-
+import type { ToolDefinition } from "../types";
 import {
   getAccountParameters,
   getAccountResult,
@@ -13,7 +12,10 @@ import {
   getPersonalProfileResult,
 } from "./parameters";
 
-export const getAccount: Tool = {
+export const getAccount: ToolDefinition<
+  typeof getAccountParameters,
+  typeof getAccountResult
+> = {
   name: "get_account",
   title: `Retrieve a profile`,
   description: `Returns user profile information.`,
@@ -33,16 +35,16 @@ export const getAccount: Tool = {
   },
 };
 
-export const getDoingBusinessAs: Tool = {
+export const getDoingBusinessAs: ToolDefinition<
+  typeof getDoingBusinessAsParameters,
+  typeof getDoingBusinessAsResult
+> = {
   name: "get_doing_business_as",
   title: `Retrieve DBA`,
   description: `Retrieves Doing Business As profile.`,
   parameters: getDoingBusinessAsParameters,
   result: getDoingBusinessAsResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getDoingBusinessAsParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.merchant.getDoingBusinessAs(args);
   },
   annotations: {
@@ -53,16 +55,16 @@ export const getDoingBusinessAs: Tool = {
   },
 };
 
-export const getMerchantProfile: Tool = {
+export const getMerchantProfile: ToolDefinition<
+  typeof getMerchantProfileParameters,
+  typeof getMerchantProfileResult
+> = {
   name: "get_merchant_profile",
   title: `Retrieve a merchant profile`,
   description: `Retrieves merchant profile data.`,
   parameters: getMerchantProfileParameters,
   result: getMerchantProfileResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getMerchantProfileParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.merchant.getMerchantProfile(args);
   },
   annotations: {
@@ -73,16 +75,16 @@ export const getMerchantProfile: Tool = {
   },
 };
 
-export const getPersonalProfile: Tool = {
+export const getPersonalProfile: ToolDefinition<
+  typeof getPersonalProfileParameters,
+  typeof getPersonalProfileResult
+> = {
   name: "get_personal_profile",
   title: `Retrieve a personal profile`,
   description: `Retrieves personal profile data.`,
   parameters: getPersonalProfileParameters,
   result: getPersonalProfileResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getPersonalProfileParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.merchant.getPersonalProfile(args);
   },
   annotations: {

@@ -1,6 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import {
   createMerchantRoleParameters,
@@ -15,16 +14,16 @@ import {
   updateMerchantRoleResult,
 } from "./parameters";
 
-export const createMerchantRole: Tool = {
+export const createMerchantRole: ToolDefinition<
+  typeof createMerchantRoleParameters,
+  typeof createMerchantRoleResult
+> = {
   name: "create_merchant_role",
   title: `Create a role`,
   description: `Create a custom role for the merchant. Roles are defined by the set of permissions that they grant to the members that they are assigned to.`,
   parameters: createMerchantRoleParameters,
   result: createMerchantRoleResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof createMerchantRoleParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.roles.create(merchantCode, args);
   },
   annotations: {
@@ -35,20 +34,16 @@ export const createMerchantRole: Tool = {
   },
 };
 
-export const deleteMerchantRole: Tool = {
+export const deleteMerchantRole: ToolDefinition<
+  typeof deleteMerchantRoleParameters,
+  typeof deleteMerchantRoleResult
+> = {
   name: "delete_merchant_role",
   title: `Delete a role`,
   description: `Delete a custom role.`,
   parameters: deleteMerchantRoleParameters,
   result: deleteMerchantRoleResult,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      roleId,
-      ...args
-    }: z.infer<typeof deleteMerchantRoleParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, roleId, ...args }) => {
     return await sumup.roles.delete(merchantCode, roleId, args);
   },
   annotations: {
@@ -59,20 +54,16 @@ export const deleteMerchantRole: Tool = {
   },
 };
 
-export const getMerchantRole: Tool = {
+export const getMerchantRole: ToolDefinition<
+  typeof getMerchantRoleParameters,
+  typeof getMerchantRoleResult
+> = {
   name: "get_merchant_role",
   title: `Retrieve a role`,
   description: `Retrieve a custom role by ID.`,
   parameters: getMerchantRoleParameters,
   result: getMerchantRoleResult,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      roleId,
-      ...args
-    }: z.infer<typeof getMerchantRoleParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, roleId, ...args }) => {
     return await sumup.roles.get(merchantCode, roleId, args);
   },
   annotations: {
@@ -83,16 +74,16 @@ export const getMerchantRole: Tool = {
   },
 };
 
-export const listMerchantRoles: Tool = {
+export const listMerchantRoles: ToolDefinition<
+  typeof listMerchantRolesParameters,
+  typeof listMerchantRolesResult
+> = {
   name: "list_merchant_roles",
   title: `List roles`,
   description: `List merchant's custom roles.`,
   parameters: listMerchantRolesParameters,
   result: listMerchantRolesResult,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listMerchantRolesParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.roles.list(merchantCode, args);
   },
   annotations: {
@@ -103,20 +94,16 @@ export const listMerchantRoles: Tool = {
   },
 };
 
-export const updateMerchantRole: Tool = {
+export const updateMerchantRole: ToolDefinition<
+  typeof updateMerchantRoleParameters,
+  typeof updateMerchantRoleResult
+> = {
   name: "update_merchant_role",
   title: `Update a role`,
   description: `Update a custom role.`,
   parameters: updateMerchantRoleParameters,
   result: updateMerchantRoleResult,
-  callback: async (
-    sumup: SumUp,
-    {
-      merchantCode,
-      roleId,
-      ...args
-    }: z.infer<typeof updateMerchantRoleParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, roleId, ...args }) => {
     return await sumup.roles.update(merchantCode, roleId, args);
   },
   annotations: {

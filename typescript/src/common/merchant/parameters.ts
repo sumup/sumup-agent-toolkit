@@ -274,16 +274,6 @@ export const getAccountResult = z
             `Merchant settings &#40;like \\"payout_type\\", \\"payout_period\\"&#41;`,
           )
           .optional(),
-        vat_rates: z
-          .object({
-            id: z.number().describe(`Internal ID`).optional(),
-            description: z.string().describe(`Description`).optional(),
-            rate: z.number().describe(`Rate`).optional(),
-            ordering: z.number().describe(`Ordering`).optional(),
-            country: z.string().describe(`Country ISO code`).optional(),
-          })
-          .describe(`Merchant VAT rates`)
-          .optional(),
         locale: z
           .string()
           .describe(`Merchant locale &#40;for internal usage only&#41;`)
@@ -591,16 +581,6 @@ export const getMerchantProfileResult = z
       .describe(
         `Merchant settings &#40;like \\"payout_type\\", \\"payout_period\\"&#41;`,
       )
-      .optional(),
-    vat_rates: z
-      .object({
-        id: z.number().describe(`Internal ID`).optional(),
-        description: z.string().describe(`Description`).optional(),
-        rate: z.number().describe(`Rate`).optional(),
-        ordering: z.number().describe(`Ordering`).optional(),
-        country: z.string().describe(`Country ISO code`).optional(),
-      })
-      .describe(`Merchant VAT rates`)
       .optional(),
     locale: z
       .string()
