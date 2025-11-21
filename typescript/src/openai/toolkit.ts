@@ -14,11 +14,14 @@ class SumUpAgentToolkit {
 
   constructor({
     apiKey,
+    host,
   }: {
     apiKey: string;
+    host?: string;
   }) {
     this._sumup = new SumUp({
       apiKey,
+      host,
     });
 
     this.tools = tools.map(

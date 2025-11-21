@@ -9,8 +9,10 @@ class SumUpAgentToolkit extends McpServer {
 
   constructor({
     apiKey,
+    host,
   }: {
     apiKey: string;
+    host?: string;
     configuration: ServerOptions;
   }) {
     super(
@@ -28,6 +30,7 @@ class SumUpAgentToolkit extends McpServer {
 
     this._sumup = new SumUp({
       apiKey,
+      host,
     });
 
     this.registerResource(

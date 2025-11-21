@@ -13,11 +13,14 @@ class SumUpAgentToolkit implements BaseToolkit {
 
   constructor({
     apiKey,
+    host,
   }: {
     apiKey: string;
+    host?: string;
   }) {
     this._sumup = new SumUp({
       apiKey,
+      host,
     });
 
     this.tools = tools.map((t) =>
