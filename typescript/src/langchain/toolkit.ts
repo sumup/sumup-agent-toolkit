@@ -26,7 +26,10 @@ class SumUpAgentToolkit implements BaseToolkit {
     this.tools = tools.map((t) =>
       tool(
         async (input): Promise<string> => {
-          return await t.callback(this._sumup, input);
+          return await t.callback(
+            this._sumup,
+            input as Record<string, unknown>,
+          );
         },
         {
           name: t.name,
