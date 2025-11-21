@@ -4,11 +4,11 @@
   "homepage": "https://github.com/sumup/sumup-agent-toolkit",
   "license": "Apache-2.0",
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "prebuild": "rm -rf ./dist",
-    "build": "tsup",
-    "postbuild": "publint",
+    "build": "rslib build",
+    "build:watch": "rslib build --watch",
+    "inspect": "rslib inspect",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "prepublishOnly": "npm run build",
@@ -25,22 +25,22 @@
   "exports": {
     "./langchain": {
       "types": "./dist/langchain/index.d.ts",
-      "require": "./dist/langchain/index.js",
+      "require": "./dist/langchain/index.cjs",
       "import": "./dist/langchain/index.mjs"
     },
     "./openai": {
       "types": "./dist/openai/index.d.ts",
-      "require": "./dist/openai/index.js",
+      "require": "./dist/openai/index.cjs",
       "import": "./dist/openai/index.mjs"
     },
     "./mcp": {
       "types": "./dist/mcp/index.d.ts",
-      "require": "./dist/mcp/index.js",
+      "require": "./dist/mcp/index.cjs",
       "import": "./dist/mcp/index.mjs"
     },
     "./ai": {
       "types": "./dist/ai/index.d.ts",
-      "require": "./dist/ai/index.js",
+      "require": "./dist/ai/index.cjs",
       "import": "./dist/ai/index.mjs"
     }
   },
@@ -48,23 +48,19 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.62",
+    "@langchain/core": "^1.0.6",
     "@modelcontextprotocol/sdk": "^1.22.0",
+    "@openai/agents": "^0.3.3",
     "@sumup/sdk": "^0.0.6",
     "ai": "^5.0.98",
-    "openai": "^4.96.0",
-    "zod": "^4.1.12",
-    "zod-to-json-schema": "^3.24.6"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.7",
-    "@types/jest": "^30.0.0",
+    "@rslib/core": "^0.18.0",
     "@types/node": "^22.15.17",
-    "globals": "^16.4.0",
-    "publint": "^0.3.15",
-    "ts-jest": "^29.4.5",
+    "rsbuild-plugin-publint": "^0.3.3",
     "ts-node": "^10.9.2",
-    "tsup": "^8.5.0",
     "typedoc": "^0.28.14",
     "typescript": "^5.9.3"
   },
