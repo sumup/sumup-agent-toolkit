@@ -81,8 +81,16 @@ class SumUpAgentToolkit extends McpServer {
       this.registerTool(
         tool.name,
         {
+          title: tool.title,
           description: tool.description,
           inputSchema: tool.parameters.shape,
+          outputSchema: tool.result.shape,
+          annotations: {
+            title: tool.annotations?.title,
+            readOnlyHint: tool.annotations?.readOnly,
+            destructiveHint: tool.annotations?.destructive,
+            idempotentHint: tool.annotations?.idempotent,
+          },
         },
         async (args: z.infer<typeof tool.parameters>) => {
           const result = await tool.callback(this._sumup, args);

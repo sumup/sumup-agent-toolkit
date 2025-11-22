@@ -28,6 +28,63 @@ export const createReaderParameters = z.object({
     .optional(),
 });
 
+export const createReaderResult = z
+  .object({
+    id: z
+      .string()
+      .min(30)
+      .max(30)
+      .describe(`Unique identifier of the object.
+Note that this identifies the instance of the physical devices pairing with your SumUp account.
+If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+    name: z
+      .string()
+      .max(500)
+      .describe(
+        `Custom human-readable, user-defined name for easier identification of the reader.`,
+      ),
+    status: z
+      .enum(["unknown", "processing", "paired", "expired"])
+      .describe(`The status of the reader object gives information about the current state of the reader.
+
+Possible values:
+
+- \`unknown\` - The reader status is unknown.
+- \`processing\` - The reader is created and waits for the physical device to confirm the pairing.
+- \`paired\` - The reader is paired with a merchant account and can be used with SumUp APIs.
+- \`expired\` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.`),
+    device: z
+      .object({
+        identifier: z
+          .string()
+          .describe(
+            `A unique identifier of the physical device (e.g. serial number).`,
+          ),
+        model: z
+          .enum(["solo", "virtual-solo"])
+          .describe(`Identifier of the model of the device.`),
+      })
+      .describe(`Information about the underlying physical device.`),
+    meta: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+
+**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+      )
+      .optional(),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the reader was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the reader was last updated.`),
+  })
+  .describe(
+    `A physical card reader device that can accept in-person payments.`,
+  );
+
 export const createReaderCheckoutParameters = z
   .object({
     merchantCode: z.string().describe(`Merchant Code`),
@@ -134,10 +191,25 @@ For example, EUR 1.00 is represented as value 100 with minor unit of 2.
   })
   .describe(`Reader Checkout`);
 
+export const createReaderCheckoutResult = z
+  .object({
+    data: z.object({
+      client_transaction_id: z
+        .string()
+        .describe(`The client transaction ID is a unique identifier for the transaction that is generated for the client.
+
+It can be used later to fetch the transaction details via the [Transactions API](https://developer.sumup.com/api/transactions/get).
+`),
+    }),
+  })
+  .describe(`The Checkout got successfully created for the given reader.`);
+
 export const createReaderTerminateParameters = z.object({
   merchantCode: z.string().describe(`Merchant Code`),
   readerId: z.string().describe(`The unique identifier of the Reader`),
 });
+
+export const createReaderTerminateResult = z.any();
 
 export const deleteReaderParameters = z.object({
   merchantCode: z
@@ -152,6 +224,8 @@ Note that this identifies the instance of the physical devices pairing with your
 If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
 });
 
+export const deleteReaderResult = z.any();
+
 export const getReaderParameters = z.object({
   merchantCode: z
     .string()
@@ -165,11 +239,131 @@ Note that this identifies the instance of the physical devices pairing with your
 If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
 });
 
+export const getReaderResult = z
+  .object({
+    id: z
+      .string()
+      .min(30)
+      .max(30)
+      .describe(`Unique identifier of the object.
+Note that this identifies the instance of the physical devices pairing with your SumUp account.
+If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+    name: z
+      .string()
+      .max(500)
+      .describe(
+        `Custom human-readable, user-defined name for easier identification of the reader.`,
+      ),
+    status: z
+      .enum(["unknown", "processing", "paired", "expired"])
+      .describe(`The status of the reader object gives information about the current state of the reader.
+
+Possible values:
+
+- \`unknown\` - The reader status is unknown.
+- \`processing\` - The reader is created and waits for the physical device to confirm the pairing.
+- \`paired\` - The reader is paired with a merchant account and can be used with SumUp APIs.
+- \`expired\` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.`),
+    device: z
+      .object({
+        identifier: z
+          .string()
+          .describe(
+            `A unique identifier of the physical device (e.g. serial number).`,
+          ),
+        model: z
+          .enum(["solo", "virtual-solo"])
+          .describe(`Identifier of the model of the device.`),
+      })
+      .describe(`Information about the underlying physical device.`),
+    meta: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+
+**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+      )
+      .optional(),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the reader was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the reader was last updated.`),
+  })
+  .describe(
+    `A physical card reader device that can accept in-person payments.`,
+  );
+
 export const listReadersParameters = z.object({
   merchantCode: z
     .string()
     .describe(`Unique identifier of the merchant account.`),
 });
+
+export const listReadersResult = z
+  .object({
+    items: z.array(
+      z
+        .object({
+          id: z
+            .string()
+            .min(30)
+            .max(30)
+            .describe(`Unique identifier of the object.
+Note that this identifies the instance of the physical devices pairing with your SumUp account.
+If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+          name: z
+            .string()
+            .max(500)
+            .describe(
+              `Custom human-readable, user-defined name for easier identification of the reader.`,
+            ),
+          status: z
+            .enum(["unknown", "processing", "paired", "expired"])
+            .describe(`The status of the reader object gives information about the current state of the reader.
+
+Possible values:
+
+- \`unknown\` - The reader status is unknown.
+- \`processing\` - The reader is created and waits for the physical device to confirm the pairing.
+- \`paired\` - The reader is paired with a merchant account and can be used with SumUp APIs.
+- \`expired\` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.`),
+          device: z
+            .object({
+              identifier: z
+                .string()
+                .describe(
+                  `A unique identifier of the physical device (e.g. serial number).`,
+                ),
+              model: z
+                .enum(["solo", "virtual-solo"])
+                .describe(`Identifier of the model of the device.`),
+            })
+            .describe(`Information about the underlying physical device.`),
+          meta: z
+            .object({})
+            .catchall(z.any())
+            .describe(
+              `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+
+**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+            )
+            .optional(),
+          created_at: z
+            .string()
+            .describe(`The timestamp of when the reader was created.`),
+          updated_at: z
+            .string()
+            .describe(`The timestamp of when the reader was last updated.`),
+        })
+        .describe(
+          `A physical card reader device that can accept in-person payments.`,
+        ),
+    ),
+  })
+  .describe(`Returns a list Reader objects.`);
 
 export const updateReaderParameters = z.object({
   merchantCode: z
@@ -199,3 +393,60 @@ If you DELETE a reader, and pair the device again, the ID will be different. Do 
     )
     .optional(),
 });
+
+export const updateReaderResult = z
+  .object({
+    id: z
+      .string()
+      .min(30)
+      .max(30)
+      .describe(`Unique identifier of the object.
+Note that this identifies the instance of the physical devices pairing with your SumUp account.
+If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+    name: z
+      .string()
+      .max(500)
+      .describe(
+        `Custom human-readable, user-defined name for easier identification of the reader.`,
+      ),
+    status: z
+      .enum(["unknown", "processing", "paired", "expired"])
+      .describe(`The status of the reader object gives information about the current state of the reader.
+
+Possible values:
+
+- \`unknown\` - The reader status is unknown.
+- \`processing\` - The reader is created and waits for the physical device to confirm the pairing.
+- \`paired\` - The reader is paired with a merchant account and can be used with SumUp APIs.
+- \`expired\` - The pairing is expired and no longer usable with the account. The resource needs to get recreated.`),
+    device: z
+      .object({
+        identifier: z
+          .string()
+          .describe(
+            `A unique identifier of the physical device (e.g. serial number).`,
+          ),
+        model: z
+          .enum(["solo", "virtual-solo"])
+          .describe(`Identifier of the model of the device.`),
+      })
+      .describe(`Information about the underlying physical device.`),
+    meta: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+
+**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+      )
+      .optional(),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the reader was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the reader was last updated.`),
+  })
+  .describe(
+    `A physical card reader device that can accept in-person payments.`,
+  );

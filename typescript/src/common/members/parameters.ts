@@ -41,15 +41,185 @@ export const createMerchantMemberParameters = z.object({
     .optional(),
 });
 
+export const createMerchantMemberResult = z
+  .object({
+    id: z.string().describe(`ID of the member.`),
+    roles: z.array(z.string()).describe(`User's roles.`),
+    permissions: z.array(z.string()).describe(`User's permissions.`),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the member was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the member was last updated.`),
+    user: z
+      .object({
+        id: z
+          .string()
+          .describe(`Identifier for the End-User (also called Subject).`),
+        email: z
+          .string()
+          .describe(
+            `End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.`,
+          ),
+        mfa_on_login_enabled: z
+          .boolean()
+          .describe(`True if the user has enabled MFA on login.`),
+        virtual_user: z
+          .boolean()
+          .describe(`True if the user is a virtual user (operator).`),
+        service_account_user: z
+          .boolean()
+          .describe(`True if the user is a service account.`),
+        disabled_at: z
+          .string()
+          .describe(
+            `Time when the user has been disabled. Applies only to virtual users (\`virtual_user: true\`).`,
+          )
+          .optional(),
+        nickname: z
+          .string()
+          .describe(`User's preferred name. Used for display purposes only.`)
+          .optional(),
+        picture: z
+          .string()
+          .describe(
+            `URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.`,
+          )
+          .optional(),
+        classic: z
+          .object({
+            user_id: z.number().int(),
+          })
+          .describe(`Classic identifiers of the user.`)
+          .optional(),
+      })
+      .describe(`Information about the user associated with the membership.`)
+      .optional(),
+    invite: z
+      .object({
+        email: z.string().describe(`Email address of the invited user.`),
+        expires_at: z.string(),
+      })
+      .describe(`Pending invitation for membership.`)
+      .optional(),
+    status: z
+      .enum(["accepted", "pending", "expired", "disabled", "unknown"])
+      .describe(`The status of the membership.`),
+    metadata: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      )
+      .optional(),
+    attributes: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Object attributes that are modifiable only by SumUp applications.`,
+      )
+      .optional(),
+  })
+  .describe(
+    `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
+  );
+
 export const deleteMerchantMemberParameters = z.object({
   merchantCode: z.string().describe(`Merchant code.`),
   memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
 
+export const deleteMerchantMemberResult = z.any();
+
 export const getMerchantMemberParameters = z.object({
   merchantCode: z.string().describe(`Merchant code.`),
   memberId: z.string().describe(`The ID of the member to retrieve.`),
 });
+
+export const getMerchantMemberResult = z
+  .object({
+    id: z.string().describe(`ID of the member.`),
+    roles: z.array(z.string()).describe(`User's roles.`),
+    permissions: z.array(z.string()).describe(`User's permissions.`),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the member was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the member was last updated.`),
+    user: z
+      .object({
+        id: z
+          .string()
+          .describe(`Identifier for the End-User (also called Subject).`),
+        email: z
+          .string()
+          .describe(
+            `End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.`,
+          ),
+        mfa_on_login_enabled: z
+          .boolean()
+          .describe(`True if the user has enabled MFA on login.`),
+        virtual_user: z
+          .boolean()
+          .describe(`True if the user is a virtual user (operator).`),
+        service_account_user: z
+          .boolean()
+          .describe(`True if the user is a service account.`),
+        disabled_at: z
+          .string()
+          .describe(
+            `Time when the user has been disabled. Applies only to virtual users (\`virtual_user: true\`).`,
+          )
+          .optional(),
+        nickname: z
+          .string()
+          .describe(`User's preferred name. Used for display purposes only.`)
+          .optional(),
+        picture: z
+          .string()
+          .describe(
+            `URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.`,
+          )
+          .optional(),
+        classic: z
+          .object({
+            user_id: z.number().int(),
+          })
+          .describe(`Classic identifiers of the user.`)
+          .optional(),
+      })
+      .describe(`Information about the user associated with the membership.`)
+      .optional(),
+    invite: z
+      .object({
+        email: z.string().describe(`Email address of the invited user.`),
+        expires_at: z.string(),
+      })
+      .describe(`Pending invitation for membership.`)
+      .optional(),
+    status: z
+      .enum(["accepted", "pending", "expired", "disabled", "unknown"])
+      .describe(`The status of the membership.`),
+    metadata: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      )
+      .optional(),
+    attributes: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Object attributes that are modifiable only by SumUp applications.`,
+      )
+      .optional(),
+  })
+  .describe(
+    `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
+  );
 
 export const listMerchantMembersParameters = z.object({
   merchantCode: z.string().describe(`Merchant code.`),
@@ -78,6 +248,101 @@ export const listMerchantMembersParameters = z.object({
     .optional()
     .describe(`Filter the returned members by role.`),
 });
+
+export const listMerchantMembersResult = z
+  .object({
+    items: z.array(
+      z
+        .object({
+          id: z.string().describe(`ID of the member.`),
+          roles: z.array(z.string()).describe(`User's roles.`),
+          permissions: z.array(z.string()).describe(`User's permissions.`),
+          created_at: z
+            .string()
+            .describe(`The timestamp of when the member was created.`),
+          updated_at: z
+            .string()
+            .describe(`The timestamp of when the member was last updated.`),
+          user: z
+            .object({
+              id: z
+                .string()
+                .describe(`Identifier for the End-User (also called Subject).`),
+              email: z
+                .string()
+                .describe(
+                  `End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.`,
+                ),
+              mfa_on_login_enabled: z
+                .boolean()
+                .describe(`True if the user has enabled MFA on login.`),
+              virtual_user: z
+                .boolean()
+                .describe(`True if the user is a virtual user (operator).`),
+              service_account_user: z
+                .boolean()
+                .describe(`True if the user is a service account.`),
+              disabled_at: z
+                .string()
+                .describe(
+                  `Time when the user has been disabled. Applies only to virtual users (\`virtual_user: true\`).`,
+                )
+                .optional(),
+              nickname: z
+                .string()
+                .describe(
+                  `User's preferred name. Used for display purposes only.`,
+                )
+                .optional(),
+              picture: z
+                .string()
+                .describe(
+                  `URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.`,
+                )
+                .optional(),
+              classic: z
+                .object({
+                  user_id: z.number().int(),
+                })
+                .describe(`Classic identifiers of the user.`)
+                .optional(),
+            })
+            .describe(
+              `Information about the user associated with the membership.`,
+            )
+            .optional(),
+          invite: z
+            .object({
+              email: z.string().describe(`Email address of the invited user.`),
+              expires_at: z.string(),
+            })
+            .describe(`Pending invitation for membership.`)
+            .optional(),
+          status: z
+            .enum(["accepted", "pending", "expired", "disabled", "unknown"])
+            .describe(`The status of the membership.`),
+          metadata: z
+            .object({})
+            .catchall(z.any())
+            .describe(
+              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+            )
+            .optional(),
+          attributes: z
+            .object({})
+            .catchall(z.any())
+            .describe(
+              `Object attributes that are modifiable only by SumUp applications.`,
+            )
+            .optional(),
+        })
+        .describe(
+          `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
+        ),
+    ),
+    total_count: z.number().int().optional(),
+  })
+  .describe(`Returns a list of Member objects.`);
 
 export const updateMerchantMemberParameters = z.object({
   merchantCode: z.string().describe(`Merchant code.`),
@@ -114,3 +379,87 @@ export const updateMerchantMemberParameters = z.object({
     .describe(`Allows you to update user data of managed users.`)
     .optional(),
 });
+
+export const updateMerchantMemberResult = z
+  .object({
+    id: z.string().describe(`ID of the member.`),
+    roles: z.array(z.string()).describe(`User's roles.`),
+    permissions: z.array(z.string()).describe(`User's permissions.`),
+    created_at: z
+      .string()
+      .describe(`The timestamp of when the member was created.`),
+    updated_at: z
+      .string()
+      .describe(`The timestamp of when the member was last updated.`),
+    user: z
+      .object({
+        id: z
+          .string()
+          .describe(`Identifier for the End-User (also called Subject).`),
+        email: z
+          .string()
+          .describe(
+            `End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, for unique identification use ID instead.`,
+          ),
+        mfa_on_login_enabled: z
+          .boolean()
+          .describe(`True if the user has enabled MFA on login.`),
+        virtual_user: z
+          .boolean()
+          .describe(`True if the user is a virtual user (operator).`),
+        service_account_user: z
+          .boolean()
+          .describe(`True if the user is a service account.`),
+        disabled_at: z
+          .string()
+          .describe(
+            `Time when the user has been disabled. Applies only to virtual users (\`virtual_user: true\`).`,
+          )
+          .optional(),
+        nickname: z
+          .string()
+          .describe(`User's preferred name. Used for display purposes only.`)
+          .optional(),
+        picture: z
+          .string()
+          .describe(
+            `URL of the End-User's profile picture. This URL refers to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image.`,
+          )
+          .optional(),
+        classic: z
+          .object({
+            user_id: z.number().int(),
+          })
+          .describe(`Classic identifiers of the user.`)
+          .optional(),
+      })
+      .describe(`Information about the user associated with the membership.`)
+      .optional(),
+    invite: z
+      .object({
+        email: z.string().describe(`Email address of the invited user.`),
+        expires_at: z.string(),
+      })
+      .describe(`Pending invitation for membership.`)
+      .optional(),
+    status: z
+      .enum(["accepted", "pending", "expired", "disabled", "unknown"])
+      .describe(`The status of the membership.`),
+    metadata: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      )
+      .optional(),
+    attributes: z
+      .object({})
+      .catchall(z.any())
+      .describe(
+        `Object attributes that are modifiable only by SumUp applications.`,
+      )
+      .optional(),
+  })
+  .describe(
+    `A member is user within specific resource identified by resource id, resource type, and associated roles.`,
+  );
