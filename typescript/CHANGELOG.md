@@ -1,5 +1,13 @@
 # @sumup/agent-toolkit
 
+## [0.4.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.3.0...typescript-v0.4.0) (2025-11-22)
+
+
+### Features
+
+* rename to sumup-ai ([ebc2e10](https://github.com/sumup/sumup-ai/commit/ebc2e10794c0adc580eeb67ca373c540ca19fa43))
+* **sdk:** output schemas, annotaitons ([d7e8074](https://github.com/sumup/sumup-ai/commit/d7e8074d0bbf95878c4b993ab439ff890bcf2cb0))
+
 ## [0.3.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.2.0...typescript-v0.3.0) (2025-11-21)
 
 
