@@ -1,6 +1,6 @@
 {
   "name": "@sumup/agent-toolkit",
-  "version": "0.0.1",
+  "version": "0.4.0",
   "license": "Apache-2.0",
   "exports": {
     "./langchain": "./src/langchain/index.ts",
@@ -8,5 +8,10 @@
     "./ai": "./src/ai/index.ts",
     "./mcp": "./src/mcp/index.ts"
   },
-  "include": ["CHANGELOG.md", "LICENSE", "README.md", "src/**/*.ts"]
+  "include": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "src/**/*.ts"
+  ]
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/sumup/sumup-ai/compare/mcp-v0.1.1...mcp-v0.2.0) (2025-11-22)
+
+
+### Features
+
+* rename to sumup-ai ([ebc2e10](https://github.com/sumup/sumup-ai/commit/ebc2e10794c0adc580eeb67ca373c540ca19fa43))
+
 ## [0.1.1](https://github.com/sumup/sumup-ai/compare/mcp-v0.1.0...mcp-v0.1.1) (2025-11-02)
 
 
