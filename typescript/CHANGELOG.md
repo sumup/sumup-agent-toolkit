@@ -1,5 +1,13 @@
 # @sumup/agent-toolkit
 
+## [0.4.1](https://github.com/sumup/sumup-ai/compare/typescript-v0.4.0...typescript-v0.4.1) (2025-11-22)
+
+
+### Bug Fixes
+
+* **sdk:** ignore jsr.json for formatting ([cc9f5df](https://github.com/sumup/sumup-ai/commit/cc9f5dfaec9d5e37647b1bbe84a0f0cf6aa5a944))
+* **sdk:** mcp toolkit ([643634e](https://github.com/sumup/sumup-ai/commit/643634e02ba7445bfeadf37ad8922a6b51611f5f))
+
 ## [0.4.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.3.0...typescript-v0.4.0) (2025-11-22)
 
 
