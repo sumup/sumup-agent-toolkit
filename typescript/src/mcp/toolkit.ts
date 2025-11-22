@@ -83,8 +83,8 @@ class SumUpAgentToolkit extends McpServer {
         {
           title: tool.title,
           description: tool.description,
-          inputSchema: tool.parameters.shape,
-          outputSchema: tool.result.shape,
+          inputSchema: tool.parameters,
+          outputSchema: tool.result,
           annotations: {
             title: tool.annotations?.title,
             readOnlyHint: tool.annotations?.readOnly,
