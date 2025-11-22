@@ -16,6 +16,30 @@ export const listPayoutsParameters = z.object({
   order: z.enum(["desc", "asc"]).optional(),
 });
 
+export const listPayoutsResult = z
+  .array(
+    z.object({
+      amount: z.number().optional(),
+      currency: z.string().optional(),
+      date: z.string().optional(),
+      fee: z.number().optional(),
+      id: z.number().int().optional(),
+      reference: z.string().optional(),
+      status: z.enum(["SUCCESSFUL", "FAILED"]).optional(),
+      transaction_code: z.string().optional(),
+      type: z
+        .enum([
+          "PAYOUT",
+          "CHARGE_BACK_DEDUCTION",
+          "REFUND_DEDUCTION",
+          "DD_RETURN_DEDUCTION",
+          "BALANCE_DEDUCTION",
+        ])
+        .optional(),
+    }),
+  )
+  .describe(`OK`);
+
 export const listPayoutsV1Parameters = z.object({
   merchantCode: z.string(),
   start_date: z
@@ -32,3 +56,27 @@ export const listPayoutsV1Parameters = z.object({
   limit: z.number().int().optional(),
   order: z.enum(["desc", "asc"]).optional(),
 });
+
+export const listPayoutsV1Result = z
+  .array(
+    z.object({
+      amount: z.number().optional(),
+      currency: z.string().optional(),
+      date: z.string().optional(),
+      fee: z.number().optional(),
+      id: z.number().int().optional(),
+      reference: z.string().optional(),
+      status: z.enum(["SUCCESSFUL", "FAILED"]).optional(),
+      transaction_code: z.string().optional(),
+      type: z
+        .enum([
+          "PAYOUT",
+          "CHARGE_BACK_DEDUCTION",
+          "REFUND_DEDUCTION",
+          "DD_RETURN_DEDUCTION",
+          "BALANCE_DEDUCTION",
+        ])
+        .optional(),
+    }),
+  )
+  .describe(`OK`);

@@ -19,8 +19,10 @@ class SumUpAgentToolkit {
 
     for (const t of tools) {
       this.tools[t.name] = tool({
+        name: t.name,
         description: t.description,
         inputSchema: zodSchema(t.parameters),
+        outputSchema: zodSchema(t.result),
         execute: async (args) => {
           return await t.callback(this._sumup, args as Record<string, unknown>);
         },

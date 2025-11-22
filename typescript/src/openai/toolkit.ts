@@ -19,13 +19,18 @@ class SumUpAgentToolkit {
       host,
     });
 
-    this.tools = tools.map(({ name, description, parameters, callback }) =>
-      tool({
-        name,
-        description,
-        parameters,
-        execute: async (input) => await callback(this._sumup, input),
-      }),
+    this.tools = tools.map(
+      ({ name, description, parameters, callback, annotations }) =>
+        tool({
+          name,
+          description,
+          parameters,
+          needsApproval: !!annotations?.destructive,
+          execute: async (input) => {
+            const res = await callback(this._sumup, input);
+            return JSON.stringify(res);
+          },
+        }),
     );
   }
 

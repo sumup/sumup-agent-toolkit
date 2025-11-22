@@ -4,10 +4,48 @@ import type { z } from "zod";
 // biome-ignore lint/suspicious/noExplicitAny: necessary evil
 type ZodObjectAny = z.ZodObject<any, any>;
 
-// biome-ignore lint/suspicious/noExplicitAny: necessary evil
-export type Tool<Args extends ZodObjectAny = any> = {
+export type Tool<
+  // biome-ignore lint/suspicious/noExplicitAny: necessary evil
+  Args extends ZodObjectAny = any,
+  // biome-ignore lint/suspicious/noExplicitAny: necessary evil
+  Result extends ZodObjectAny = any,
+> = {
   name: string;
+  title: string;
   description: string;
   parameters: Args;
-  callback: (sumup: SumUp, args: z.output<Args>) => Promise<string>;
+  result: Result;
+  callback: (sumup: SumUp, args: z.infer<Args>) => Promise<z.infer<Result>>;
+  annotations?: Annotations;
+};
+
+type Annotations = {
+  /**
+   * A human-readable title for the tool.
+   */
+  title?: string;
+  /**
+   * If true, the tool does not modify its environment.
+   *
+   * Default: false
+   */
+  readOnly?: boolean;
+  /**
+   * If true, the tool may perform destructive updates to its environment.
+   * If false, the tool performs only additive updates.
+   *
+   * (This property is meaningful only when `readOnlyHint == false`)
+   *
+   * Default: true
+   */
+  destructive?: boolean;
+  /**
+   * If true, calling the tool repeatedly with the same arguments
+   * will have no additional effect on the its environment.
+   *
+   * (This property is meaningful only when `readOnlyHint == false`)
+   *
+   * Default: false
+   */
+  idempotent?: boolean;
 };
