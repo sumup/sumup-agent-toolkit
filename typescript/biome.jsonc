@@ -33,6 +33,12 @@
   },
   "overrides": [
     {
+      "includes": ["jsr.json"],
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
       "includes": ["**/examples/**"],
       "linter": {
         "rules": {
