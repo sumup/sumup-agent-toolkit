@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   createMerchantRoleParameters,
@@ -14,7 +14,7 @@ import {
   updateMerchantRoleResult,
 } from "./parameters";
 
-export const createMerchantRole: ToolDefinition<
+export const createMerchantRole: Tool<
   typeof createMerchantRoleParameters,
   typeof createMerchantRoleResult
 > = {
@@ -34,7 +34,7 @@ export const createMerchantRole: ToolDefinition<
   },
 };
 
-export const deleteMerchantRole: ToolDefinition<
+export const deleteMerchantRole: Tool<
   typeof deleteMerchantRoleParameters,
   typeof deleteMerchantRoleResult
 > = {
@@ -54,7 +54,7 @@ export const deleteMerchantRole: ToolDefinition<
   },
 };
 
-export const getMerchantRole: ToolDefinition<
+export const getMerchantRole: Tool<
   typeof getMerchantRoleParameters,
   typeof getMerchantRoleResult
 > = {
@@ -74,7 +74,7 @@ export const getMerchantRole: ToolDefinition<
   },
 };
 
-export const listMerchantRoles: ToolDefinition<
+export const listMerchantRoles: Tool<
   typeof listMerchantRolesParameters,
   typeof listMerchantRolesResult
 > = {
@@ -94,7 +94,7 @@ export const listMerchantRoles: ToolDefinition<
   },
 };
 
-export const updateMerchantRole: ToolDefinition<
+export const updateMerchantRole: Tool<
   typeof updateMerchantRoleParameters,
   typeof updateMerchantRoleResult
 > = {

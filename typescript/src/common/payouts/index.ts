@@ -1,2 +1,2 @@
-export { listPayoutsParameters, listPayoutsV1Parameters } from "./parameters";
-export { listPayouts, listPayoutsV1 } from "./tools";
+export { listPayoutsV1Parameters } from "./parameters";
+export { listPayoutsV1 } from "./tools";

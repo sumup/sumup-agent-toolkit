@@ -1,9 +1,9 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import { listMembershipsParameters, listMembershipsResult } from "./parameters";
 
-export const listMemberships: ToolDefinition<
+export const listMemberships: Tool<
   typeof listMembershipsParameters,
   typeof listMembershipsResult
 > = {

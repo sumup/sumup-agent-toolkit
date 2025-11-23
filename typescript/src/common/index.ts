@@ -29,7 +29,7 @@ import {
   getPersonalProfile,
 } from "./merchant";
 import { getMerchant, getPerson, listPersons } from "./merchants";
-import { listPayouts, listPayoutsV1 } from "./payouts";
+import { listPayoutsV1 } from "./payouts";
 import {
   createReader,
   createReaderCheckout,
@@ -55,13 +55,11 @@ import {
   updateSubAccount,
 } from "./subaccounts";
 import {
-  getTransaction,
   getTransactionV2_1,
-  listTransactions,
   listTransactionsV2_1,
   refundTransaction,
 } from "./transactions";
-import type { ToolDefinition } from "./types";
+import type { Tool } from "./types";
 
 export const tools = [
   getPaymentMethods,
@@ -76,11 +74,8 @@ export const tools = [
   deactivatePaymentInstrument,
   refundTransaction,
   getTransactionV2_1,
-  getTransaction,
   listTransactionsV2_1,
-  listTransactions,
   listPayoutsV1,
-  listPayouts,
   getReceipt,
   getAccount,
   getPersonalProfile,
@@ -114,58 +109,7 @@ export const tools = [
   createReaderTerminate,
 ];
 
-export {
-  getPaymentMethods,
-  createCheckout,
-  listCheckouts,
-  getCheckout,
-  deactivateCheckout,
-  createCustomer,
-  getCustomer,
-  updateCustomer,
-  listPaymentInstruments,
-  deactivatePaymentInstrument,
-  refundTransaction,
-  getTransactionV2_1,
-  getTransaction,
-  listTransactionsV2_1,
-  listTransactions,
-  listPayoutsV1,
-  listPayouts,
-  getReceipt,
-  getAccount,
-  getPersonalProfile,
-  getMerchantProfile,
-  getDoingBusinessAs,
-  listSubAccounts,
-  createSubAccount,
-  compatGetOperator,
-  updateSubAccount,
-  deactivateSubAccount,
-  listMerchantMembers,
-  createMerchantMember,
-  getMerchantMember,
-  updateMerchantMember,
-  deleteMerchantMember,
-  listMemberships,
-  listMerchantRoles,
-  createMerchantRole,
-  getMerchantRole,
-  deleteMerchantRole,
-  updateMerchantRole,
-  getMerchant,
-  listPersons,
-  getPerson,
-  listReaders,
-  createReader,
-  getReader,
-  deleteReader,
-  updateReader,
-  createReaderCheckout,
-  createReaderTerminate,
-};
-
-export const registerTools = (reg: (t: ToolDefinition) => void) => {
+export const registerTools = (reg: (t: Tool) => void) => {
   reg(getPaymentMethods);
   reg(createCheckout);
   reg(listCheckouts);
@@ -178,11 +122,8 @@ export const registerTools = (reg: (t: ToolDefinition) => void) => {
   reg(deactivatePaymentInstrument);
   reg(refundTransaction);
   reg(getTransactionV2_1);
-  reg(getTransaction);
   reg(listTransactionsV2_1);
-  reg(listTransactions);
   reg(listPayoutsV1);
-  reg(listPayouts);
   reg(getReceipt);
   reg(getAccount);
   reg(getPersonalProfile);

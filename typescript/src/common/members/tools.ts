@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   createMerchantMemberParameters,
@@ -14,7 +14,7 @@ import {
   updateMerchantMemberResult,
 } from "./parameters";
 
-export const createMerchantMember: ToolDefinition<
+export const createMerchantMember: Tool<
   typeof createMerchantMemberParameters,
   typeof createMerchantMemberResult
 > = {
@@ -34,7 +34,7 @@ export const createMerchantMember: ToolDefinition<
   },
 };
 
-export const deleteMerchantMember: ToolDefinition<
+export const deleteMerchantMember: Tool<
   typeof deleteMerchantMemberParameters,
   typeof deleteMerchantMemberResult
 > = {
@@ -54,7 +54,7 @@ export const deleteMerchantMember: ToolDefinition<
   },
 };
 
-export const getMerchantMember: ToolDefinition<
+export const getMerchantMember: Tool<
   typeof getMerchantMemberParameters,
   typeof getMerchantMemberResult
 > = {
@@ -74,7 +74,7 @@ export const getMerchantMember: ToolDefinition<
   },
 };
 
-export const listMerchantMembers: ToolDefinition<
+export const listMerchantMembers: Tool<
   typeof listMerchantMembersParameters,
   typeof listMerchantMembersResult
 > = {
@@ -94,7 +94,7 @@ export const listMerchantMembers: ToolDefinition<
   },
 };
 
-export const updateMerchantMember: ToolDefinition<
+export const updateMerchantMember: Tool<
   typeof updateMerchantMemberParameters,
   typeof updateMerchantMemberResult
 > = {

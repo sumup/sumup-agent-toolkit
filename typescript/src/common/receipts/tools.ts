@@ -1,9 +1,9 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import { getReceiptParameters, getReceiptResult } from "./parameters";
 
-export const getReceipt: ToolDefinition<
+export const getReceipt: Tool<
   typeof getReceiptParameters,
   typeof getReceiptResult
 > = {

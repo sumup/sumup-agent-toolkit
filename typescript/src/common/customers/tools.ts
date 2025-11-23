@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   createCustomerParameters,
@@ -14,7 +14,7 @@ import {
   updateCustomerResult,
 } from "./parameters";
 
-export const createCustomer: ToolDefinition<
+export const createCustomer: Tool<
   typeof createCustomerParameters,
   typeof createCustomerResult
 > = {
@@ -34,7 +34,7 @@ export const createCustomer: ToolDefinition<
   },
 };
 
-export const deactivatePaymentInstrument: ToolDefinition<
+export const deactivatePaymentInstrument: Tool<
   typeof deactivatePaymentInstrumentParameters,
   typeof deactivatePaymentInstrumentResult
 > = {
@@ -58,7 +58,7 @@ export const deactivatePaymentInstrument: ToolDefinition<
   },
 };
 
-export const getCustomer: ToolDefinition<
+export const getCustomer: Tool<
   typeof getCustomerParameters,
   typeof getCustomerResult
 > = {
@@ -78,7 +78,7 @@ export const getCustomer: ToolDefinition<
   },
 };
 
-export const listPaymentInstruments: ToolDefinition<
+export const listPaymentInstruments: Tool<
   typeof listPaymentInstrumentsParameters,
   typeof listPaymentInstrumentsResult
 > = {
@@ -98,7 +98,7 @@ export const listPaymentInstruments: ToolDefinition<
   },
 };
 
-export const updateCustomer: ToolDefinition<
+export const updateCustomer: Tool<
   typeof updateCustomerParameters,
   typeof updateCustomerResult
 > = {

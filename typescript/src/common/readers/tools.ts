@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   createReaderCheckoutParameters,
@@ -18,7 +18,7 @@ import {
   updateReaderResult,
 } from "./parameters";
 
-export const createReader: ToolDefinition<
+export const createReader: Tool<
   typeof createReaderParameters,
   typeof createReaderResult
 > = {
@@ -38,7 +38,7 @@ export const createReader: ToolDefinition<
   },
 };
 
-export const createReaderCheckout: ToolDefinition<
+export const createReaderCheckout: Tool<
   typeof createReaderCheckoutParameters,
   typeof createReaderCheckoutResult
 > = {
@@ -68,7 +68,7 @@ There are some caveats when using this endpoint:
   },
 };
 
-export const createReaderTerminate: ToolDefinition<
+export const createReaderTerminate: Tool<
   typeof createReaderTerminateParameters,
   typeof createReaderTerminateResult
 > = {
@@ -101,7 +101,7 @@ If a transaction is successfully terminated and \`return_url\` was provided on C
   },
 };
 
-export const deleteReader: ToolDefinition<
+export const deleteReader: Tool<
   typeof deleteReaderParameters,
   typeof deleteReaderResult
 > = {
@@ -121,7 +121,7 @@ export const deleteReader: ToolDefinition<
   },
 };
 
-export const getReader: ToolDefinition<
+export const getReader: Tool<
   typeof getReaderParameters,
   typeof getReaderResult
 > = {
@@ -141,7 +141,7 @@ export const getReader: ToolDefinition<
   },
 };
 
-export const listReaders: ToolDefinition<
+export const listReaders: Tool<
   typeof listReadersParameters,
   typeof listReadersResult
 > = {
@@ -161,7 +161,7 @@ export const listReaders: ToolDefinition<
   },
 };
 
-export const updateReader: ToolDefinition<
+export const updateReader: Tool<
   typeof updateReaderParameters,
   typeof updateReaderResult
 > = {

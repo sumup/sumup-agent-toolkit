@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   createCheckoutParameters,
@@ -14,7 +14,7 @@ import {
   listCheckoutsResult,
 } from "./parameters";
 
-export const createCheckout: ToolDefinition<
+export const createCheckout: Tool<
   typeof createCheckoutParameters,
   typeof createCheckoutResult
 > = {
@@ -38,7 +38,7 @@ Follow by processing a checkout to charge the provided payment instrument.`,
   },
 };
 
-export const deactivateCheckout: ToolDefinition<
+export const deactivateCheckout: Tool<
   typeof deactivateCheckoutParameters,
   typeof deactivateCheckoutResult
 > = {
@@ -58,7 +58,7 @@ export const deactivateCheckout: ToolDefinition<
   },
 };
 
-export const getCheckout: ToolDefinition<
+export const getCheckout: Tool<
   typeof getCheckoutParameters,
   typeof getCheckoutResult
 > = {
@@ -78,7 +78,7 @@ export const getCheckout: ToolDefinition<
   },
 };
 
-export const getPaymentMethods: ToolDefinition<
+export const getPaymentMethods: Tool<
   typeof getPaymentMethodsParameters,
   typeof getPaymentMethodsResult
 > = {
@@ -101,7 +101,7 @@ export const getPaymentMethods: ToolDefinition<
   },
 };
 
-export const listCheckouts: ToolDefinition<
+export const listCheckouts: Tool<
   typeof listCheckoutsParameters,
   typeof listCheckoutsResult
 > = {

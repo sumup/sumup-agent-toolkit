@@ -96,6 +96,10 @@ function collectOperations(
         continue;
       }
 
+      if (operation.deprecated) {
+        continue;
+      }
+
       const tag = operation.tags[0]!;
       const operationId = operation.operationId;
       if (excludedOperationIds.has(operationId)) {

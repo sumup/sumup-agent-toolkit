@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   getMerchantParameters,
@@ -10,7 +10,7 @@ import {
   listPersonsResult,
 } from "./parameters";
 
-export const getMerchant: ToolDefinition<
+export const getMerchant: Tool<
   typeof getMerchantParameters,
   typeof getMerchantResult
 > = {
@@ -30,7 +30,7 @@ export const getMerchant: ToolDefinition<
   },
 };
 
-export const getPerson: ToolDefinition<
+export const getPerson: Tool<
   typeof getPersonParameters,
   typeof getPersonResult
 > = {
@@ -50,7 +50,7 @@ export const getPerson: ToolDefinition<
   },
 };
 
-export const listPersons: ToolDefinition<
+export const listPersons: Tool<
   typeof listPersonsParameters,
   typeof listPersonsResult
 > = {

@@ -1,6 +1,6 @@
 import type SumUp from "@sumup/sdk";
 import type z from "zod";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 import {
   getAccountParameters,
   getAccountResult,
@@ -12,7 +12,7 @@ import {
   getPersonalProfileResult,
 } from "./parameters";
 
-export const getAccount: ToolDefinition<
+export const getAccount: Tool<
   typeof getAccountParameters,
   typeof getAccountResult
 > = {
@@ -35,7 +35,7 @@ export const getAccount: ToolDefinition<
   },
 };
 
-export const getDoingBusinessAs: ToolDefinition<
+export const getDoingBusinessAs: Tool<
   typeof getDoingBusinessAsParameters,
   typeof getDoingBusinessAsResult
 > = {
@@ -55,7 +55,7 @@ export const getDoingBusinessAs: ToolDefinition<
   },
 };
 
-export const getMerchantProfile: ToolDefinition<
+export const getMerchantProfile: Tool<
   typeof getMerchantProfileParameters,
   typeof getMerchantProfileResult
 > = {
@@ -75,7 +75,7 @@ export const getMerchantProfile: ToolDefinition<
   },
 };
 
-export const getPersonalProfile: ToolDefinition<
+export const getPersonalProfile: Tool<
   typeof getPersonalProfileParameters,
   typeof getPersonalProfileResult
 > = {

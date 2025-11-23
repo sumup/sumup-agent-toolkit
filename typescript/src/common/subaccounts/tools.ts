@@ -1,5 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type { ToolDefinition } from "../types";
+import type { Tool } from "../types";
 
 import {
   compatGetOperatorParameters,
@@ -14,7 +14,7 @@ import {
   updateSubAccountResult,
 } from "./parameters";
 
-export const compatGetOperator: ToolDefinition<
+export const compatGetOperator: Tool<
   typeof compatGetOperatorParameters,
   typeof compatGetOperatorResult
 > = {
@@ -34,7 +34,7 @@ export const compatGetOperator: ToolDefinition<
   },
 };
 
-export const createSubAccount: ToolDefinition<
+export const createSubAccount: Tool<
   typeof createSubAccountParameters,
   typeof createSubAccountResult
 > = {
@@ -54,7 +54,7 @@ export const createSubAccount: ToolDefinition<
   },
 };
 
-export const deactivateSubAccount: ToolDefinition<
+export const deactivateSubAccount: Tool<
   typeof deactivateSubAccountParameters,
   typeof deactivateSubAccountResult
 > = {
@@ -74,7 +74,7 @@ export const deactivateSubAccount: ToolDefinition<
   },
 };
 
-export const listSubAccounts: ToolDefinition<
+export const listSubAccounts: Tool<
   typeof listSubAccountsParameters,
   typeof listSubAccountsResult
 > = {
@@ -94,7 +94,7 @@ export const listSubAccounts: ToolDefinition<
   },
 };
 
-export const updateSubAccount: ToolDefinition<
+export const updateSubAccount: Tool<
   typeof updateSubAccountParameters,
   typeof updateSubAccountResult
 > = {

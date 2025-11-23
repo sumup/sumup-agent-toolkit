@@ -52,9 +52,11 @@ function shouldSkipNullableAdditionalProperties(
   schema: OpenAPIV3_1.SchemaObject,
 ): boolean {
   return Boolean(
-    (schema as {
-      "x-codegen-skip-nullable-additional-properties"?: boolean;
-    })["x-codegen-skip-nullable-additional-properties"],
+    (
+      schema as {
+        "x-codegen-skip-nullable-additional-properties"?: boolean;
+      }
+    )["x-codegen-skip-nullable-additional-properties"],
   );
 }
 
