@@ -74,14 +74,7 @@ export const getReceiptResult = z
           .describe(`Products`)
           .optional(),
         vat_rates: z
-          .array(
-            z.object({
-              gross: z.number().describe(`Gross`).optional(),
-              net: z.number().describe(`Net`).optional(),
-              rate: z.number().describe(`Rate`).optional(),
-              vat: z.number().describe(`Vat`).optional(),
-            }),
-          )
+          .array(z.object({}).catchall(z.unknown()))
           .describe(`Vat rates.`)
           .optional(),
         events: z

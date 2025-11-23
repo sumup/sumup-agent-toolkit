@@ -1,6 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import {
   listPayoutsParameters,
@@ -9,16 +8,16 @@ import {
   listPayoutsV1Result,
 } from "./parameters";
 
-export const listPayouts: Tool = {
+export const listPayouts: ToolDefinition<
+  typeof listPayoutsParameters,
+  typeof listPayoutsResult
+> = {
   name: "list_payouts",
   title: `List payouts`,
   description: `Lists ordered payouts for the merchant profile.`,
   parameters: listPayoutsParameters,
   result: listPayoutsResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof listPayoutsParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.payouts.listDeprecated(args);
   },
   annotations: {
@@ -29,16 +28,16 @@ export const listPayouts: Tool = {
   },
 };
 
-export const listPayoutsV1: Tool = {
+export const listPayoutsV1: ToolDefinition<
+  typeof listPayoutsV1Parameters,
+  typeof listPayoutsV1Result
+> = {
   name: "list_payouts_v1",
   title: `List payouts`,
   description: `Lists ordered payouts for the merchant profile.`,
   parameters: listPayoutsV1Parameters,
   result: listPayoutsV1Result,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listPayoutsV1Parameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.payouts.list(merchantCode, args);
   },
   annotations: {

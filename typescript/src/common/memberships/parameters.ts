@@ -80,14 +80,16 @@ Possible values are:
             .describe(`The status of the membership.`),
           metadata: z
             .object({})
-            .catchall(z.any())
+            .catchall(z.record(z.unknown()))
+            .nullable()
             .describe(
               `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
             )
             .optional(),
           attributes: z
             .object({})
-            .catchall(z.any())
+            .catchall(z.record(z.unknown()))
+            .nullable()
             .describe(
               `Object attributes that are modifiable only by SumUp applications.`,
             )
@@ -119,7 +121,8 @@ Possible values are:
                 ),
               attributes: z
                 .object({})
-                .catchall(z.any())
+                .catchall(z.record(z.unknown()))
+                .nullable()
                 .describe(
                   `Object attributes that are modifiable only by SumUp applications.`,
                 )

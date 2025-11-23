@@ -1,19 +1,18 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import { getReceiptParameters, getReceiptResult } from "./parameters";
 
-export const getReceipt: Tool = {
+export const getReceipt: ToolDefinition<
+  typeof getReceiptParameters,
+  typeof getReceiptResult
+> = {
   name: "get_receipt",
   title: `Retrieve receipt details`,
   description: `Retrieves receipt specific data for a transaction.`,
   parameters: getReceiptParameters,
   result: getReceiptResult,
-  callback: async (
-    sumup: SumUp,
-    { id, ...args }: z.infer<typeof getReceiptParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { id, ...args }) => {
     return await sumup.receipts.get(id, args);
   },
   annotations: {

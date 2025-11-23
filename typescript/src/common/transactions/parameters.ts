@@ -22,414 +22,267 @@ export const getTransactionParameters = z.object({
 });
 
 export const getTransactionResult = z
-  .intersection(
-    z.intersection(
-      z.intersection(
+  .object({
+    id: z.string().describe(`Unique ID of the transaction.`).optional(),
+    transaction_code: z
+      .string()
+      .describe(
+        `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+      )
+      .optional(),
+    amount: z.number().describe(`Total amount of the transaction.`).optional(),
+    currency: z
+      .enum([
+        "BGN",
+        "BRL",
+        "CHF",
+        "CLP",
+        "CZK",
+        "DKK",
+        "EUR",
+        "GBP",
+        "HRK",
+        "HUF",
+        "NOK",
+        "PLN",
+        "RON",
+        "SEK",
+        "USD",
+      ])
+      .describe(
+        `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+      )
+      .optional(),
+    timestamp: z
+      .string()
+      .describe(
+        `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+      )
+      .optional(),
+    status: z
+      .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+      .describe(`Current status of the transaction.`)
+      .optional(),
+    payment_type: z
+      .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+      .describe(`Payment type used for the transaction.`)
+      .optional(),
+    installments_count: z
+      .number()
+      .int()
+      .describe(`Current number of the installment for deferred payments.`)
+      .optional(),
+    merchant_code: z
+      .string()
+      .describe(
+        `Unique code of the registered merchant to whom the payment is made.`,
+      )
+      .optional(),
+    vat_amount: z
+      .number()
+      .describe(
+        `Amount of the applicable VAT (out of the total transaction amount).`,
+      )
+      .optional(),
+    tip_amount: z
+      .number()
+      .describe(`Amount of the tip (out of the total transaction amount).`)
+      .optional(),
+    entry_mode: z
+      .enum(["CUSTOMER_ENTRY", "BOLETO"])
+      .describe(`Entry mode of the payment details.`)
+      .optional(),
+    auth_code: z
+      .string()
+      .describe(
+        `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+      )
+      .optional(),
+    internal_id: z
+      .number()
+      .int()
+      .describe(`Internal unique ID of the transaction on the SumUp platform.`)
+      .optional(),
+    product_summary: z
+      .string()
+      .describe(
+        `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
+      )
+      .optional(),
+    payouts_total: z
+      .number()
+      .int()
+      .describe(
+        `Total number of payouts to the registered user specified in the \`user\` property.`,
+      )
+      .optional(),
+    payouts_received: z
+      .number()
+      .int()
+      .describe(
+        `Number of payouts that are made to the registered user specified in the \`user\` property.`,
+      )
+      .optional(),
+    payout_plan: z
+      .enum(["SINGLE_PAYMENT", "TRUE_INSTALLMENT", "ACCELERATED_INSTALLMENT"])
+      .describe(
+        `Payout plan of the registered user at the time when the transaction was made.`,
+      )
+      .optional(),
+    username: z
+      .string()
+      .describe(
+        `Email address of the registered user (merchant) to whom the payment is made.`,
+      )
+      .optional(),
+    lat: z
+      .number()
+      .describe(
+        `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+      )
+      .optional(),
+    lon: z
+      .number()
+      .describe(
+        `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+      )
+      .optional(),
+    horizontal_accuracy: z
+      .number()
+      .describe(
+        `Indication of the precision of the geographical position received from the payment terminal.`,
+      )
+      .optional(),
+    simple_payment_type: z
+      .enum([
+        "MOTO",
+        "CASH",
+        "CC_SIGNATURE",
+        "ELV",
+        "CC_CUSTOMER_ENTERED",
+        "MANUAL_ENTRY",
+        "EMV",
+      ])
+      .describe(`Simple name of the payment type.`)
+      .optional(),
+    verification_method: z
+      .enum([
+        "none",
+        "signature",
+        "offline pin",
+        "online pin",
+        "offline pin + signature",
+        "confirmation code verified",
+      ])
+      .describe(`Verification method used for the transaction.`)
+      .optional(),
+    card: z
+      .object({
+        last_4_digits: z
+          .string()
+          .min(4)
+          .max(4)
+          .describe(`Last 4 digits of the payment card number.`)
+          .optional(),
+        type: z
+          .enum([
+            "AMEX",
+            "CUP",
+            "DINERS",
+            "DISCOVER",
+            "ELO",
+            "ELV",
+            "HIPERCARD",
+            "JCB",
+            "MAESTRO",
+            "MASTERCARD",
+            "VISA",
+            "VISA_ELECTRON",
+            "VISA_VPAY",
+            "UNKNOWN",
+          ])
+          .describe(`Issuing card network of the payment card.`)
+          .optional(),
+      })
+      .describe(`Details of the payment card.`)
+      .optional(),
+    local_time: z
+      .string()
+      .describe(`Local date and time of the creation of the transaction.`)
+      .optional(),
+    payout_type: z
+      .enum(["BANK_ACCOUNT", "BALANCE", "PREPAID_CARD"])
+      .describe(`Payout type for the transaction.`)
+      .optional(),
+    products: z
+      .array(
         z
           .object({
-            id: z.string().describe(`Unique ID of the transaction.`).optional(),
-            transaction_code: z
+            name: z
               .string()
-              .describe(
-                `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-              )
+              .describe(`Name of the product from the merchant's catalog.`)
               .optional(),
-            amount: z
+            price: z
               .number()
-              .describe(`Total amount of the transaction.`)
+              .describe(`Price of the product without VAT.`)
               .optional(),
-            currency: z
-              .enum([
-                "BGN",
-                "BRL",
-                "CHF",
-                "CLP",
-                "CZK",
-                "DKK",
-                "EUR",
-                "GBP",
-                "HRK",
-                "HUF",
-                "NOK",
-                "PLN",
-                "RON",
-                "SEK",
-                "USD",
-              ])
-              .describe(
-                `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-              )
-              .optional(),
-            timestamp: z
-              .string()
-              .describe(
-                `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-              )
-              .optional(),
-            status: z
-              .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-              .describe(`Current status of the transaction.`)
-              .optional(),
-            payment_type: z
-              .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-              .describe(`Payment type used for the transaction.`)
-              .optional(),
-            installments_count: z
+            vat_rate: z
               .number()
-              .int()
+              .describe(`VAT rate applicable to the product.`)
+              .optional(),
+            single_vat_amount: z
+              .number()
               .describe(
-                `Current number of the installment for deferred payments.`,
+                `Amount of the VAT for a single product item (calculated as the product of \`price\` and \`vat_rate\`, i.e. \`single_vat_amount = price * vat_rate\`).`,
+              )
+              .optional(),
+            price_with_vat: z
+              .number()
+              .describe(`Price of a single product item with VAT.`)
+              .optional(),
+            vat_amount: z
+              .number()
+              .describe(
+                `Total VAT amount for the purchase (calculated as the product of \`single_vat_amount\` and \`quantity\`, i.e. \`vat_amount = single_vat_amount * quantity\`).`,
+              )
+              .optional(),
+            quantity: z
+              .number()
+              .describe(`Number of product items for the purchase.`)
+              .optional(),
+            total_price: z
+              .number()
+              .describe(
+                `Total price of the product items without VAT (calculated as the product of \`price\` and \`quantity\`, i.e. \`total_price = price * quantity\`).`,
+              )
+              .optional(),
+            total_with_vat: z
+              .number()
+              .describe(
+                `Total price of the product items including VAT (calculated as the product of \`price_with_vat\` and \`quantity\`, i.e. \`total_with_vat = price_with_vat * quantity\`).`,
               )
               .optional(),
           })
-          .describe(`Details of the transaction.`),
-        z.object({
-          merchant_code: z
-            .string()
-            .describe(
-              `Unique code of the registered merchant to whom the payment is made.`,
-            )
-            .optional(),
-          vat_amount: z
-            .number()
-            .describe(
-              `Amount of the applicable VAT (out of the total transaction amount).`,
-            )
-            .optional(),
-          tip_amount: z
-            .number()
-            .describe(
-              `Amount of the tip (out of the total transaction amount).`,
-            )
-            .optional(),
-          entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
-            .describe(`Entry mode of the payment details.`)
-            .optional(),
-          auth_code: z
-            .string()
-            .describe(
-              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-            )
-            .optional(),
-          internal_id: z
-            .number()
-            .int()
-            .describe(
-              `Internal unique ID of the transaction on the SumUp platform.`,
-            )
-            .optional(),
-        }),
-      ),
-      z.object({
-        product_summary: z
-          .string()
-          .describe(
-            `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
-          )
-          .optional(),
-        payouts_total: z
-          .number()
-          .int()
-          .describe(
-            `Total number of payouts to the registered user specified in the \`user\` property.`,
-          )
-          .optional(),
-        payouts_received: z
-          .number()
-          .int()
-          .describe(
-            `Number of payouts that are made to the registered user specified in the \`user\` property.`,
-          )
-          .optional(),
-        payout_plan: z
-          .enum([
-            "SINGLE_PAYMENT",
-            "TRUE_INSTALLMENT",
-            "ACCELERATED_INSTALLMENT",
-          ])
-          .describe(
-            `Payout plan of the registered user at the time when the transaction was made.`,
-          )
-          .optional(),
-      }),
-    ),
-    z.object({
-      username: z
-        .string()
-        .describe(
-          `Email address of the registered user (merchant) to whom the payment is made.`,
-        )
-        .optional(),
-      lat: z
-        .number()
-        .describe(
-          `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-        )
-        .optional(),
-      lon: z
-        .number()
-        .describe(
-          `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-        )
-        .optional(),
-      horizontal_accuracy: z
-        .number()
-        .describe(
-          `Indication of the precision of the geographical position received from the payment terminal.`,
-        )
-        .optional(),
-      simple_payment_type: z
-        .enum([
-          "MOTO",
-          "CASH",
-          "CC_SIGNATURE",
-          "ELV",
-          "CC_CUSTOMER_ENTERED",
-          "MANUAL_ENTRY",
-          "EMV",
-        ])
-        .describe(`Simple name of the payment type.`)
-        .optional(),
-      verification_method: z
-        .enum([
-          "none",
-          "signature",
-          "offline pin",
-          "online pin",
-          "offline pin + signature",
-          "confirmation code verified",
-        ])
-        .describe(`Verification method used for the transaction.`)
-        .optional(),
-      card: z
-        .object({
-          last_4_digits: z
-            .string()
-            .min(4)
-            .max(4)
-            .describe(`Last 4 digits of the payment card number.`)
-            .optional(),
-          type: z
-            .enum([
-              "AMEX",
-              "CUP",
-              "DINERS",
-              "DISCOVER",
-              "ELO",
-              "ELV",
-              "HIPERCARD",
-              "JCB",
-              "MAESTRO",
-              "MASTERCARD",
-              "VISA",
-              "VISA_ELECTRON",
-              "VISA_VPAY",
-              "UNKNOWN",
-            ])
-            .describe(`Issuing card network of the payment card.`)
-            .optional(),
-        })
-        .describe(`Details of the payment card.`)
-        .optional(),
-      local_time: z
-        .string()
-        .describe(`Local date and time of the creation of the transaction.`)
-        .optional(),
-      payout_type: z
-        .enum(["BANK_ACCOUNT", "BALANCE", "PREPAID_CARD"])
-        .describe(`Payout type for the transaction.`)
-        .optional(),
-      products: z
-        .array(
-          z
-            .object({
-              name: z
-                .string()
-                .describe(`Name of the product from the merchant's catalog.`)
-                .optional(),
-              price: z
-                .number()
-                .describe(`Price of the product without VAT.`)
-                .optional(),
-              vat_rate: z
-                .number()
-                .describe(`VAT rate applicable to the product.`)
-                .optional(),
-              single_vat_amount: z
-                .number()
-                .describe(
-                  `Amount of the VAT for a single product item (calculated as the product of \`price\` and \`vat_rate\`, i.e. \`single_vat_amount = price * vat_rate\`).`,
-                )
-                .optional(),
-              price_with_vat: z
-                .number()
-                .describe(`Price of a single product item with VAT.`)
-                .optional(),
-              vat_amount: z
-                .number()
-                .describe(
-                  `Total VAT amount for the purchase (calculated as the product of \`single_vat_amount\` and \`quantity\`, i.e. \`vat_amount = single_vat_amount * quantity\`).`,
-                )
-                .optional(),
-              quantity: z
-                .number()
-                .describe(`Number of product items for the purchase.`)
-                .optional(),
-              total_price: z
-                .number()
-                .describe(
-                  `Total price of the product items without VAT (calculated as the product of \`price\` and \`quantity\`, i.e. \`total_price = price * quantity\`).`,
-                )
-                .optional(),
-              total_with_vat: z
-                .number()
-                .describe(
-                  `Total price of the product items including VAT (calculated as the product of \`price_with_vat\` and \`quantity\`, i.e. \`total_with_vat = price_with_vat * quantity\`).`,
-                )
-                .optional(),
-            })
-            .describe(`Details of the product for which the payment is made.`),
-        )
-        .describe(
-          `List of products from the merchant's catalogue for which the transaction serves as a payment.`,
-        )
-        .optional(),
-      vat_rates: z
-        .array(z.string())
-        .describe(`List of VAT rates applicable to the transaction.`)
-        .optional(),
-      transaction_events: z
-        .array(
-          z
-            .object({
-              id: z
-                .number()
-                .int()
-                .describe(`Unique ID of the transaction event.`)
-                .optional(),
-              event_type: z
-                .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
-                .describe(`Type of the transaction event.`)
-                .optional(),
-              status: z
-                .enum([
-                  "PENDING",
-                  "SCHEDULED",
-                  "FAILED",
-                  "REFUNDED",
-                  "SUCCESSFUL",
-                  "PAID_OUT",
-                ])
-                .describe(`Status of the transaction event.`)
-                .optional(),
-              amount: z.number().describe(`Amount of the event.`).optional(),
-              due_date: z
-                .string()
-                .describe(`Date when the transaction event is due to occur.`)
-                .optional(),
-              date: z
-                .string()
-                .describe(`Date when the transaction event occurred.`)
-                .optional(),
-              installment_number: z
-                .number()
-                .int()
-                .describe(
-                  `Consecutive number of the installment that is paid. Applicable only payout events, i.e. \`event_type = PAYOUT\`.`,
-                )
-                .optional(),
-              timestamp: z
-                .string()
-                .describe(`Date and time of the transaction event.`)
-                .optional(),
-            })
-            .describe(`Details of a transaction event.`),
-        )
-        .describe(`List of transaction events related to the transaction.`)
-        .optional(),
-      simple_status: z
-        .enum([
-          "SUCCESSFUL",
-          "PAID_OUT",
-          "CANCEL_FAILED",
-          "CANCELLED",
-          "CHARGEBACK",
-          "FAILED",
-          "REFUND_FAILED",
-          "REFUNDED",
-          "NON_COLLECTION",
-        ])
-        .describe(
-          `Status generated from the processing status and the latest transaction state.`,
-        )
-        .optional(),
-      links: z
-        .array(
-          z.union([
-            z
-              .object({
-                rel: z
-                  .string()
-                  .describe(`Specifies the relation to the current resource.`)
-                  .optional(),
-                href: z
-                  .string()
-                  .describe(`URL for accessing the related resource.`)
-                  .optional(),
-                type: z
-                  .string()
-                  .describe(`Specifies the media type of the related resource.`)
-                  .optional(),
-              })
-              .describe(`Details of a link to a related resource.`),
-            z.intersection(
-              z
-                .object({
-                  rel: z
-                    .string()
-                    .describe(`Specifies the relation to the current resource.`)
-                    .optional(),
-                  href: z
-                    .string()
-                    .describe(`URL for accessing the related resource.`)
-                    .optional(),
-                  type: z
-                    .string()
-                    .describe(
-                      `Specifies the media type of the related resource.`,
-                    )
-                    .optional(),
-                })
-                .describe(`Details of a link to a related resource.`),
-              z.object({
-                min_amount: z
-                  .number()
-                  .describe(`Minimum allowed amount for the refund.`)
-                  .optional(),
-                max_amount: z
-                  .number()
-                  .describe(`Maximum allowed amount for the refund.`)
-                  .optional(),
-              }),
-            ),
-          ]),
-        )
-        .describe(`List of hyperlinks for accessing related resources.`)
-        .optional(),
-      events: z
-        .array(
-          z.object({
+          .describe(`Details of the product for which the payment is made.`),
+      )
+      .describe(
+        `List of products from the merchant's catalogue for which the transaction serves as a payment.`,
+      )
+      .optional(),
+    vat_rates: z
+      .array(z.object({}).catchall(z.unknown()))
+      .describe(`List of VAT rates applicable to the transaction.`)
+      .optional(),
+    transaction_events: z
+      .array(
+        z
+          .object({
             id: z
               .number()
               .int()
               .describe(`Unique ID of the transaction event.`)
               .optional(),
-            transaction_id: z
-              .string()
-              .describe(`Unique ID of the transaction.`)
-              .optional(),
-            type: z
+            event_type: z
               .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
               .describe(`Type of the transaction event.`)
               .optional(),
@@ -445,64 +298,176 @@ export const getTransactionResult = z
               .describe(`Status of the transaction event.`)
               .optional(),
             amount: z.number().describe(`Amount of the event.`).optional(),
-            timestamp: z
+            due_date: z
               .string()
-              .describe(`Date and time of the transaction event.`)
+              .describe(`Date when the transaction event is due to occur.`)
               .optional(),
-            fee_amount: z
-              .number()
-              .describe(`Amount of the fee related to the event.`)
+            date: z
+              .string()
+              .describe(`Date when the transaction event occurred.`)
               .optional(),
             installment_number: z
               .number()
               .int()
-              .describe(`Consecutive number of the installment.`)
+              .describe(
+                `Consecutive number of the installment that is paid. Applicable only payout events, i.e. \`event_type = PAYOUT\`.`,
+              )
               .optional(),
-            deducted_amount: z
-              .number()
-              .describe(`Amount deducted for the event.`)
+            timestamp: z
+              .string()
+              .describe(`Date and time of the transaction event.`)
               .optional(),
-            deducted_fee_amount: z
+          })
+          .describe(`Details of a transaction event.`),
+      )
+      .describe(`List of transaction events related to the transaction.`)
+      .optional(),
+    simple_status: z
+      .enum([
+        "SUCCESSFUL",
+        "PAID_OUT",
+        "CANCEL_FAILED",
+        "CANCELLED",
+        "CHARGEBACK",
+        "FAILED",
+        "REFUND_FAILED",
+        "REFUNDED",
+        "NON_COLLECTION",
+      ])
+      .describe(
+        `Status generated from the processing status and the latest transaction state.`,
+      )
+      .optional(),
+    links: z
+      .array(
+        z.union([
+          z
+            .object({
+              rel: z
+                .string()
+                .describe(`Specifies the relation to the current resource.`)
+                .optional(),
+              href: z
+                .string()
+                .describe(`URL for accessing the related resource.`)
+                .optional(),
+              type: z
+                .string()
+                .describe(`Specifies the media type of the related resource.`)
+                .optional(),
+            })
+            .describe(`Details of a link to a related resource.`),
+          z.object({
+            rel: z
+              .string()
+              .describe(`Specifies the relation to the current resource.`)
+              .optional(),
+            href: z
+              .string()
+              .describe(`URL for accessing the related resource.`)
+              .optional(),
+            type: z
+              .string()
+              .describe(`Specifies the media type of the related resource.`)
+              .optional(),
+            min_amount: z
               .number()
-              .describe(`Amount of the fee deducted for the event.`)
+              .describe(`Minimum allowed amount for the refund.`)
+              .optional(),
+            max_amount: z
+              .number()
+              .describe(`Maximum allowed amount for the refund.`)
               .optional(),
           }),
-        )
-        .describe(`List of events related to the transaction.`)
-        .optional(),
-      location: z
-        .object({
-          lat: z
+        ]),
+      )
+      .describe(`List of hyperlinks for accessing related resources.`)
+      .optional(),
+    events: z
+      .array(
+        z.object({
+          id: z
             .number()
-            .describe(
-              `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-            )
+            .int()
+            .describe(`Unique ID of the transaction event.`)
             .optional(),
-          lon: z
+          transaction_id: z
+            .string()
+            .describe(`Unique ID of the transaction.`)
+            .optional(),
+          type: z
+            .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
+            .describe(`Type of the transaction event.`)
+            .optional(),
+          status: z
+            .enum([
+              "PENDING",
+              "SCHEDULED",
+              "FAILED",
+              "REFUNDED",
+              "SUCCESSFUL",
+              "PAID_OUT",
+            ])
+            .describe(`Status of the transaction event.`)
+            .optional(),
+          amount: z.number().describe(`Amount of the event.`).optional(),
+          timestamp: z
+            .string()
+            .describe(`Date and time of the transaction event.`)
+            .optional(),
+          fee_amount: z
             .number()
-            .describe(
-              `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-            )
+            .describe(`Amount of the fee related to the event.`)
             .optional(),
-          horizontal_accuracy: z
+          installment_number: z
             .number()
-            .describe(
-              `Indication of the precision of the geographical position received from the payment terminal.`,
-            )
+            .int()
+            .describe(`Consecutive number of the installment.`)
             .optional(),
-        })
-        .describe(
-          `Details of the payment location as received from the payment terminal.`,
-        )
-        .optional(),
-      tax_enabled: z
-        .boolean()
-        .describe(
-          `Indicates whether tax deduction is enabled for the transaction.`,
-        )
-        .optional(),
-    }),
-  )
+          deducted_amount: z
+            .number()
+            .describe(`Amount deducted for the event.`)
+            .optional(),
+          deducted_fee_amount: z
+            .number()
+            .describe(`Amount of the fee deducted for the event.`)
+            .optional(),
+        }),
+      )
+      .describe(`List of events related to the transaction.`)
+      .optional(),
+    location: z
+      .object({
+        lat: z
+          .number()
+          .describe(
+            `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+          )
+          .optional(),
+        lon: z
+          .number()
+          .describe(
+            `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+          )
+          .optional(),
+        horizontal_accuracy: z
+          .number()
+          .describe(
+            `Indication of the precision of the geographical position received from the payment terminal.`,
+          )
+          .optional(),
+      })
+      .describe(
+        `Details of the payment location as received from the payment terminal.`,
+      )
+      .optional(),
+    tax_enabled: z
+      .boolean()
+      .describe(
+        `Indicates whether tax deduction is enabled for the transaction.`,
+      )
+      .optional(),
+  })
   .describe(`OK`);
 
 export const getTransactionV2_1Parameters = z.object({
@@ -536,414 +501,267 @@ export const getTransactionV2_1Parameters = z.object({
 });
 
 export const getTransactionV2_1Result = z
-  .intersection(
-    z.intersection(
-      z.intersection(
+  .object({
+    id: z.string().describe(`Unique ID of the transaction.`).optional(),
+    transaction_code: z
+      .string()
+      .describe(
+        `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+      )
+      .optional(),
+    amount: z.number().describe(`Total amount of the transaction.`).optional(),
+    currency: z
+      .enum([
+        "BGN",
+        "BRL",
+        "CHF",
+        "CLP",
+        "CZK",
+        "DKK",
+        "EUR",
+        "GBP",
+        "HRK",
+        "HUF",
+        "NOK",
+        "PLN",
+        "RON",
+        "SEK",
+        "USD",
+      ])
+      .describe(
+        `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+      )
+      .optional(),
+    timestamp: z
+      .string()
+      .describe(
+        `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+      )
+      .optional(),
+    status: z
+      .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+      .describe(`Current status of the transaction.`)
+      .optional(),
+    payment_type: z
+      .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+      .describe(`Payment type used for the transaction.`)
+      .optional(),
+    installments_count: z
+      .number()
+      .int()
+      .describe(`Current number of the installment for deferred payments.`)
+      .optional(),
+    merchant_code: z
+      .string()
+      .describe(
+        `Unique code of the registered merchant to whom the payment is made.`,
+      )
+      .optional(),
+    vat_amount: z
+      .number()
+      .describe(
+        `Amount of the applicable VAT (out of the total transaction amount).`,
+      )
+      .optional(),
+    tip_amount: z
+      .number()
+      .describe(`Amount of the tip (out of the total transaction amount).`)
+      .optional(),
+    entry_mode: z
+      .enum(["CUSTOMER_ENTRY", "BOLETO"])
+      .describe(`Entry mode of the payment details.`)
+      .optional(),
+    auth_code: z
+      .string()
+      .describe(
+        `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+      )
+      .optional(),
+    internal_id: z
+      .number()
+      .int()
+      .describe(`Internal unique ID of the transaction on the SumUp platform.`)
+      .optional(),
+    product_summary: z
+      .string()
+      .describe(
+        `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
+      )
+      .optional(),
+    payouts_total: z
+      .number()
+      .int()
+      .describe(
+        `Total number of payouts to the registered user specified in the \`user\` property.`,
+      )
+      .optional(),
+    payouts_received: z
+      .number()
+      .int()
+      .describe(
+        `Number of payouts that are made to the registered user specified in the \`user\` property.`,
+      )
+      .optional(),
+    payout_plan: z
+      .enum(["SINGLE_PAYMENT", "TRUE_INSTALLMENT", "ACCELERATED_INSTALLMENT"])
+      .describe(
+        `Payout plan of the registered user at the time when the transaction was made.`,
+      )
+      .optional(),
+    username: z
+      .string()
+      .describe(
+        `Email address of the registered user (merchant) to whom the payment is made.`,
+      )
+      .optional(),
+    lat: z
+      .number()
+      .describe(
+        `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+      )
+      .optional(),
+    lon: z
+      .number()
+      .describe(
+        `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+      )
+      .optional(),
+    horizontal_accuracy: z
+      .number()
+      .describe(
+        `Indication of the precision of the geographical position received from the payment terminal.`,
+      )
+      .optional(),
+    simple_payment_type: z
+      .enum([
+        "MOTO",
+        "CASH",
+        "CC_SIGNATURE",
+        "ELV",
+        "CC_CUSTOMER_ENTERED",
+        "MANUAL_ENTRY",
+        "EMV",
+      ])
+      .describe(`Simple name of the payment type.`)
+      .optional(),
+    verification_method: z
+      .enum([
+        "none",
+        "signature",
+        "offline pin",
+        "online pin",
+        "offline pin + signature",
+        "confirmation code verified",
+      ])
+      .describe(`Verification method used for the transaction.`)
+      .optional(),
+    card: z
+      .object({
+        last_4_digits: z
+          .string()
+          .min(4)
+          .max(4)
+          .describe(`Last 4 digits of the payment card number.`)
+          .optional(),
+        type: z
+          .enum([
+            "AMEX",
+            "CUP",
+            "DINERS",
+            "DISCOVER",
+            "ELO",
+            "ELV",
+            "HIPERCARD",
+            "JCB",
+            "MAESTRO",
+            "MASTERCARD",
+            "VISA",
+            "VISA_ELECTRON",
+            "VISA_VPAY",
+            "UNKNOWN",
+          ])
+          .describe(`Issuing card network of the payment card.`)
+          .optional(),
+      })
+      .describe(`Details of the payment card.`)
+      .optional(),
+    local_time: z
+      .string()
+      .describe(`Local date and time of the creation of the transaction.`)
+      .optional(),
+    payout_type: z
+      .enum(["BANK_ACCOUNT", "BALANCE", "PREPAID_CARD"])
+      .describe(`Payout type for the transaction.`)
+      .optional(),
+    products: z
+      .array(
         z
           .object({
-            id: z.string().describe(`Unique ID of the transaction.`).optional(),
-            transaction_code: z
+            name: z
               .string()
-              .describe(
-                `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-              )
+              .describe(`Name of the product from the merchant's catalog.`)
               .optional(),
-            amount: z
+            price: z
               .number()
-              .describe(`Total amount of the transaction.`)
+              .describe(`Price of the product without VAT.`)
               .optional(),
-            currency: z
-              .enum([
-                "BGN",
-                "BRL",
-                "CHF",
-                "CLP",
-                "CZK",
-                "DKK",
-                "EUR",
-                "GBP",
-                "HRK",
-                "HUF",
-                "NOK",
-                "PLN",
-                "RON",
-                "SEK",
-                "USD",
-              ])
-              .describe(
-                `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-              )
-              .optional(),
-            timestamp: z
-              .string()
-              .describe(
-                `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-              )
-              .optional(),
-            status: z
-              .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-              .describe(`Current status of the transaction.`)
-              .optional(),
-            payment_type: z
-              .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-              .describe(`Payment type used for the transaction.`)
-              .optional(),
-            installments_count: z
+            vat_rate: z
               .number()
-              .int()
+              .describe(`VAT rate applicable to the product.`)
+              .optional(),
+            single_vat_amount: z
+              .number()
               .describe(
-                `Current number of the installment for deferred payments.`,
+                `Amount of the VAT for a single product item (calculated as the product of \`price\` and \`vat_rate\`, i.e. \`single_vat_amount = price * vat_rate\`).`,
+              )
+              .optional(),
+            price_with_vat: z
+              .number()
+              .describe(`Price of a single product item with VAT.`)
+              .optional(),
+            vat_amount: z
+              .number()
+              .describe(
+                `Total VAT amount for the purchase (calculated as the product of \`single_vat_amount\` and \`quantity\`, i.e. \`vat_amount = single_vat_amount * quantity\`).`,
+              )
+              .optional(),
+            quantity: z
+              .number()
+              .describe(`Number of product items for the purchase.`)
+              .optional(),
+            total_price: z
+              .number()
+              .describe(
+                `Total price of the product items without VAT (calculated as the product of \`price\` and \`quantity\`, i.e. \`total_price = price * quantity\`).`,
+              )
+              .optional(),
+            total_with_vat: z
+              .number()
+              .describe(
+                `Total price of the product items including VAT (calculated as the product of \`price_with_vat\` and \`quantity\`, i.e. \`total_with_vat = price_with_vat * quantity\`).`,
               )
               .optional(),
           })
-          .describe(`Details of the transaction.`),
-        z.object({
-          merchant_code: z
-            .string()
-            .describe(
-              `Unique code of the registered merchant to whom the payment is made.`,
-            )
-            .optional(),
-          vat_amount: z
-            .number()
-            .describe(
-              `Amount of the applicable VAT (out of the total transaction amount).`,
-            )
-            .optional(),
-          tip_amount: z
-            .number()
-            .describe(
-              `Amount of the tip (out of the total transaction amount).`,
-            )
-            .optional(),
-          entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
-            .describe(`Entry mode of the payment details.`)
-            .optional(),
-          auth_code: z
-            .string()
-            .describe(
-              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-            )
-            .optional(),
-          internal_id: z
-            .number()
-            .int()
-            .describe(
-              `Internal unique ID of the transaction on the SumUp platform.`,
-            )
-            .optional(),
-        }),
-      ),
-      z.object({
-        product_summary: z
-          .string()
-          .describe(
-            `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
-          )
-          .optional(),
-        payouts_total: z
-          .number()
-          .int()
-          .describe(
-            `Total number of payouts to the registered user specified in the \`user\` property.`,
-          )
-          .optional(),
-        payouts_received: z
-          .number()
-          .int()
-          .describe(
-            `Number of payouts that are made to the registered user specified in the \`user\` property.`,
-          )
-          .optional(),
-        payout_plan: z
-          .enum([
-            "SINGLE_PAYMENT",
-            "TRUE_INSTALLMENT",
-            "ACCELERATED_INSTALLMENT",
-          ])
-          .describe(
-            `Payout plan of the registered user at the time when the transaction was made.`,
-          )
-          .optional(),
-      }),
-    ),
-    z.object({
-      username: z
-        .string()
-        .describe(
-          `Email address of the registered user (merchant) to whom the payment is made.`,
-        )
-        .optional(),
-      lat: z
-        .number()
-        .describe(
-          `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-        )
-        .optional(),
-      lon: z
-        .number()
-        .describe(
-          `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-        )
-        .optional(),
-      horizontal_accuracy: z
-        .number()
-        .describe(
-          `Indication of the precision of the geographical position received from the payment terminal.`,
-        )
-        .optional(),
-      simple_payment_type: z
-        .enum([
-          "MOTO",
-          "CASH",
-          "CC_SIGNATURE",
-          "ELV",
-          "CC_CUSTOMER_ENTERED",
-          "MANUAL_ENTRY",
-          "EMV",
-        ])
-        .describe(`Simple name of the payment type.`)
-        .optional(),
-      verification_method: z
-        .enum([
-          "none",
-          "signature",
-          "offline pin",
-          "online pin",
-          "offline pin + signature",
-          "confirmation code verified",
-        ])
-        .describe(`Verification method used for the transaction.`)
-        .optional(),
-      card: z
-        .object({
-          last_4_digits: z
-            .string()
-            .min(4)
-            .max(4)
-            .describe(`Last 4 digits of the payment card number.`)
-            .optional(),
-          type: z
-            .enum([
-              "AMEX",
-              "CUP",
-              "DINERS",
-              "DISCOVER",
-              "ELO",
-              "ELV",
-              "HIPERCARD",
-              "JCB",
-              "MAESTRO",
-              "MASTERCARD",
-              "VISA",
-              "VISA_ELECTRON",
-              "VISA_VPAY",
-              "UNKNOWN",
-            ])
-            .describe(`Issuing card network of the payment card.`)
-            .optional(),
-        })
-        .describe(`Details of the payment card.`)
-        .optional(),
-      local_time: z
-        .string()
-        .describe(`Local date and time of the creation of the transaction.`)
-        .optional(),
-      payout_type: z
-        .enum(["BANK_ACCOUNT", "BALANCE", "PREPAID_CARD"])
-        .describe(`Payout type for the transaction.`)
-        .optional(),
-      products: z
-        .array(
-          z
-            .object({
-              name: z
-                .string()
-                .describe(`Name of the product from the merchant's catalog.`)
-                .optional(),
-              price: z
-                .number()
-                .describe(`Price of the product without VAT.`)
-                .optional(),
-              vat_rate: z
-                .number()
-                .describe(`VAT rate applicable to the product.`)
-                .optional(),
-              single_vat_amount: z
-                .number()
-                .describe(
-                  `Amount of the VAT for a single product item (calculated as the product of \`price\` and \`vat_rate\`, i.e. \`single_vat_amount = price * vat_rate\`).`,
-                )
-                .optional(),
-              price_with_vat: z
-                .number()
-                .describe(`Price of a single product item with VAT.`)
-                .optional(),
-              vat_amount: z
-                .number()
-                .describe(
-                  `Total VAT amount for the purchase (calculated as the product of \`single_vat_amount\` and \`quantity\`, i.e. \`vat_amount = single_vat_amount * quantity\`).`,
-                )
-                .optional(),
-              quantity: z
-                .number()
-                .describe(`Number of product items for the purchase.`)
-                .optional(),
-              total_price: z
-                .number()
-                .describe(
-                  `Total price of the product items without VAT (calculated as the product of \`price\` and \`quantity\`, i.e. \`total_price = price * quantity\`).`,
-                )
-                .optional(),
-              total_with_vat: z
-                .number()
-                .describe(
-                  `Total price of the product items including VAT (calculated as the product of \`price_with_vat\` and \`quantity\`, i.e. \`total_with_vat = price_with_vat * quantity\`).`,
-                )
-                .optional(),
-            })
-            .describe(`Details of the product for which the payment is made.`),
-        )
-        .describe(
-          `List of products from the merchant's catalogue for which the transaction serves as a payment.`,
-        )
-        .optional(),
-      vat_rates: z
-        .array(z.string())
-        .describe(`List of VAT rates applicable to the transaction.`)
-        .optional(),
-      transaction_events: z
-        .array(
-          z
-            .object({
-              id: z
-                .number()
-                .int()
-                .describe(`Unique ID of the transaction event.`)
-                .optional(),
-              event_type: z
-                .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
-                .describe(`Type of the transaction event.`)
-                .optional(),
-              status: z
-                .enum([
-                  "PENDING",
-                  "SCHEDULED",
-                  "FAILED",
-                  "REFUNDED",
-                  "SUCCESSFUL",
-                  "PAID_OUT",
-                ])
-                .describe(`Status of the transaction event.`)
-                .optional(),
-              amount: z.number().describe(`Amount of the event.`).optional(),
-              due_date: z
-                .string()
-                .describe(`Date when the transaction event is due to occur.`)
-                .optional(),
-              date: z
-                .string()
-                .describe(`Date when the transaction event occurred.`)
-                .optional(),
-              installment_number: z
-                .number()
-                .int()
-                .describe(
-                  `Consecutive number of the installment that is paid. Applicable only payout events, i.e. \`event_type = PAYOUT\`.`,
-                )
-                .optional(),
-              timestamp: z
-                .string()
-                .describe(`Date and time of the transaction event.`)
-                .optional(),
-            })
-            .describe(`Details of a transaction event.`),
-        )
-        .describe(`List of transaction events related to the transaction.`)
-        .optional(),
-      simple_status: z
-        .enum([
-          "SUCCESSFUL",
-          "PAID_OUT",
-          "CANCEL_FAILED",
-          "CANCELLED",
-          "CHARGEBACK",
-          "FAILED",
-          "REFUND_FAILED",
-          "REFUNDED",
-          "NON_COLLECTION",
-        ])
-        .describe(
-          `Status generated from the processing status and the latest transaction state.`,
-        )
-        .optional(),
-      links: z
-        .array(
-          z.union([
-            z
-              .object({
-                rel: z
-                  .string()
-                  .describe(`Specifies the relation to the current resource.`)
-                  .optional(),
-                href: z
-                  .string()
-                  .describe(`URL for accessing the related resource.`)
-                  .optional(),
-                type: z
-                  .string()
-                  .describe(`Specifies the media type of the related resource.`)
-                  .optional(),
-              })
-              .describe(`Details of a link to a related resource.`),
-            z.intersection(
-              z
-                .object({
-                  rel: z
-                    .string()
-                    .describe(`Specifies the relation to the current resource.`)
-                    .optional(),
-                  href: z
-                    .string()
-                    .describe(`URL for accessing the related resource.`)
-                    .optional(),
-                  type: z
-                    .string()
-                    .describe(
-                      `Specifies the media type of the related resource.`,
-                    )
-                    .optional(),
-                })
-                .describe(`Details of a link to a related resource.`),
-              z.object({
-                min_amount: z
-                  .number()
-                  .describe(`Minimum allowed amount for the refund.`)
-                  .optional(),
-                max_amount: z
-                  .number()
-                  .describe(`Maximum allowed amount for the refund.`)
-                  .optional(),
-              }),
-            ),
-          ]),
-        )
-        .describe(`List of hyperlinks for accessing related resources.`)
-        .optional(),
-      events: z
-        .array(
-          z.object({
+          .describe(`Details of the product for which the payment is made.`),
+      )
+      .describe(
+        `List of products from the merchant's catalogue for which the transaction serves as a payment.`,
+      )
+      .optional(),
+    vat_rates: z
+      .array(z.object({}).catchall(z.unknown()))
+      .describe(`List of VAT rates applicable to the transaction.`)
+      .optional(),
+    transaction_events: z
+      .array(
+        z
+          .object({
             id: z
               .number()
               .int()
               .describe(`Unique ID of the transaction event.`)
               .optional(),
-            transaction_id: z
-              .string()
-              .describe(`Unique ID of the transaction.`)
-              .optional(),
-            type: z
+            event_type: z
               .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
               .describe(`Type of the transaction event.`)
               .optional(),
@@ -959,64 +777,176 @@ export const getTransactionV2_1Result = z
               .describe(`Status of the transaction event.`)
               .optional(),
             amount: z.number().describe(`Amount of the event.`).optional(),
-            timestamp: z
+            due_date: z
               .string()
-              .describe(`Date and time of the transaction event.`)
+              .describe(`Date when the transaction event is due to occur.`)
               .optional(),
-            fee_amount: z
-              .number()
-              .describe(`Amount of the fee related to the event.`)
+            date: z
+              .string()
+              .describe(`Date when the transaction event occurred.`)
               .optional(),
             installment_number: z
               .number()
               .int()
-              .describe(`Consecutive number of the installment.`)
+              .describe(
+                `Consecutive number of the installment that is paid. Applicable only payout events, i.e. \`event_type = PAYOUT\`.`,
+              )
               .optional(),
-            deducted_amount: z
-              .number()
-              .describe(`Amount deducted for the event.`)
+            timestamp: z
+              .string()
+              .describe(`Date and time of the transaction event.`)
               .optional(),
-            deducted_fee_amount: z
+          })
+          .describe(`Details of a transaction event.`),
+      )
+      .describe(`List of transaction events related to the transaction.`)
+      .optional(),
+    simple_status: z
+      .enum([
+        "SUCCESSFUL",
+        "PAID_OUT",
+        "CANCEL_FAILED",
+        "CANCELLED",
+        "CHARGEBACK",
+        "FAILED",
+        "REFUND_FAILED",
+        "REFUNDED",
+        "NON_COLLECTION",
+      ])
+      .describe(
+        `Status generated from the processing status and the latest transaction state.`,
+      )
+      .optional(),
+    links: z
+      .array(
+        z.union([
+          z
+            .object({
+              rel: z
+                .string()
+                .describe(`Specifies the relation to the current resource.`)
+                .optional(),
+              href: z
+                .string()
+                .describe(`URL for accessing the related resource.`)
+                .optional(),
+              type: z
+                .string()
+                .describe(`Specifies the media type of the related resource.`)
+                .optional(),
+            })
+            .describe(`Details of a link to a related resource.`),
+          z.object({
+            rel: z
+              .string()
+              .describe(`Specifies the relation to the current resource.`)
+              .optional(),
+            href: z
+              .string()
+              .describe(`URL for accessing the related resource.`)
+              .optional(),
+            type: z
+              .string()
+              .describe(`Specifies the media type of the related resource.`)
+              .optional(),
+            min_amount: z
               .number()
-              .describe(`Amount of the fee deducted for the event.`)
+              .describe(`Minimum allowed amount for the refund.`)
+              .optional(),
+            max_amount: z
+              .number()
+              .describe(`Maximum allowed amount for the refund.`)
               .optional(),
           }),
-        )
-        .describe(`List of events related to the transaction.`)
-        .optional(),
-      location: z
-        .object({
-          lat: z
+        ]),
+      )
+      .describe(`List of hyperlinks for accessing related resources.`)
+      .optional(),
+    events: z
+      .array(
+        z.object({
+          id: z
             .number()
-            .describe(
-              `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-            )
+            .int()
+            .describe(`Unique ID of the transaction event.`)
             .optional(),
-          lon: z
+          transaction_id: z
+            .string()
+            .describe(`Unique ID of the transaction.`)
+            .optional(),
+          type: z
+            .enum(["PAYOUT", "CHARGE_BACK", "REFUND", "PAYOUT_DEDUCTION"])
+            .describe(`Type of the transaction event.`)
+            .optional(),
+          status: z
+            .enum([
+              "PENDING",
+              "SCHEDULED",
+              "FAILED",
+              "REFUNDED",
+              "SUCCESSFUL",
+              "PAID_OUT",
+            ])
+            .describe(`Status of the transaction event.`)
+            .optional(),
+          amount: z.number().describe(`Amount of the event.`).optional(),
+          timestamp: z
+            .string()
+            .describe(`Date and time of the transaction event.`)
+            .optional(),
+          fee_amount: z
             .number()
-            .describe(
-              `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
-            )
+            .describe(`Amount of the fee related to the event.`)
             .optional(),
-          horizontal_accuracy: z
+          installment_number: z
             .number()
-            .describe(
-              `Indication of the precision of the geographical position received from the payment terminal.`,
-            )
+            .int()
+            .describe(`Consecutive number of the installment.`)
             .optional(),
-        })
-        .describe(
-          `Details of the payment location as received from the payment terminal.`,
-        )
-        .optional(),
-      tax_enabled: z
-        .boolean()
-        .describe(
-          `Indicates whether tax deduction is enabled for the transaction.`,
-        )
-        .optional(),
-    }),
-  )
+          deducted_amount: z
+            .number()
+            .describe(`Amount deducted for the event.`)
+            .optional(),
+          deducted_fee_amount: z
+            .number()
+            .describe(`Amount of the fee deducted for the event.`)
+            .optional(),
+        }),
+      )
+      .describe(`List of events related to the transaction.`)
+      .optional(),
+    location: z
+      .object({
+        lat: z
+          .number()
+          .describe(
+            `Latitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+          )
+          .optional(),
+        lon: z
+          .number()
+          .describe(
+            `Longitude value from the coordinates of the payment location (as received from the payment terminal reader).`,
+          )
+          .optional(),
+        horizontal_accuracy: z
+          .number()
+          .describe(
+            `Indication of the precision of the geographical position received from the payment terminal.`,
+          )
+          .optional(),
+      })
+      .describe(
+        `Details of the payment location as received from the payment terminal.`,
+      )
+      .optional(),
+    tax_enabled: z
+      .boolean()
+      .describe(
+        `Indicates whether tax deduction is enabled for the transaction.`,
+      )
+      .optional(),
+  })
   .describe(`OK`);
 
 export const listTransactionsParameters = z.object({
@@ -1101,146 +1031,133 @@ export const listTransactionsResult = z
   .object({
     items: z
       .array(
-        z.intersection(
-          z.intersection(
-            z
-              .object({
-                id: z
-                  .string()
-                  .describe(`Unique ID of the transaction.`)
-                  .optional(),
-                transaction_code: z
-                  .string()
-                  .describe(
-                    `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                  )
-                  .optional(),
-                amount: z
-                  .number()
-                  .describe(`Total amount of the transaction.`)
-                  .optional(),
-                currency: z
-                  .enum([
-                    "BGN",
-                    "BRL",
-                    "CHF",
-                    "CLP",
-                    "CZK",
-                    "DKK",
-                    "EUR",
-                    "GBP",
-                    "HRK",
-                    "HUF",
-                    "NOK",
-                    "PLN",
-                    "RON",
-                    "SEK",
-                    "USD",
-                  ])
-                  .describe(
-                    `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                  )
-                  .optional(),
-                timestamp: z
-                  .string()
-                  .describe(
-                    `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                  )
-                  .optional(),
-                status: z
-                  .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                  .describe(`Current status of the transaction.`)
-                  .optional(),
-                payment_type: z
-                  .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                  .describe(`Payment type used for the transaction.`)
-                  .optional(),
-                installments_count: z
-                  .number()
-                  .int()
-                  .describe(
-                    `Current number of the installment for deferred payments.`,
-                  )
-                  .optional(),
-              })
-              .describe(`Details of the transaction.`),
-            z.object({
-              product_summary: z
-                .string()
-                .describe(
-                  `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
-                )
-                .optional(),
-              payouts_total: z
-                .number()
-                .int()
-                .describe(
-                  `Total number of payouts to the registered user specified in the \`user\` property.`,
-                )
-                .optional(),
-              payouts_received: z
-                .number()
-                .int()
-                .describe(
-                  `Number of payouts that are made to the registered user specified in the \`user\` property.`,
-                )
-                .optional(),
-              payout_plan: z
-                .enum([
-                  "SINGLE_PAYMENT",
-                  "TRUE_INSTALLMENT",
-                  "ACCELERATED_INSTALLMENT",
-                ])
-                .describe(
-                  `Payout plan of the registered user at the time when the transaction was made.`,
-                )
-                .optional(),
-            }),
-          ),
-          z.object({
-            transaction_id: z
-              .string()
-              .describe(`Unique ID of the transaction.`)
-              .optional(),
-            client_transaction_id: z
-              .string()
-              .describe(`Client-specific ID of the transaction.`)
-              .optional(),
-            user: z
-              .string()
-              .describe(
-                `Email address of the registered user (merchant) to whom the payment is made.`,
-              )
-              .optional(),
-            type: z
-              .enum(["PAYMENT", "REFUND", "CHARGE_BACK"])
-              .describe(
-                `Type of the transaction for the registered user specified in the \`user\` property.`,
-              )
-              .optional(),
-            card_type: z
-              .enum([
-                "VISA",
-                "AMEX",
-                "CUP",
-                "DINERS",
-                "DISCOVER",
-                "ELO",
-                "ELV",
-                "HIPERCARD",
-                "JCB",
-                "MAESTRO",
-                "MASTERCARD",
-                "VISA_ELECTRON",
-                "VISA_VPAY",
-                "UNKNOWN",
-              ])
-              .describe(
-                `Issuing card network of the payment card used for the transaction.`,
-              )
-              .optional(),
-          }),
-        ),
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          product_summary: z
+            .string()
+            .describe(
+              `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
+            )
+            .optional(),
+          payouts_total: z
+            .number()
+            .int()
+            .describe(
+              `Total number of payouts to the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          payouts_received: z
+            .number()
+            .int()
+            .describe(
+              `Number of payouts that are made to the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          payout_plan: z
+            .enum([
+              "SINGLE_PAYMENT",
+              "TRUE_INSTALLMENT",
+              "ACCELERATED_INSTALLMENT",
+            ])
+            .describe(
+              `Payout plan of the registered user at the time when the transaction was made.`,
+            )
+            .optional(),
+          transaction_id: z
+            .string()
+            .describe(`Unique ID of the transaction.`)
+            .optional(),
+          client_transaction_id: z
+            .string()
+            .describe(`Client-specific ID of the transaction.`)
+            .optional(),
+          user: z
+            .string()
+            .describe(
+              `Email address of the registered user (merchant) to whom the payment is made.`,
+            )
+            .optional(),
+          type: z
+            .enum(["PAYMENT", "REFUND", "CHARGE_BACK"])
+            .describe(
+              `Type of the transaction for the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          card_type: z
+            .enum([
+              "VISA",
+              "AMEX",
+              "CUP",
+              "DINERS",
+              "DISCOVER",
+              "ELO",
+              "ELV",
+              "HIPERCARD",
+              "JCB",
+              "MAESTRO",
+              "MASTERCARD",
+              "VISA_ELECTRON",
+              "VISA_VPAY",
+              "UNKNOWN",
+            ])
+            .describe(
+              `Issuing card network of the payment card used for the transaction.`,
+            )
+            .optional(),
+        }),
       )
       .optional(),
     links: z
@@ -1349,146 +1266,133 @@ export const listTransactionsV2_1Result = z
   .object({
     items: z
       .array(
-        z.intersection(
-          z.intersection(
-            z
-              .object({
-                id: z
-                  .string()
-                  .describe(`Unique ID of the transaction.`)
-                  .optional(),
-                transaction_code: z
-                  .string()
-                  .describe(
-                    `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                  )
-                  .optional(),
-                amount: z
-                  .number()
-                  .describe(`Total amount of the transaction.`)
-                  .optional(),
-                currency: z
-                  .enum([
-                    "BGN",
-                    "BRL",
-                    "CHF",
-                    "CLP",
-                    "CZK",
-                    "DKK",
-                    "EUR",
-                    "GBP",
-                    "HRK",
-                    "HUF",
-                    "NOK",
-                    "PLN",
-                    "RON",
-                    "SEK",
-                    "USD",
-                  ])
-                  .describe(
-                    `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                  )
-                  .optional(),
-                timestamp: z
-                  .string()
-                  .describe(
-                    `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                  )
-                  .optional(),
-                status: z
-                  .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                  .describe(`Current status of the transaction.`)
-                  .optional(),
-                payment_type: z
-                  .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                  .describe(`Payment type used for the transaction.`)
-                  .optional(),
-                installments_count: z
-                  .number()
-                  .int()
-                  .describe(
-                    `Current number of the installment for deferred payments.`,
-                  )
-                  .optional(),
-              })
-              .describe(`Details of the transaction.`),
-            z.object({
-              product_summary: z
-                .string()
-                .describe(
-                  `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
-                )
-                .optional(),
-              payouts_total: z
-                .number()
-                .int()
-                .describe(
-                  `Total number of payouts to the registered user specified in the \`user\` property.`,
-                )
-                .optional(),
-              payouts_received: z
-                .number()
-                .int()
-                .describe(
-                  `Number of payouts that are made to the registered user specified in the \`user\` property.`,
-                )
-                .optional(),
-              payout_plan: z
-                .enum([
-                  "SINGLE_PAYMENT",
-                  "TRUE_INSTALLMENT",
-                  "ACCELERATED_INSTALLMENT",
-                ])
-                .describe(
-                  `Payout plan of the registered user at the time when the transaction was made.`,
-                )
-                .optional(),
-            }),
-          ),
-          z.object({
-            transaction_id: z
-              .string()
-              .describe(`Unique ID of the transaction.`)
-              .optional(),
-            client_transaction_id: z
-              .string()
-              .describe(`Client-specific ID of the transaction.`)
-              .optional(),
-            user: z
-              .string()
-              .describe(
-                `Email address of the registered user (merchant) to whom the payment is made.`,
-              )
-              .optional(),
-            type: z
-              .enum(["PAYMENT", "REFUND", "CHARGE_BACK"])
-              .describe(
-                `Type of the transaction for the registered user specified in the \`user\` property.`,
-              )
-              .optional(),
-            card_type: z
-              .enum([
-                "VISA",
-                "AMEX",
-                "CUP",
-                "DINERS",
-                "DISCOVER",
-                "ELO",
-                "ELV",
-                "HIPERCARD",
-                "JCB",
-                "MAESTRO",
-                "MASTERCARD",
-                "VISA_ELECTRON",
-                "VISA_VPAY",
-                "UNKNOWN",
-              ])
-              .describe(
-                `Issuing card network of the payment card used for the transaction.`,
-              )
-              .optional(),
-          }),
-        ),
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          product_summary: z
+            .string()
+            .describe(
+              `Short description of the payment. The value is taken from the \`description\` property of the related checkout resource.`,
+            )
+            .optional(),
+          payouts_total: z
+            .number()
+            .int()
+            .describe(
+              `Total number of payouts to the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          payouts_received: z
+            .number()
+            .int()
+            .describe(
+              `Number of payouts that are made to the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          payout_plan: z
+            .enum([
+              "SINGLE_PAYMENT",
+              "TRUE_INSTALLMENT",
+              "ACCELERATED_INSTALLMENT",
+            ])
+            .describe(
+              `Payout plan of the registered user at the time when the transaction was made.`,
+            )
+            .optional(),
+          transaction_id: z
+            .string()
+            .describe(`Unique ID of the transaction.`)
+            .optional(),
+          client_transaction_id: z
+            .string()
+            .describe(`Client-specific ID of the transaction.`)
+            .optional(),
+          user: z
+            .string()
+            .describe(
+              `Email address of the registered user (merchant) to whom the payment is made.`,
+            )
+            .optional(),
+          type: z
+            .enum(["PAYMENT", "REFUND", "CHARGE_BACK"])
+            .describe(
+              `Type of the transaction for the registered user specified in the \`user\` property.`,
+            )
+            .optional(),
+          card_type: z
+            .enum([
+              "VISA",
+              "AMEX",
+              "CUP",
+              "DINERS",
+              "DISCOVER",
+              "ELO",
+              "ELV",
+              "HIPERCARD",
+              "JCB",
+              "MAESTRO",
+              "MASTERCARD",
+              "VISA_ELECTRON",
+              "VISA_VPAY",
+              "UNKNOWN",
+            ])
+            .describe(
+              `Issuing card network of the payment card used for the transaction.`,
+            )
+            .optional(),
+        }),
       )
       .optional(),
     links: z

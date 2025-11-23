@@ -6,7 +6,7 @@ export const createMerchantRoleParameters = z.object({
   permissions: z.array(z.string()).max(100).describe(`User's permissions.`),
   metadata: z
     .object({})
-    .catchall(z.any())
+    .catchall(z.record(z.unknown()))
     .describe(
       `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
     )
@@ -34,7 +34,8 @@ export const createMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.any())
+      .catchall(z.record(z.unknown()))
+      .nullable()
       .describe(
         `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
       )
@@ -79,7 +80,8 @@ export const getMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.any())
+      .catchall(z.record(z.unknown()))
+      .nullable()
       .describe(
         `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
       )
@@ -119,7 +121,8 @@ export const listMerchantRolesResult = z
             .describe(`True if the role is provided by SumUp.`),
           metadata: z
             .object({})
-            .catchall(z.any())
+            .catchall(z.record(z.unknown()))
+            .nullable()
             .describe(
               `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
             )
@@ -170,7 +173,8 @@ export const updateMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.any())
+      .catchall(z.record(z.unknown()))
+      .nullable()
       .describe(
         `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
       )

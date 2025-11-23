@@ -1,6 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import {
   getTransactionParameters,
@@ -15,7 +14,10 @@ import {
   refundTransactionResult,
 } from "./parameters";
 
-export const getTransaction: Tool = {
+export const getTransaction: ToolDefinition<
+  typeof getTransactionParameters,
+  typeof getTransactionResult
+> = {
   name: "get_transaction",
   title: `Retrieve a transaction`,
   description: `Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:
@@ -27,10 +29,7 @@ export const getTransaction: Tool = {
  *  \`client_transaction_id\``,
   parameters: getTransactionParameters,
   result: getTransactionResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof getTransactionParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.transactions.getDeprecated(args);
   },
   annotations: {
@@ -41,7 +40,10 @@ export const getTransaction: Tool = {
   },
 };
 
-export const getTransactionV2_1: Tool = {
+export const getTransactionV2_1: ToolDefinition<
+  typeof getTransactionV2_1Parameters,
+  typeof getTransactionV2_1Result
+> = {
   name: "get_transaction_v2_1",
   title: `Retrieve a transaction`,
   description: `Retrieves the full details of an identified transaction. The transaction resource is identified by a query parameter and *one* of following parameters is required:
@@ -53,10 +55,7 @@ export const getTransactionV2_1: Tool = {
  *  \`client_transaction_id\``,
   parameters: getTransactionV2_1Parameters,
   result: getTransactionV2_1Result,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof getTransactionV2_1Parameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.transactions.get(merchantCode, args);
   },
   annotations: {
@@ -67,16 +66,16 @@ export const getTransactionV2_1: Tool = {
   },
 };
 
-export const listTransactions: Tool = {
+export const listTransactions: ToolDefinition<
+  typeof listTransactionsParameters,
+  typeof listTransactionsResult
+> = {
   name: "list_transactions",
   title: `List transactions`,
   description: `Lists detailed history of all transactions associated with the merchant profile.`,
   parameters: listTransactionsParameters,
   result: listTransactionsResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof listTransactionsParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.transactions.listDeprecated(args);
   },
   annotations: {
@@ -87,16 +86,16 @@ export const listTransactions: Tool = {
   },
 };
 
-export const listTransactionsV2_1: Tool = {
+export const listTransactionsV2_1: ToolDefinition<
+  typeof listTransactionsV2_1Parameters,
+  typeof listTransactionsV2_1Result
+> = {
   name: "list_transactions_v2_1",
   title: `List transactions`,
   description: `Lists detailed history of all transactions associated with the merchant profile.`,
   parameters: listTransactionsV2_1Parameters,
   result: listTransactionsV2_1Result,
-  callback: async (
-    sumup: SumUp,
-    { merchantCode, ...args }: z.infer<typeof listTransactionsV2_1Parameters>,
-  ) => {
+  callback: async (sumup: SumUp, { merchantCode, ...args }) => {
     return await sumup.transactions.list(merchantCode, args);
   },
   annotations: {
@@ -107,16 +106,16 @@ export const listTransactionsV2_1: Tool = {
   },
 };
 
-export const refundTransaction: Tool = {
+export const refundTransaction: ToolDefinition<
+  typeof refundTransactionParameters,
+  typeof refundTransactionResult
+> = {
   name: "refund_transaction",
   title: `Refund a transaction`,
   description: `Refunds an identified transaction either in full or partially.`,
   parameters: refundTransactionParameters,
   result: refundTransactionResult,
-  callback: async (
-    sumup: SumUp,
-    { txnId, ...args }: z.infer<typeof refundTransactionParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { txnId, ...args }) => {
     return await sumup.transactions.refund(txnId, args);
   },
   annotations: {

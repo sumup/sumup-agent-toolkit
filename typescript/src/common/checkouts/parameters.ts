@@ -68,112 +68,104 @@ export const createCheckoutParameters = z
       .optional(),
     valid_until: z
       .string()
+      .nullable()
       .describe(
         `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
       )
       .optional(),
     transactions: z
       .array(
-        z.intersection(
-          z
-            .object({
-              id: z
-                .string()
-                .describe(`Unique ID of the transaction.`)
-                .optional(),
-              transaction_code: z
-                .string()
-                .describe(
-                  `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                )
-                .optional(),
-              amount: z
-                .number()
-                .describe(`Total amount of the transaction.`)
-                .optional(),
-              currency: z
-                .enum([
-                  "BGN",
-                  "BRL",
-                  "CHF",
-                  "CLP",
-                  "CZK",
-                  "DKK",
-                  "EUR",
-                  "GBP",
-                  "HRK",
-                  "HUF",
-                  "NOK",
-                  "PLN",
-                  "RON",
-                  "SEK",
-                  "USD",
-                ])
-                .describe(
-                  `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                )
-                .optional(),
-              timestamp: z
-                .string()
-                .describe(
-                  `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                )
-                .optional(),
-              status: z
-                .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                .describe(`Current status of the transaction.`)
-                .optional(),
-              payment_type: z
-                .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                .describe(`Payment type used for the transaction.`)
-                .optional(),
-              installments_count: z
-                .number()
-                .int()
-                .describe(
-                  `Current number of the installment for deferred payments.`,
-                )
-                .optional(),
-            })
-            .describe(`Details of the transaction.`),
-          z.object({
-            merchant_code: z
-              .string()
-              .describe(
-                `Unique code of the registered merchant to whom the payment is made.`,
-              )
-              .optional(),
-            vat_amount: z
-              .number()
-              .describe(
-                `Amount of the applicable VAT (out of the total transaction amount).`,
-              )
-              .optional(),
-            tip_amount: z
-              .number()
-              .describe(
-                `Amount of the tip (out of the total transaction amount).`,
-              )
-              .optional(),
-            entry_mode: z
-              .enum(["CUSTOMER_ENTRY", "BOLETO"])
-              .describe(`Entry mode of the payment details.`)
-              .optional(),
-            auth_code: z
-              .string()
-              .describe(
-                `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-              )
-              .optional(),
-            internal_id: z
-              .number()
-              .int()
-              .describe(
-                `Internal unique ID of the transaction on the SumUp platform.`,
-              )
-              .optional(),
-          }),
-        ),
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          merchant_code: z
+            .string()
+            .describe(
+              `Unique code of the registered merchant to whom the payment is made.`,
+            )
+            .optional(),
+          vat_amount: z
+            .number()
+            .describe(
+              `Amount of the applicable VAT (out of the total transaction amount).`,
+            )
+            .optional(),
+          tip_amount: z
+            .number()
+            .describe(
+              `Amount of the tip (out of the total transaction amount).`,
+            )
+            .optional(),
+          entry_mode: z
+            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .describe(`Entry mode of the payment details.`)
+            .optional(),
+          auth_code: z
+            .string()
+            .describe(
+              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+            )
+            .optional(),
+          internal_id: z
+            .number()
+            .int()
+            .describe(
+              `Internal unique ID of the transaction on the SumUp platform.`,
+            )
+            .optional(),
+        }),
       )
       .describe(`List of transactions related to the payment.`)
       .optional(),
@@ -247,6 +239,7 @@ export const createCheckoutResult = z
       .optional(),
     valid_until: z
       .string()
+      .nullable()
       .describe(
         `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
       )
@@ -270,106 +263,97 @@ export const createCheckoutResult = z
       .optional(),
     transactions: z
       .array(
-        z.intersection(
-          z
-            .object({
-              id: z
-                .string()
-                .describe(`Unique ID of the transaction.`)
-                .optional(),
-              transaction_code: z
-                .string()
-                .describe(
-                  `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                )
-                .optional(),
-              amount: z
-                .number()
-                .describe(`Total amount of the transaction.`)
-                .optional(),
-              currency: z
-                .enum([
-                  "BGN",
-                  "BRL",
-                  "CHF",
-                  "CLP",
-                  "CZK",
-                  "DKK",
-                  "EUR",
-                  "GBP",
-                  "HRK",
-                  "HUF",
-                  "NOK",
-                  "PLN",
-                  "RON",
-                  "SEK",
-                  "USD",
-                ])
-                .describe(
-                  `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                )
-                .optional(),
-              timestamp: z
-                .string()
-                .describe(
-                  `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                )
-                .optional(),
-              status: z
-                .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                .describe(`Current status of the transaction.`)
-                .optional(),
-              payment_type: z
-                .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                .describe(`Payment type used for the transaction.`)
-                .optional(),
-              installments_count: z
-                .number()
-                .int()
-                .describe(
-                  `Current number of the installment for deferred payments.`,
-                )
-                .optional(),
-            })
-            .describe(`Details of the transaction.`),
-          z.object({
-            merchant_code: z
-              .string()
-              .describe(
-                `Unique code of the registered merchant to whom the payment is made.`,
-              )
-              .optional(),
-            vat_amount: z
-              .number()
-              .describe(
-                `Amount of the applicable VAT (out of the total transaction amount).`,
-              )
-              .optional(),
-            tip_amount: z
-              .number()
-              .describe(
-                `Amount of the tip (out of the total transaction amount).`,
-              )
-              .optional(),
-            entry_mode: z
-              .enum(["CUSTOMER_ENTRY", "BOLETO"])
-              .describe(`Entry mode of the payment details.`)
-              .optional(),
-            auth_code: z
-              .string()
-              .describe(
-                `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-              )
-              .optional(),
-            internal_id: z
-              .number()
-              .int()
-              .describe(
-                `Internal unique ID of the transaction on the SumUp platform.`,
-              )
-              .optional(),
-          }),
-        ),
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          merchant_code: z
+            .string()
+            .describe(
+              `Unique code of the registered merchant to whom the payment is made.`,
+            )
+            .optional(),
+          vat_amount: z
+            .number()
+            .describe(
+              `Amount of the applicable VAT (out of the total transaction amount).`,
+            )
+            .optional(),
+          tip_amount: z
+            .number()
+            .describe(
+              `Amount of the tip (out of the total transaction amount).`,
+            )
+            .optional(),
+          entry_mode: z
+            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .describe(`Entry mode of the payment details.`)
+            .optional(),
+          auth_code: z
+            .string()
+            .describe(
+              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+            )
+            .optional(),
+          internal_id: z
+            .number()
+            .int()
+            .describe(
+              `Internal unique ID of the transaction on the SumUp platform.`,
+            )
+            .optional(),
+        }),
       )
       .describe(`List of transactions related to the payment.`)
       .optional(),
@@ -441,6 +425,7 @@ export const deactivateCheckoutResult = z
       .optional(),
     valid_until: z
       .string()
+      .nullable()
       .describe(
         `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
       )
@@ -464,106 +449,97 @@ export const deactivateCheckoutResult = z
       .optional(),
     transactions: z
       .array(
-        z.intersection(
-          z
-            .object({
-              id: z
-                .string()
-                .describe(`Unique ID of the transaction.`)
-                .optional(),
-              transaction_code: z
-                .string()
-                .describe(
-                  `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                )
-                .optional(),
-              amount: z
-                .number()
-                .describe(`Total amount of the transaction.`)
-                .optional(),
-              currency: z
-                .enum([
-                  "BGN",
-                  "BRL",
-                  "CHF",
-                  "CLP",
-                  "CZK",
-                  "DKK",
-                  "EUR",
-                  "GBP",
-                  "HRK",
-                  "HUF",
-                  "NOK",
-                  "PLN",
-                  "RON",
-                  "SEK",
-                  "USD",
-                ])
-                .describe(
-                  `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                )
-                .optional(),
-              timestamp: z
-                .string()
-                .describe(
-                  `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                )
-                .optional(),
-              status: z
-                .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                .describe(`Current status of the transaction.`)
-                .optional(),
-              payment_type: z
-                .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                .describe(`Payment type used for the transaction.`)
-                .optional(),
-              installments_count: z
-                .number()
-                .int()
-                .describe(
-                  `Current number of the installment for deferred payments.`,
-                )
-                .optional(),
-            })
-            .describe(`Details of the transaction.`),
-          z.object({
-            merchant_code: z
-              .string()
-              .describe(
-                `Unique code of the registered merchant to whom the payment is made.`,
-              )
-              .optional(),
-            vat_amount: z
-              .number()
-              .describe(
-                `Amount of the applicable VAT (out of the total transaction amount).`,
-              )
-              .optional(),
-            tip_amount: z
-              .number()
-              .describe(
-                `Amount of the tip (out of the total transaction amount).`,
-              )
-              .optional(),
-            entry_mode: z
-              .enum(["CUSTOMER_ENTRY", "BOLETO"])
-              .describe(`Entry mode of the payment details.`)
-              .optional(),
-            auth_code: z
-              .string()
-              .describe(
-                `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-              )
-              .optional(),
-            internal_id: z
-              .number()
-              .int()
-              .describe(
-                `Internal unique ID of the transaction on the SumUp platform.`,
-              )
-              .optional(),
-          }),
-        ),
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          merchant_code: z
+            .string()
+            .describe(
+              `Unique code of the registered merchant to whom the payment is made.`,
+            )
+            .optional(),
+          vat_amount: z
+            .number()
+            .describe(
+              `Amount of the applicable VAT (out of the total transaction amount).`,
+            )
+            .optional(),
+          tip_amount: z
+            .number()
+            .describe(
+              `Amount of the tip (out of the total transaction amount).`,
+            )
+            .optional(),
+          entry_mode: z
+            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .describe(`Entry mode of the payment details.`)
+            .optional(),
+          auth_code: z
+            .string()
+            .describe(
+              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+            )
+            .optional(),
+          internal_id: z
+            .number()
+            .int()
+            .describe(
+              `Internal unique ID of the transaction on the SumUp platform.`,
+            )
+            .optional(),
+        }),
       )
       .describe(`List of transactions related to the payment.`)
       .optional(),
@@ -575,229 +551,212 @@ export const getCheckoutParameters = z.object({
 });
 
 export const getCheckoutResult = z
-  .intersection(
-    z
+  .object({
+    checkout_reference: z
+      .string()
+      .max(90)
+      .describe(
+        `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
+      )
+      .optional(),
+    amount: z.number().describe(`Amount of the payment.`).optional(),
+    currency: z
+      .enum([
+        "BGN",
+        "BRL",
+        "CHF",
+        "CLP",
+        "CZK",
+        "DKK",
+        "EUR",
+        "GBP",
+        "HRK",
+        "HUF",
+        "NOK",
+        "PLN",
+        "RON",
+        "SEK",
+        "USD",
+      ])
+      .describe(
+        `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+      )
+      .optional(),
+    merchant_code: z
+      .string()
+      .describe(`Unique identifying code of the merchant profile.`)
+      .optional(),
+    description: z
+      .string()
+      .describe(
+        `Short description of the checkout visible in the SumUp dashboard. The description can contribute to reporting, allowing easier identification of a checkout.`,
+      )
+      .optional(),
+    return_url: z
+      .string()
+      .describe(
+        `URL to which the SumUp platform sends the processing status of the payment checkout.`,
+      )
+      .optional(),
+    id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
+    status: z
+      .enum(["PENDING", "FAILED", "PAID"])
+      .describe(`Current status of the checkout.`)
+      .optional(),
+    date: z
+      .string()
+      .describe(
+        `Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+      )
+      .optional(),
+    valid_until: z
+      .string()
+      .nullable()
+      .describe(
+        `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
+      )
+      .optional(),
+    customer_id: z
+      .string()
+      .describe(
+        `Unique identification of a customer. If specified, the checkout session and payment instrument are associated with the referenced customer.`,
+      )
+      .optional(),
+    mandate: z
       .object({
-        checkout_reference: z
-          .string()
-          .max(90)
-          .describe(
-            `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
-          )
-          .optional(),
-        amount: z.number().describe(`Amount of the payment.`).optional(),
-        currency: z
-          .enum([
-            "BGN",
-            "BRL",
-            "CHF",
-            "CLP",
-            "CZK",
-            "DKK",
-            "EUR",
-            "GBP",
-            "HRK",
-            "HUF",
-            "NOK",
-            "PLN",
-            "RON",
-            "SEK",
-            "USD",
-          ])
-          .describe(
-            `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-          )
-          .optional(),
+        type: z.string().describe(`Indicates the mandate type`).optional(),
+        status: z.string().describe(`Mandate status`).optional(),
         merchant_code: z
           .string()
-          .describe(`Unique identifying code of the merchant profile.`)
-          .optional(),
-        description: z
-          .string()
-          .describe(
-            `Short description of the checkout visible in the SumUp dashboard. The description can contribute to reporting, allowing easier identification of a checkout.`,
-          )
-          .optional(),
-        return_url: z
-          .string()
-          .describe(
-            `URL to which the SumUp platform sends the processing status of the payment checkout.`,
-          )
-          .optional(),
-        id: z
-          .string()
-          .describe(`Unique ID of the checkout resource.`)
-          .optional(),
-        status: z
-          .enum(["PENDING", "FAILED", "PAID"])
-          .describe(`Current status of the checkout.`)
-          .optional(),
-        date: z
-          .string()
-          .describe(
-            `Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-          )
-          .optional(),
-        valid_until: z
-          .string()
-          .describe(
-            `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
-          )
-          .optional(),
-        customer_id: z
-          .string()
-          .describe(
-            `Unique identification of a customer. If specified, the checkout session and payment instrument are associated with the referenced customer.`,
-          )
-          .optional(),
-        mandate: z
-          .object({
-            type: z.string().describe(`Indicates the mandate type`).optional(),
-            status: z.string().describe(`Mandate status`).optional(),
-            merchant_code: z
-              .string()
-              .describe(`Merchant code which has the mandate`)
-              .optional(),
-          })
-          .describe(`Created mandate`)
-          .optional(),
-        transactions: z
-          .array(
-            z.intersection(
-              z
-                .object({
-                  id: z
-                    .string()
-                    .describe(`Unique ID of the transaction.`)
-                    .optional(),
-                  transaction_code: z
-                    .string()
-                    .describe(
-                      `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                    )
-                    .optional(),
-                  amount: z
-                    .number()
-                    .describe(`Total amount of the transaction.`)
-                    .optional(),
-                  currency: z
-                    .enum([
-                      "BGN",
-                      "BRL",
-                      "CHF",
-                      "CLP",
-                      "CZK",
-                      "DKK",
-                      "EUR",
-                      "GBP",
-                      "HRK",
-                      "HUF",
-                      "NOK",
-                      "PLN",
-                      "RON",
-                      "SEK",
-                      "USD",
-                    ])
-                    .describe(
-                      `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                    )
-                    .optional(),
-                  timestamp: z
-                    .string()
-                    .describe(
-                      `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                    )
-                    .optional(),
-                  status: z
-                    .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                    .describe(`Current status of the transaction.`)
-                    .optional(),
-                  payment_type: z
-                    .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                    .describe(`Payment type used for the transaction.`)
-                    .optional(),
-                  installments_count: z
-                    .number()
-                    .int()
-                    .describe(
-                      `Current number of the installment for deferred payments.`,
-                    )
-                    .optional(),
-                })
-                .describe(`Details of the transaction.`),
-              z.object({
-                merchant_code: z
-                  .string()
-                  .describe(
-                    `Unique code of the registered merchant to whom the payment is made.`,
-                  )
-                  .optional(),
-                vat_amount: z
-                  .number()
-                  .describe(
-                    `Amount of the applicable VAT (out of the total transaction amount).`,
-                  )
-                  .optional(),
-                tip_amount: z
-                  .number()
-                  .describe(
-                    `Amount of the tip (out of the total transaction amount).`,
-                  )
-                  .optional(),
-                entry_mode: z
-                  .enum(["CUSTOMER_ENTRY", "BOLETO"])
-                  .describe(`Entry mode of the payment details.`)
-                  .optional(),
-                auth_code: z
-                  .string()
-                  .describe(
-                    `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-                  )
-                  .optional(),
-                internal_id: z
-                  .number()
-                  .int()
-                  .describe(
-                    `Internal unique ID of the transaction on the SumUp platform.`,
-                  )
-                  .optional(),
-              }),
-            ),
-          )
-          .describe(`List of transactions related to the payment.`)
+          .describe(`Merchant code which has the mandate`)
           .optional(),
       })
-      .describe(`Details of the payment checkout.`),
-    z.object({
-      transaction_code: z
-        .string()
-        .describe(
-          `Transaction code of the successful transaction with which the payment for the checkout is completed.`,
-        )
-        .optional(),
-      transaction_id: z
-        .string()
-        .describe(
-          `Transaction ID of the successful transaction with which the payment for the checkout is completed.`,
-        )
-        .optional(),
-      merchant_name: z.string().describe(`Name of the merchant`).optional(),
-      redirect_url: z
-        .string()
-        .describe(
-          `Refers to a url where the end user is redirected once the payment processing completes.`,
-        )
-        .optional(),
-      payment_instrument: z
-        .object({
-          token: z.string().describe(`Token value`).optional(),
-        })
-        .describe(
-          `Object containing token information for the specified payment instrument`,
-        )
-        .optional(),
-    }),
-  )
+      .describe(`Created mandate`)
+      .optional(),
+    transactions: z
+      .array(
+        z.object({
+          id: z.string().describe(`Unique ID of the transaction.`).optional(),
+          transaction_code: z
+            .string()
+            .describe(
+              `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
+            )
+            .optional(),
+          amount: z
+            .number()
+            .describe(`Total amount of the transaction.`)
+            .optional(),
+          currency: z
+            .enum([
+              "BGN",
+              "BRL",
+              "CHF",
+              "CLP",
+              "CZK",
+              "DKK",
+              "EUR",
+              "GBP",
+              "HRK",
+              "HUF",
+              "NOK",
+              "PLN",
+              "RON",
+              "SEK",
+              "USD",
+            ])
+            .describe(
+              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+            )
+            .optional(),
+          timestamp: z
+            .string()
+            .describe(
+              `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+            )
+            .optional(),
+          status: z
+            .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+            .describe(`Current status of the transaction.`)
+            .optional(),
+          payment_type: z
+            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .describe(`Payment type used for the transaction.`)
+            .optional(),
+          installments_count: z
+            .number()
+            .int()
+            .describe(
+              `Current number of the installment for deferred payments.`,
+            )
+            .optional(),
+          merchant_code: z
+            .string()
+            .describe(
+              `Unique code of the registered merchant to whom the payment is made.`,
+            )
+            .optional(),
+          vat_amount: z
+            .number()
+            .describe(
+              `Amount of the applicable VAT (out of the total transaction amount).`,
+            )
+            .optional(),
+          tip_amount: z
+            .number()
+            .describe(
+              `Amount of the tip (out of the total transaction amount).`,
+            )
+            .optional(),
+          entry_mode: z
+            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .describe(`Entry mode of the payment details.`)
+            .optional(),
+          auth_code: z
+            .string()
+            .describe(
+              `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+            )
+            .optional(),
+          internal_id: z
+            .number()
+            .int()
+            .describe(
+              `Internal unique ID of the transaction on the SumUp platform.`,
+            )
+            .optional(),
+        }),
+      )
+      .describe(`List of transactions related to the payment.`)
+      .optional(),
+    transaction_code: z
+      .string()
+      .describe(
+        `Transaction code of the successful transaction with which the payment for the checkout is completed.`,
+      )
+      .optional(),
+    transaction_id: z
+      .string()
+      .describe(
+        `Transaction ID of the successful transaction with which the payment for the checkout is completed.`,
+      )
+      .optional(),
+    merchant_name: z.string().describe(`Name of the merchant`).optional(),
+    redirect_url: z
+      .string()
+      .describe(
+        `Refers to a url where the end user is redirected once the payment processing completes.`,
+      )
+      .optional(),
+    payment_instrument: z
+      .object({
+        token: z.string().describe(`Token value`).optional(),
+      })
+      .describe(
+        `Object containing token information for the specified payment instrument`,
+      )
+      .optional(),
+  })
   .describe(`OK`);
 
 export const getPaymentMethodsParameters = z.object({
@@ -837,602 +796,184 @@ export const listCheckoutsParameters = z.object({
 
 export const listCheckoutsResult = z
   .array(
-    z.intersection(
-      z
+    z.object({
+      checkout_reference: z
+        .string()
+        .max(90)
+        .describe(
+          `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
+        )
+        .optional(),
+      amount: z.number().describe(`Amount of the payment.`).optional(),
+      currency: z
+        .enum([
+          "BGN",
+          "BRL",
+          "CHF",
+          "CLP",
+          "CZK",
+          "DKK",
+          "EUR",
+          "GBP",
+          "HRK",
+          "HUF",
+          "NOK",
+          "PLN",
+          "RON",
+          "SEK",
+          "USD",
+        ])
+        .describe(
+          `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+        )
+        .optional(),
+      merchant_code: z
+        .string()
+        .describe(`Unique identifying code of the merchant profile.`)
+        .optional(),
+      description: z
+        .string()
+        .describe(
+          `Short description of the checkout visible in the SumUp dashboard. The description can contribute to reporting, allowing easier identification of a checkout.`,
+        )
+        .optional(),
+      return_url: z
+        .string()
+        .describe(
+          `URL to which the SumUp platform sends the processing status of the payment checkout.`,
+        )
+        .optional(),
+      id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
+      status: z
+        .enum(["PENDING", "FAILED", "PAID"])
+        .describe(`Current status of the checkout.`)
+        .optional(),
+      date: z
+        .string()
+        .describe(
+          `Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
+        )
+        .optional(),
+      valid_until: z
+        .string()
+        .nullable()
+        .describe(
+          `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
+        )
+        .optional(),
+      customer_id: z
+        .string()
+        .describe(
+          `Unique identification of a customer. If specified, the checkout session and payment instrument are associated with the referenced customer.`,
+        )
+        .optional(),
+      mandate: z
         .object({
-          checkout_reference: z
-            .string()
-            .max(90)
-            .describe(
-              `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
-            )
-            .optional(),
-          amount: z.number().describe(`Amount of the payment.`).optional(),
-          currency: z
-            .enum([
-              "BGN",
-              "BRL",
-              "CHF",
-              "CLP",
-              "CZK",
-              "DKK",
-              "EUR",
-              "GBP",
-              "HRK",
-              "HUF",
-              "NOK",
-              "PLN",
-              "RON",
-              "SEK",
-              "USD",
-            ])
-            .describe(
-              `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-            )
-            .optional(),
+          type: z.string().describe(`Indicates the mandate type`).optional(),
+          status: z.string().describe(`Mandate status`).optional(),
           merchant_code: z
             .string()
-            .describe(`Unique identifying code of the merchant profile.`)
-            .optional(),
-          description: z
-            .string()
-            .describe(
-              `Short description of the checkout visible in the SumUp dashboard. The description can contribute to reporting, allowing easier identification of a checkout.`,
-            )
-            .optional(),
-          return_url: z
-            .string()
-            .describe(
-              `URL to which the SumUp platform sends the processing status of the payment checkout.`,
-            )
-            .optional(),
-          id: z
-            .string()
-            .describe(`Unique ID of the checkout resource.`)
-            .optional(),
-          status: z
-            .enum(["PENDING", "FAILED", "PAID"])
-            .describe(`Current status of the checkout.`)
-            .optional(),
-          date: z
-            .string()
-            .describe(
-              `Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-            )
-            .optional(),
-          valid_until: z
-            .string()
-            .describe(
-              `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
-            )
-            .optional(),
-          customer_id: z
-            .string()
-            .describe(
-              `Unique identification of a customer. If specified, the checkout session and payment instrument are associated with the referenced customer.`,
-            )
-            .optional(),
-          mandate: z
-            .object({
-              type: z
-                .string()
-                .describe(`Indicates the mandate type`)
-                .optional(),
-              status: z.string().describe(`Mandate status`).optional(),
-              merchant_code: z
-                .string()
-                .describe(`Merchant code which has the mandate`)
-                .optional(),
-            })
-            .describe(`Created mandate`)
-            .optional(),
-          transactions: z
-            .array(
-              z.intersection(
-                z
-                  .object({
-                    id: z
-                      .string()
-                      .describe(`Unique ID of the transaction.`)
-                      .optional(),
-                    transaction_code: z
-                      .string()
-                      .describe(
-                        `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                      )
-                      .optional(),
-                    amount: z
-                      .number()
-                      .describe(`Total amount of the transaction.`)
-                      .optional(),
-                    currency: z
-                      .enum([
-                        "BGN",
-                        "BRL",
-                        "CHF",
-                        "CLP",
-                        "CZK",
-                        "DKK",
-                        "EUR",
-                        "GBP",
-                        "HRK",
-                        "HUF",
-                        "NOK",
-                        "PLN",
-                        "RON",
-                        "SEK",
-                        "USD",
-                      ])
-                      .describe(
-                        `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                      )
-                      .optional(),
-                    timestamp: z
-                      .string()
-                      .describe(
-                        `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                      )
-                      .optional(),
-                    status: z
-                      .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                      .describe(`Current status of the transaction.`)
-                      .optional(),
-                    payment_type: z
-                      .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                      .describe(`Payment type used for the transaction.`)
-                      .optional(),
-                    installments_count: z
-                      .number()
-                      .int()
-                      .describe(
-                        `Current number of the installment for deferred payments.`,
-                      )
-                      .optional(),
-                  })
-                  .describe(`Details of the transaction.`),
-                z.object({
-                  merchant_code: z
-                    .string()
-                    .describe(
-                      `Unique code of the registered merchant to whom the payment is made.`,
-                    )
-                    .optional(),
-                  vat_amount: z
-                    .number()
-                    .describe(
-                      `Amount of the applicable VAT (out of the total transaction amount).`,
-                    )
-                    .optional(),
-                  tip_amount: z
-                    .number()
-                    .describe(
-                      `Amount of the tip (out of the total transaction amount).`,
-                    )
-                    .optional(),
-                  entry_mode: z
-                    .enum(["CUSTOMER_ENTRY", "BOLETO"])
-                    .describe(`Entry mode of the payment details.`)
-                    .optional(),
-                  auth_code: z
-                    .string()
-                    .describe(
-                      `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-                    )
-                    .optional(),
-                  internal_id: z
-                    .number()
-                    .int()
-                    .describe(
-                      `Internal unique ID of the transaction on the SumUp platform.`,
-                    )
-                    .optional(),
-                }),
-              ),
-            )
-            .describe(`List of transactions related to the payment.`)
+            .describe(`Merchant code which has the mandate`)
             .optional(),
         })
-        .describe(`Details of the payment checkout.`),
-      z.object({
-        transaction_code: z
-          .string()
-          .describe(
-            `Transaction code of the successful transaction with which the payment for the checkout is completed.`,
-          )
-          .optional(),
-        transaction_id: z
-          .string()
-          .describe(
-            `Transaction ID of the successful transaction with which the payment for the checkout is completed.`,
-          )
-          .optional(),
-        merchant_name: z.string().describe(`Name of the merchant`).optional(),
-        redirect_url: z
-          .string()
-          .describe(
-            `Refers to a url where the end user is redirected once the payment processing completes.`,
-          )
-          .optional(),
-        payment_instrument: z
-          .object({
-            token: z.string().describe(`Token value`).optional(),
-          })
-          .describe(
-            `Object containing token information for the specified payment instrument`,
-          )
-          .optional(),
-      }),
-    ),
-  )
-  .describe(`OK`);
-
-export const processCheckoutParameters = z
-  .object({
-    id: z.string().describe(`Unique ID of the checkout resource.`),
-    payment_type: z
-      .enum(["card", "boleto", "ideal", "blik", "bancontact"])
-      .describe(`Describes the payment method used to attempt processing`),
-    installments: z
-      .number()
-      .int()
-      .describe(
-        `Number of installments for deferred payments. Available only to merchant users in Brazil.`,
-      )
-      .optional(),
-    mandate: z
-      .object({
-        type: z.enum(["recurrent"]).describe(`Indicates the mandate type`),
-        user_agent: z
-          .string()
-          .describe(`Operating system and web client used by the end-user`),
-        user_ip: z
-          .string()
-          .describe(`IP address of the end user. Supports IPv4 and IPv6`)
-          .optional(),
-      })
-      .describe(`Mandate is passed when a card is to be tokenized`)
-      .optional(),
-    card: z
-      .object({
-        name: z
-          .string()
-          .describe(
-            `Name of the cardholder as it appears on the payment card.`,
-          ),
-        number: z
-          .string()
-          .describe(`Number of the payment card (without spaces).`),
-        expiry_year: z
-          .string()
-          .min(2)
-          .max(4)
-          .describe(
-            `Year from the expiration time of the payment card. Accepted formats are \`YY\` and \`YYYY\`.`,
-          ),
-        expiry_month: z
-          .enum([
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-            "12",
-          ])
-          .describe(
-            `Month from the expiration time of the payment card. Accepted format is \`MM\`.`,
-          ),
-        cvv: z
-          .string()
-          .min(3)
-          .max(4)
-          .describe(
-            `Three or four-digit card verification value (security code) of the payment card.`,
-          ),
-        zip_code: z
-          .string()
-          .min(5)
-          .max(5)
-          .describe(
-            `Required five-digit ZIP code. Applicable only to merchant users in the USA.`,
-          )
-          .optional(),
-        last_4_digits: z
-          .string()
-          .min(4)
-          .max(4)
-          .describe(`Last 4 digits of the payment card number.`),
-        type: z
-          .enum([
-            "AMEX",
-            "CUP",
-            "DINERS",
-            "DISCOVER",
-            "ELO",
-            "ELV",
-            "HIPERCARD",
-            "JCB",
-            "MAESTRO",
-            "MASTERCARD",
-            "VISA",
-            "VISA_ELECTRON",
-            "VISA_VPAY",
-            "UNKNOWN",
-          ])
-          .describe(`Issuing card network of the payment card.`),
-      })
-      .describe(
-        `__Required when payment type is \`card\`.__ Details of the payment card.`,
-      )
-      .optional(),
-    token: z
-      .string()
-      .describe(
-        `__Required when using a tokenized card to process a checkout.__ Unique token identifying the saved payment card for a customer.`,
-      )
-      .optional(),
-    customer_id: z
-      .string()
-      .describe(
-        `__Required when \`token\` is provided.__ Unique ID of the customer.`,
-      )
-      .optional(),
-    personal_details: z
-      .object({
-        first_name: z
-          .string()
-          .describe(`First name of the customer.`)
-          .optional(),
-        last_name: z.string().describe(`Last name of the customer.`).optional(),
-        email: z.string().describe(`Email address of the customer.`).optional(),
-        phone: z.string().describe(`Phone number of the customer.`).optional(),
-        birth_date: z
-          .string()
-          .describe(`Date of birth of the customer.`)
-          .optional(),
-        tax_id: z
-          .string()
-          .max(255)
-          .describe(`An identification number user for tax purposes (e.g. CPF)`)
-          .optional(),
-        address: z
-          .object({
-            city: z.string().describe(`City name from the address.`).optional(),
-            country: z
+        .describe(`Created mandate`)
+        .optional(),
+      transactions: z
+        .array(
+          z.object({
+            id: z.string().describe(`Unique ID of the transaction.`).optional(),
+            transaction_code: z
               .string()
               .describe(
-                `Two letter country code formatted according to [ISO3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).`,
+                `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
               )
               .optional(),
-            line_1: z
+            amount: z
+              .number()
+              .describe(`Total amount of the transaction.`)
+              .optional(),
+            currency: z
+              .enum([
+                "BGN",
+                "BRL",
+                "CHF",
+                "CLP",
+                "CZK",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HRK",
+                "HUF",
+                "NOK",
+                "PLN",
+                "RON",
+                "SEK",
+                "USD",
+              ])
+              .describe(
+                `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
+              )
+              .optional(),
+            timestamp: z
               .string()
               .describe(
-                `First line of the address with details of the street name and number.`,
+                `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
               )
               .optional(),
-            line_2: z
-              .string()
+            status: z
+              .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
+              .describe(`Current status of the transaction.`)
+              .optional(),
+            payment_type: z
+              .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+              .describe(`Payment type used for the transaction.`)
+              .optional(),
+            installments_count: z
+              .number()
+              .int()
               .describe(
-                `Second line of the address with details of the building, unit, apartment, and floor numbers.`,
+                `Current number of the installment for deferred payments.`,
               )
               .optional(),
-            postal_code: z
-              .string()
-              .describe(`Postal code from the address.`)
-              .optional(),
-            state: z
-              .string()
-              .describe(`State name or abbreviation from the address.`)
-              .optional(),
-          })
-          .describe(`Profile's personal address information.`)
-          .optional(),
-      })
-      .describe(`Personal details for the customer.`)
-      .optional(),
-  })
-  .describe(`Details of the payment instrument for processing the checkout.`);
-
-export const processCheckoutResult = z
-  .intersection(
-    z
-      .object({
-        checkout_reference: z
-          .string()
-          .max(90)
-          .describe(
-            `Unique ID of the payment checkout specified by the client application when creating the checkout resource.`,
-          )
-          .optional(),
-        amount: z.number().describe(`Amount of the payment.`).optional(),
-        currency: z
-          .enum([
-            "BGN",
-            "BRL",
-            "CHF",
-            "CLP",
-            "CZK",
-            "DKK",
-            "EUR",
-            "GBP",
-            "HRK",
-            "HUF",
-            "NOK",
-            "PLN",
-            "RON",
-            "SEK",
-            "USD",
-          ])
-          .describe(
-            `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-          )
-          .optional(),
-        merchant_code: z
-          .string()
-          .describe(`Unique identifying code of the merchant profile.`)
-          .optional(),
-        description: z
-          .string()
-          .describe(
-            `Short description of the checkout visible in the SumUp dashboard. The description can contribute to reporting, allowing easier identification of a checkout.`,
-          )
-          .optional(),
-        return_url: z
-          .string()
-          .describe(
-            `URL to which the SumUp platform sends the processing status of the payment checkout.`,
-          )
-          .optional(),
-        id: z
-          .string()
-          .describe(`Unique ID of the checkout resource.`)
-          .optional(),
-        status: z
-          .enum(["PENDING", "FAILED", "PAID"])
-          .describe(`Current status of the checkout.`)
-          .optional(),
-        date: z
-          .string()
-          .describe(
-            `Date and time of the creation of the payment checkout. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-          )
-          .optional(),
-        valid_until: z
-          .string()
-          .describe(
-            `Date and time of the checkout expiration before which the client application needs to send a processing request. If no value is present, the checkout does not have an expiration time.`,
-          )
-          .optional(),
-        customer_id: z
-          .string()
-          .describe(
-            `Unique identification of a customer. If specified, the checkout session and payment instrument are associated with the referenced customer.`,
-          )
-          .optional(),
-        mandate: z
-          .object({
-            type: z.string().describe(`Indicates the mandate type`).optional(),
-            status: z.string().describe(`Mandate status`).optional(),
             merchant_code: z
               .string()
-              .describe(`Merchant code which has the mandate`)
+              .describe(
+                `Unique code of the registered merchant to whom the payment is made.`,
+              )
               .optional(),
-          })
-          .describe(`Created mandate`)
-          .optional(),
-        transactions: z
-          .array(
-            z.intersection(
-              z
-                .object({
-                  id: z
-                    .string()
-                    .describe(`Unique ID of the transaction.`)
-                    .optional(),
-                  transaction_code: z
-                    .string()
-                    .describe(
-                      `Transaction code returned by the acquirer/processing entity after processing the transaction.`,
-                    )
-                    .optional(),
-                  amount: z
-                    .number()
-                    .describe(`Total amount of the transaction.`)
-                    .optional(),
-                  currency: z
-                    .enum([
-                      "BGN",
-                      "BRL",
-                      "CHF",
-                      "CLP",
-                      "CZK",
-                      "DKK",
-                      "EUR",
-                      "GBP",
-                      "HRK",
-                      "HUF",
-                      "NOK",
-                      "PLN",
-                      "RON",
-                      "SEK",
-                      "USD",
-                    ])
-                    .describe(
-                      `Three-letter [ISO4217](https://en.wikipedia.org/wiki/ISO_4217) code of the currency for the amount. Currently supported currency values are enumerated above.`,
-                    )
-                    .optional(),
-                  timestamp: z
-                    .string()
-                    .describe(
-                      `Date and time of the creation of the transaction. Response format expressed according to [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) code.`,
-                    )
-                    .optional(),
-                  status: z
-                    .enum(["SUCCESSFUL", "CANCELLED", "FAILED", "PENDING"])
-                    .describe(`Current status of the transaction.`)
-                    .optional(),
-                  payment_type: z
-                    .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
-                    .describe(`Payment type used for the transaction.`)
-                    .optional(),
-                  installments_count: z
-                    .number()
-                    .int()
-                    .describe(
-                      `Current number of the installment for deferred payments.`,
-                    )
-                    .optional(),
-                })
-                .describe(`Details of the transaction.`),
-              z.object({
-                merchant_code: z
-                  .string()
-                  .describe(
-                    `Unique code of the registered merchant to whom the payment is made.`,
-                  )
-                  .optional(),
-                vat_amount: z
-                  .number()
-                  .describe(
-                    `Amount of the applicable VAT (out of the total transaction amount).`,
-                  )
-                  .optional(),
-                tip_amount: z
-                  .number()
-                  .describe(
-                    `Amount of the tip (out of the total transaction amount).`,
-                  )
-                  .optional(),
-                entry_mode: z
-                  .enum(["CUSTOMER_ENTRY", "BOLETO"])
-                  .describe(`Entry mode of the payment details.`)
-                  .optional(),
-                auth_code: z
-                  .string()
-                  .describe(
-                    `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
-                  )
-                  .optional(),
-                internal_id: z
-                  .number()
-                  .int()
-                  .describe(
-                    `Internal unique ID of the transaction on the SumUp platform.`,
-                  )
-                  .optional(),
-              }),
-            ),
-          )
-          .describe(`List of transactions related to the payment.`)
-          .optional(),
-      })
-      .describe(`Details of the payment checkout.`),
-    z.object({
+            vat_amount: z
+              .number()
+              .describe(
+                `Amount of the applicable VAT (out of the total transaction amount).`,
+              )
+              .optional(),
+            tip_amount: z
+              .number()
+              .describe(
+                `Amount of the tip (out of the total transaction amount).`,
+              )
+              .optional(),
+            entry_mode: z
+              .enum(["CUSTOMER_ENTRY", "BOLETO"])
+              .describe(`Entry mode of the payment details.`)
+              .optional(),
+            auth_code: z
+              .string()
+              .describe(
+                `Authorization code for the transaction sent by the payment card issuer or bank. Applicable only to card payments.`,
+              )
+              .optional(),
+            internal_id: z
+              .number()
+              .int()
+              .describe(
+                `Internal unique ID of the transaction on the SumUp platform.`,
+              )
+              .optional(),
+          }),
+        )
+        .describe(`List of transactions related to the payment.`)
+        .optional(),
       transaction_code: z
         .string()
         .describe(

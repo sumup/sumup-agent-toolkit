@@ -1,11 +1,14 @@
-import { type FunctionTool, tool } from "@openai/agents";
+import { tool } from "@openai/agents";
 import SumUp from "@sumup/sdk";
-import { tools } from "../common";
+import { registerTools } from "src/common";
+import type z from "zod";
+
+type AgentFunctionTool = ReturnType<typeof tool>;
 
 class SumUpAgentToolkit {
   private _sumup: SumUp;
 
-  tools: FunctionTool[];
+  tools: AgentFunctionTool[];
 
   constructor({
     apiKey,
@@ -19,22 +22,25 @@ class SumUpAgentToolkit {
       host,
     });
 
-    this.tools = tools.map(
-      ({ name, description, parameters, callback, annotations }) =>
-        tool({
-          name,
-          description,
-          parameters,
-          needsApproval: !!annotations?.destructive,
-          execute: async (input) => {
-            const res = await callback(this._sumup, input);
+    this.tools = [];
+    registerTools((t) => {
+      this.tools.push(
+        tool<z.infer<typeof t.parameters>>({
+          name: t.name,
+          description: t.description,
+          strict: true,
+          parameters: t.parameters,
+          needsApproval: !!t.annotations?.destructive,
+          execute: async (input: z.infer<typeof t.parameters>) => {
+            const res = await t.callback(this._sumup, input);
             return JSON.stringify(res);
           },
         }),
-    );
+      );
+    });
   }
 
-  getTools(): FunctionTool[] {
+  getTools(): AgentFunctionTool[] {
     return this.tools;
   }
 }

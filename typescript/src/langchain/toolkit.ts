@@ -4,7 +4,8 @@ import {
   tool,
 } from "@langchain/core/tools";
 import SumUp from "@sumup/sdk";
-import { tools } from "../common";
+import type z from "zod";
+import { registerTools } from "../common";
 
 class SumUpAgentToolkit implements BaseToolkit {
   private _sumup: SumUp;
@@ -23,19 +24,23 @@ class SumUpAgentToolkit implements BaseToolkit {
       host,
     });
 
-    this.tools = tools.map((t) =>
-      tool(
-        async (input): Promise<string> => {
-          const res = await t.callback(this._sumup, input);
-          return JSON.stringify(res);
-        },
-        {
-          name: t.name,
-          description: t.description,
-          schema: t.parameters,
-        },
-      ),
-    );
+    this.tools = [];
+    registerTools((t) => {
+      this.tools.push(
+        tool(
+          async (input: z.infer<typeof t.parameters>): Promise<string> => {
+            const res = await t.callback(this._sumup, input);
+            return JSON.stringify(res);
+          },
+          {
+            name: t.name,
+            description: t.description,
+            schema: t.parameters,
+            responseFormat: "content",
+          },
+        ),
+      );
+    });
   }
 
   getTools(): StructuredTool[] {

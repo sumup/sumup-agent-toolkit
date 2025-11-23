@@ -1,6 +1,5 @@
 import type SumUp from "@sumup/sdk";
-import type z from "zod";
-import type { Tool } from "../types";
+import type { ToolDefinition } from "../types";
 
 import {
   compatGetOperatorParameters,
@@ -15,16 +14,16 @@ import {
   updateSubAccountResult,
 } from "./parameters";
 
-export const compatGetOperator: Tool = {
+export const compatGetOperator: ToolDefinition<
+  typeof compatGetOperatorParameters,
+  typeof compatGetOperatorResult
+> = {
   name: "compat_get_operator",
   title: `Retrieve an operator`,
   description: `Returns specific operator.`,
   parameters: compatGetOperatorParameters,
   result: compatGetOperatorResult,
-  callback: async (
-    sumup: SumUp,
-    { operatorId, ...args }: z.infer<typeof compatGetOperatorParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { operatorId, ...args }) => {
     return await sumup.subaccounts.compatGetOperator(operatorId, args);
   },
   annotations: {
@@ -35,16 +34,16 @@ export const compatGetOperator: Tool = {
   },
 };
 
-export const createSubAccount: Tool = {
+export const createSubAccount: ToolDefinition<
+  typeof createSubAccountParameters,
+  typeof createSubAccountResult
+> = {
   name: "create_sub_account",
   title: `Create an operator`,
   description: `Creates new operator for currently authorized users' merchant.`,
   parameters: createSubAccountParameters,
   result: createSubAccountResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof createSubAccountParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.subaccounts.createSubAccount(args);
   },
   annotations: {
@@ -55,16 +54,16 @@ export const createSubAccount: Tool = {
   },
 };
 
-export const deactivateSubAccount: Tool = {
+export const deactivateSubAccount: ToolDefinition<
+  typeof deactivateSubAccountParameters,
+  typeof deactivateSubAccountResult
+> = {
   name: "deactivate_sub_account",
   title: `Disable an operator.`,
   description: `Disable the specified operator for the merchant account.`,
   parameters: deactivateSubAccountParameters,
   result: deactivateSubAccountResult,
-  callback: async (
-    sumup: SumUp,
-    { operatorId, ...args }: z.infer<typeof deactivateSubAccountParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { operatorId, ...args }) => {
     return await sumup.subaccounts.deactivateSubAccount(operatorId, args);
   },
   annotations: {
@@ -75,16 +74,16 @@ export const deactivateSubAccount: Tool = {
   },
 };
 
-export const listSubAccounts: Tool = {
+export const listSubAccounts: ToolDefinition<
+  typeof listSubAccountsParameters,
+  typeof listSubAccountsResult
+> = {
   name: "list_sub_accounts",
   title: `List operators`,
   description: `Returns list of operators for currently authorized user's merchant.`,
   parameters: listSubAccountsParameters,
   result: listSubAccountsResult,
-  callback: async (
-    sumup: SumUp,
-    args: z.infer<typeof listSubAccountsParameters>,
-  ) => {
+  callback: async (sumup: SumUp, args) => {
     return await sumup.subaccounts.listSubAccounts(args);
   },
   annotations: {
@@ -95,16 +94,16 @@ export const listSubAccounts: Tool = {
   },
 };
 
-export const updateSubAccount: Tool = {
+export const updateSubAccount: ToolDefinition<
+  typeof updateSubAccountParameters,
+  typeof updateSubAccountResult
+> = {
   name: "update_sub_account",
   title: `Update an operator`,
   description: `Updates operator. If the operator was disabled and their password is updated they will be unblocked.`,
   parameters: updateSubAccountParameters,
   result: updateSubAccountResult,
-  callback: async (
-    sumup: SumUp,
-    { operatorId, ...args }: z.infer<typeof updateSubAccountParameters>,
-  ) => {
+  callback: async (sumup: SumUp, { operatorId, ...args }) => {
     return await sumup.subaccounts.updateSubAccount(operatorId, args);
   },
   annotations: {
