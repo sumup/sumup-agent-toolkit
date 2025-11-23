@@ -1,7 +1,19 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@ai-sdk/provider-utils": ["../../node_modules/@ai-sdk/provider-utils"],
+      "@ai-sdk/provider-utils/*": [
+        "../../node_modules/@ai-sdk/provider-utils/*"
+      ],
+      "@ai-sdk/provider": ["../../node_modules/@ai-sdk/provider"],
+      "@ai-sdk/provider/*": ["../../node_modules/@ai-sdk/provider/*"],
+      "zod": ["../../node_modules/zod"],
+      "zod/*": ["../../node_modules/zod/*"]
+    }
   },
   "include": ["index.ts"],
   "exclude": ["node_modules", "dist"]

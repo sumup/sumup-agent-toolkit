@@ -1,12 +1,12 @@
 import SumUp from "@sumup/sdk";
-import { type Tool, tool, zodSchema } from "ai";
+import { type ToolSet, tool, zodSchema } from "ai";
 import { registerTools } from "src/common";
 import type z from "zod";
 
 class SumUpAgentToolkit {
   private _sumup: SumUp;
 
-  tools: { [key: string]: Tool };
+  tools: ToolSet;
 
   constructor({
     apiKey,
@@ -35,7 +35,7 @@ class SumUpAgentToolkit {
     });
   }
 
-  getTools(): { [key: string]: Tool } {
+  getTools(): ToolSet {
     return this.tools;
   }
 }

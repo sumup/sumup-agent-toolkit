@@ -10,7 +10,7 @@
   "author": "SumUp <support@sumup.com> (https://sumup.com/)",
   "dependencies": {
     "@sumup/agent-toolkit": "file:../..",
-    "ai": "^5.0.98",
+    "ai": "^5.0.100",
     "dotenv": "^17.2.3"
   }
 }
