@@ -52,7 +52,7 @@
     "@modelcontextprotocol/sdk": "^1.22.0",
     "@openai/agents": "^0.3.3",
     "@sumup/sdk": "^0.0.7",
-    "ai": "^5.0.98",
+    "ai": "^5.0.100",
     "zod": "^3.25.76"
   },
   "devDependencies": {
