@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.5.1](https://github.com/sumup/sumup-ai/compare/typescript-v0.5.0...typescript-v0.5.1) (2025-11-24)
+
+
+### Bug Fixes
+
+* **sdk:** examples ([53a5c2d](https://github.com/sumup/sumup-ai/commit/53a5c2dccb3bd465e68a197c390a530c291ef558))
+
 ## [0.5.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.4.1...typescript-v0.5.0) (2025-11-23)
 
 
