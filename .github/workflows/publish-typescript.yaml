@@ -17,8 +17,6 @@ jobs:
     if: startsWith(github.event.release.tag_name, 'typescript-v') && github.event.release.draft == false && github.event.release.prerelease == false
     name: Publish
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     defaults:
       run:
         working-directory: ./typescript
@@ -36,13 +34,6 @@ jobs:
           cache-dependency-path: ./typescript
           registry-url: https://registry.npmjs.org
           always-auth: true
-
-      - name: Verify npm authentication
-        run: |
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "::error title=NPM token missing::The NPM_TOKEN secret is not configured. Add it to the repository secrets to enable npm publishing."
-            exit 1
-          fi
 
       - name: Install dependencies
         run: npm ci
