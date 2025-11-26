@@ -707,6 +707,7 @@ The status is only returned after write operations or on read endpoints when the
       .describe(`The date and time when the resource was last updated. This is a string as defined in [RFC 3339, section 5.6](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6).
 `),
   })
+  .passthrough()
   .describe(`Returns a Merchant for a valid identifier.`);
 
 export const getPersonParameters = z.object({
@@ -990,6 +991,7 @@ The status is only returned after write operations or on read endpoints when the
       )
       .optional(),
   })
+  .passthrough()
   .describe(`Returns a Person for a valid identifier.`);
 
 export const listPersonsParameters = z.object({
@@ -1280,4 +1282,5 @@ The status is only returned after write operations or on read endpoints when the
       }),
     ),
   })
+  .passthrough()
   .describe(`Returns a list of persons for a valid merchant identifier.`);

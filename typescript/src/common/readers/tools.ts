@@ -111,7 +111,7 @@ export const deleteReader: Tool<
   parameters: deleteReaderParameters,
   result: deleteReaderResult,
   callback: async (sumup: SumUp, { merchantCode, id, ...args }) => {
-    return await sumup.readers.deleteReader(merchantCode, id, args);
+    return await sumup.readers.delete(merchantCode, id, args);
   },
   annotations: {
     title: `Delete a reader`,

@@ -30,6 +30,7 @@ export const compatGetOperatorResult = z
       .describe(`Permissions assigned to an operator or user.`),
     account_type: z.enum(["operator", "normal"]),
   })
+  .passthrough()
   .describe(`Operator account for a merchant.`);
 
 export const createSubAccountParameters = z.object({
@@ -69,6 +70,7 @@ export const createSubAccountResult = z
       .describe(`Permissions assigned to an operator or user.`),
     account_type: z.enum(["operator", "normal"]),
   })
+  .passthrough()
   .describe(`Operator account for a merchant.`);
 
 export const deactivateSubAccountParameters = z.object({
@@ -101,6 +103,7 @@ export const deactivateSubAccountResult = z
       .describe(`Permissions assigned to an operator or user.`),
     account_type: z.enum(["operator", "normal"]),
   })
+  .passthrough()
   .describe(`Operator account for a merchant.`);
 
 export const listSubAccountsParameters = z.object({
@@ -190,4 +193,5 @@ export const updateSubAccountResult = z
       .describe(`Permissions assigned to an operator or user.`),
     account_type: z.enum(["operator", "normal"]),
   })
+  .passthrough()
   .describe(`Operator account for a merchant.`);

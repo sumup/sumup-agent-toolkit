@@ -1,14 +1,16 @@
 import { z } from "zod";
 
 export const createMerchantRoleParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   name: z.string().describe(`User-defined name of the role.`),
   permissions: z.array(z.string()).max(100).describe(`User's permissions.`),
   metadata: z
     .object({})
-    .catchall(z.record(z.unknown()))
+    .catchall(z.unknown())
     .describe(
-      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
     )
     .optional(),
   description: z
@@ -34,10 +36,10 @@ export const createMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -47,19 +49,24 @@ export const createMerchantRoleResult = z
       .string()
       .describe(`The timestamp of when the role was last updated.`),
   })
+  .passthrough()
   .describe(
     `A custom role that can be used to assign set of permissions to members.`,
   );
 
 export const deleteMerchantRoleParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   roleId: z.string().describe(`The ID of the role to retrieve.`),
 });
 
 export const deleteMerchantRoleResult = z.any();
 
 export const getMerchantRoleParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   roleId: z.string().describe(`The ID of the role to retrieve.`),
 });
 
@@ -80,10 +87,10 @@ export const getMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -93,12 +100,15 @@ export const getMerchantRoleResult = z
       .string()
       .describe(`The timestamp of when the role was last updated.`),
   })
+  .passthrough()
   .describe(
     `A custom role that can be used to assign set of permissions to members.`,
   );
 
 export const listMerchantRolesParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
 });
 
 export const listMerchantRolesResult = z
@@ -121,10 +131,10 @@ export const listMerchantRolesResult = z
             .describe(`True if the role is provided by SumUp.`),
           metadata: z
             .object({})
-            .catchall(z.record(z.unknown()))
+            .catchall(z.unknown())
             .nullable()
             .describe(
-              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
             )
             .optional(),
           created_at: z
@@ -139,10 +149,13 @@ export const listMerchantRolesResult = z
         ),
     ),
   })
+  .passthrough()
   .describe(`Returns a list of Role objects.`);
 
 export const updateMerchantRoleParameters = z.object({
-  merchantCode: z.string().describe(`Merchant code.`),
+  merchantCode: z
+    .string()
+    .describe(`Short unique identifier for the merchant.`),
   roleId: z.string().describe(`The ID of the role to retrieve.`),
   name: z.string().describe(`User-defined name of the role.`).optional(),
   permissions: z
@@ -173,10 +186,10 @@ export const updateMerchantRoleResult = z
       .describe(`True if the role is provided by SumUp.`),
     metadata: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -186,6 +199,7 @@ export const updateMerchantRoleResult = z
       .string()
       .describe(`The timestamp of when the role was last updated.`),
   })
+  .passthrough()
   .describe(
     `A custom role that can be used to assign set of permissions to members.`,
   );

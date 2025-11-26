@@ -5,7 +5,7 @@
   "type": "commonjs",
   "description": "Generates SumUp Agent Toolkit helpers from the OpenAPI schema.",
   "scripts": {
-    "generate": "ts-node src/index.ts",
+    "generate": "ts-node src/index.ts ../../apis/specs/openapi.json",
     "lint": "biome check",
     "lint:fix": "biome check --write"
   },

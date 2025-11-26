@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createReaderParameters = z.object({
   merchantCode: z
     .string()
-    .describe(`Unique identifier of the merchant account.`),
+    .describe(`Short unique identifier for the merchant.`),
   pairing_code: z
     .string()
     .min(8)
@@ -17,13 +17,11 @@ export const createReaderParameters = z.object({
     .describe(
       `Custom human-readable, user-defined name for easier identification of the reader.`,
     ),
-  meta: z
+  metadata: z
     .object({})
-    .catchall(z.string().max(256))
+    .catchall(z.unknown())
     .describe(
-      `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
     )
     .optional(),
 });
@@ -35,8 +33,8 @@ export const createReaderResult = z
       .min(30)
       .max(30)
       .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
     name: z
       .string()
       .max(500)
@@ -65,14 +63,12 @@ Possible values:
           .describe(`Identifier of the model of the device.`),
       })
       .describe(`Information about the underlying physical device.`),
-    meta: z
+    metadata: z
       .object({})
-      .catchall(z.string().max(256))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -82,6 +78,7 @@ Possible values:
       .string()
       .describe(`The timestamp of when the reader was last updated.`),
   })
+  .passthrough()
   .describe(
     `A physical card reader device that can accept in-person payments.`,
   );
@@ -203,6 +200,7 @@ It can be used later to fetch the transaction details via the [Transactions API]
 `),
     }),
   })
+  .passthrough()
   .describe(`The Checkout got successfully created for the given reader.`);
 
 export const createReaderTerminateParameters = z.object({
@@ -215,14 +213,14 @@ export const createReaderTerminateResult = z.any();
 export const deleteReaderParameters = z.object({
   merchantCode: z
     .string()
-    .describe(`Unique identifier of the merchant account.`),
+    .describe(`Short unique identifier for the merchant.`),
   id: z
     .string()
     .min(30)
     .max(30)
     .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
 });
 
 export const deleteReaderResult = z.any();
@@ -230,14 +228,14 @@ export const deleteReaderResult = z.any();
 export const getReaderParameters = z.object({
   merchantCode: z
     .string()
-    .describe(`Unique identifier of the merchant account.`),
+    .describe(`Short unique identifier for the merchant.`),
   id: z
     .string()
     .min(30)
     .max(30)
     .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
 });
 
 export const getReaderResult = z
@@ -247,8 +245,8 @@ export const getReaderResult = z
       .min(30)
       .max(30)
       .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
     name: z
       .string()
       .max(500)
@@ -277,14 +275,12 @@ Possible values:
           .describe(`Identifier of the model of the device.`),
       })
       .describe(`Information about the underlying physical device.`),
-    meta: z
+    metadata: z
       .object({})
-      .catchall(z.string().max(256))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -294,6 +290,7 @@ Possible values:
       .string()
       .describe(`The timestamp of when the reader was last updated.`),
   })
+  .passthrough()
   .describe(
     `A physical card reader device that can accept in-person payments.`,
   );
@@ -301,7 +298,7 @@ Possible values:
 export const listReadersParameters = z.object({
   merchantCode: z
     .string()
-    .describe(`Unique identifier of the merchant account.`),
+    .describe(`Short unique identifier for the merchant.`),
 });
 
 export const listReadersResult = z
@@ -314,8 +311,8 @@ export const listReadersResult = z
             .min(30)
             .max(30)
             .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
           name: z
             .string()
             .max(500)
@@ -344,14 +341,12 @@ Possible values:
                 .describe(`Identifier of the model of the device.`),
             })
             .describe(`Information about the underlying physical device.`),
-          meta: z
+          metadata: z
             .object({})
-            .catchall(z.string().max(256))
+            .catchall(z.unknown())
             .nullable()
             .describe(
-              `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+              `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
             )
             .optional(),
           created_at: z
@@ -366,19 +361,20 @@ Possible values:
         ),
     ),
   })
+  .passthrough()
   .describe(`Returns a list Reader objects.`);
 
 export const updateReaderParameters = z.object({
   merchantCode: z
     .string()
-    .describe(`Unique identifier of the merchant account.`),
+    .describe(`Short unique identifier for the merchant.`),
   id: z
     .string()
     .min(30)
     .max(30)
     .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
   name: z
     .string()
     .max(500)
@@ -386,13 +382,11 @@ If you DELETE a reader, and pair the device again, the ID will be different. Do 
       `Custom human-readable, user-defined name for easier identification of the reader.`,
     )
     .optional(),
-  meta: z
+  metadata: z
     .object({})
-    .catchall(z.string().max(256))
+    .catchall(z.unknown())
     .describe(
-      `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+      `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
     )
     .optional(),
 });
@@ -404,8 +398,8 @@ export const updateReaderResult = z
       .min(30)
       .max(30)
       .describe(`Unique identifier of the object.
-Note that this identifies the instance of the physical devices pairing with your SumUp account.
-If you DELETE a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
+
+Note that this identifies the instance of the physical devices pairing with your SumUp account. If you [delete](https://developer.sumup.com/api/readers/delete-reader) a reader, and pair the device again, the ID will be different. Do not use this ID to refer to a physical device.`),
     name: z
       .string()
       .max(500)
@@ -434,14 +428,12 @@ Possible values:
           .describe(`Identifier of the model of the device.`),
       })
       .describe(`Information about the underlying physical device.`),
-    meta: z
+    metadata: z
       .object({})
-      .catchall(z.string().max(256))
+      .catchall(z.unknown())
       .nullable()
       .describe(
-        `A set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-
-**Warning**: Updating Meta will overwrite the existing data. Make sure to always include the complete JSON object.`,
+        `Set of user-defined key-value pairs attached to the object. Partial updates are not supported. When updating, always submit whole metadata. Maximum of 64 parameters are allowed in the object.`,
       )
       .optional(),
     created_at: z
@@ -451,6 +443,7 @@ Possible values:
       .string()
       .describe(`The timestamp of when the reader was last updated.`),
   })
+  .passthrough()
   .describe(
     `A physical card reader device that can accept in-person payments.`,
   );

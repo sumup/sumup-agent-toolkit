@@ -111,6 +111,7 @@ export const createCustomerResult = z
       .describe(`Personal details for the customer.`)
       .optional(),
   })
+  .passthrough()
   .describe(`Created`);
 
 export const deactivatePaymentInstrumentParameters = z.object({
@@ -185,6 +186,7 @@ export const getCustomerResult = z
       .describe(`Personal details for the customer.`)
       .optional(),
   })
+  .passthrough()
   .describe(`Created`);
 
 export const listPaymentInstrumentsParameters = z.object({
@@ -374,4 +376,5 @@ export const updateCustomerResult = z
       .describe(`Personal details for the customer.`)
       .optional(),
   })
+  .passthrough()
   .describe(`Created`);

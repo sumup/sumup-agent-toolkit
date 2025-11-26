@@ -1,5 +1,7 @@
 import SumUp from "@sumup/sdk";
+
 import { type ToolSet, tool, zodSchema } from "ai";
+
 import { registerTools } from "src/common";
 import type z from "zod";
 
