@@ -7,19 +7,20 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+defaults:
+  run:
+    working-directory: ./mcp
+
 permissions:
-  contents: read
-  packages: write
-  id-token: write
+  id-token: write # Needed for provenance
+  packages: write # Needed to publish package to GitHub package registry
+  contents: read # Needed for publishing to JSR
 
 jobs:
   publish:
-    if: startsWith(github.event.release.tag_name, 'mcp-v') && github.event.release.draft == false && github.event.release.prerelease == false
     name: Publish
+    if: startsWith(github.event.release.tag_name, 'mcp-v') && github.event.release.draft == false && github.event.release.prerelease == false
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mcp
     steps:
       - name: Checkout release tag
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -29,11 +30,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22
           cache: npm
-          cache-dependency-path: ./mcp
+          node-version-file: ./mcp/package.json
+          cache-dependency-path: ./mcp/package-lock.json
           registry-url: https://registry.npmjs.org
-          always-auth: true
 
       - name: Install dependencies
         run: npm ci
@@ -42,10 +42,7 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        id: publish
-        run: |
-          npm publish --access public
-          echo "published=true" >> "$GITHUB_OUTPUT"
+        run: npm publish --provenance --access public
 
       - name: Log in to GitHub Container Registry
         if: steps.publish.outputs.published == 'true'

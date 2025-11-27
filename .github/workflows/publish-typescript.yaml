@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           cache: npm
-          node-version-file: ./sdk/package.json
+          node-version-file: ./typescript/package.json
           cache-dependency-path: ./typescript/package-lock.json
           registry-url: https://registry.npmjs.org
 
