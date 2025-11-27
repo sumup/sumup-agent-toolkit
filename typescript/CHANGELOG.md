@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.7.2](https://github.com/sumup/sumup-ai/compare/typescript-v0.7.1...typescript-v0.7.2) (2025-11-27)
+
+
+### Bug Fixes
+
+* **sdk:** duplicate tools ([bca89cf](https://github.com/sumup/sumup-ai/commit/bca89cf82a35997cb407bf8c7e5ccbf4968a1e70))
+
 ## [0.7.1](https://github.com/sumup/sumup-ai/compare/typescript-v0.7.0...typescript-v0.7.1) (2025-11-27)
 
 
