@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.7.1](https://github.com/sumup/sumup-ai/compare/typescript-v0.7.0...typescript-v0.7.1) (2025-11-27)
+
+
+### Bug Fixes
+
+* publishing pipeline, bump a few deps ([98af006](https://github.com/sumup/sumup-ai/commit/98af0062d9d490a2ab1addb2f8b86de55bde857d))
+
 ## [0.7.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.6.0...typescript-v0.7.0) (2025-11-27)
 
 
