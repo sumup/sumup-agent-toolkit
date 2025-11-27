@@ -44,5 +44,19 @@ jobs:
       - name: Publish to npm
         run: npm publish --provenance --access public
 
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: ./typescript/package.json
+          cache: npm
+          cache-dependency-path: ./typescript/package-lock.json
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@sumup'
+
+      - name: Publish to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: npm publish --provenance --access public
+
       - name: Publish to JSR
         run: npx jsr publish
