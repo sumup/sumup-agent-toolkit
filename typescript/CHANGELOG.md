@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.7.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.6.0...typescript-v0.7.0) (2025-11-27)
+
+
+### Features
+
+* **sdk:** bump deps ([e4febfe](https://github.com/sumup/sumup-ai/commit/e4febfe9c8062a07a7aa95ec37ac4a1542e7f5c6))
+
 ## [0.6.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.5.1...typescript-v0.6.0) (2025-11-26)
 
 
