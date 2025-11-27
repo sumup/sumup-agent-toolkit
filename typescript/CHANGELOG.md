@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.6.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.5.1...typescript-v0.6.0) (2025-11-26)
+
+
+### Features
+
+* **codegen:** tool to generate the tools ([#293](https://github.com/sumup/sumup-ai/issues/293)) ([e908ff7](https://github.com/sumup/sumup-ai/commit/e908ff76342c39097307c78773508837603cf122))
+
 ## [0.5.1](https://github.com/sumup/sumup-ai/compare/typescript-v0.5.0...typescript-v0.5.1) (2025-11-24)
 
 
