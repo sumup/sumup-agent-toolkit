@@ -1,5 +1,12 @@
 # @sumup/agent-toolkit
 
+## [0.8.0](https://github.com/sumup/sumup-ai/compare/typescript-v0.7.2...typescript-v0.8.0) (2025-12-20)
+
+
+### Features
+
+* **sdk:** proper www-authenticate handling ([#313](https://github.com/sumup/sumup-ai/issues/313)) ([67308c7](https://github.com/sumup/sumup-ai/commit/67308c765b2e756117ab8959d1f8b5e11b48b072))
+
 ## [0.7.2](https://github.com/sumup/sumup-ai/compare/typescript-v0.7.1...typescript-v0.7.2) (2025-11-27)
 
 
