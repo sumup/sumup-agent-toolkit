@@ -120,7 +120,19 @@ export const createCheckoutParameters = z
             .describe(`Current status of the transaction.`)
             .optional(),
           payment_type: z
-            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .enum([
+              "CASH",
+              "POS",
+              "ECOM",
+              "RECURRING",
+              "BITCOIN",
+              "BALANCE",
+              "MOTO",
+              "BOLETO",
+              "DIRECT_DEBIT",
+              "APM",
+              "UNKNOWN",
+            ])
             .describe(`Payment type used for the transaction.`)
             .optional(),
           installments_count: z
@@ -149,7 +161,34 @@ export const createCheckoutParameters = z
             )
             .optional(),
           entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .enum([
+              "BOLETO",
+              "SOFORT",
+              "IDEAL",
+              "BANCONTACT",
+              "EPS",
+              "MYBANK",
+              "SATISPAY",
+              "BLIK",
+              "P24",
+              "GIROPAY",
+              "PIX",
+              "QR_CODE_PIX",
+              "APPLE_PAY",
+              "GOOGLE_PAY",
+              "PAYPAL",
+              "NONE",
+              "CHIP",
+              "MANUAL_ENTRY",
+              "CUSTOMER_ENTRY",
+              "MAGSTRIPE_FALLBACK",
+              "MAGSTRIPE",
+              "DIRECT_DEBIT",
+              "CONTACTLESS",
+              "MOTO",
+              "CONTACTLESS_MAGSTRIPE",
+              "N/A",
+            ])
             .describe(`Entry mode of the payment details.`)
             .optional(),
           auth_code: z
@@ -228,7 +267,7 @@ export const createCheckoutResult = z
       .optional(),
     id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
     status: z
-      .enum(["PENDING", "FAILED", "PAID"])
+      .enum(["PENDING", "FAILED", "PAID", "EXPIRED"])
       .describe(`Current status of the checkout.`)
       .optional(),
     date: z
@@ -308,7 +347,19 @@ export const createCheckoutResult = z
             .describe(`Current status of the transaction.`)
             .optional(),
           payment_type: z
-            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .enum([
+              "CASH",
+              "POS",
+              "ECOM",
+              "RECURRING",
+              "BITCOIN",
+              "BALANCE",
+              "MOTO",
+              "BOLETO",
+              "DIRECT_DEBIT",
+              "APM",
+              "UNKNOWN",
+            ])
             .describe(`Payment type used for the transaction.`)
             .optional(),
           installments_count: z
@@ -337,7 +388,34 @@ export const createCheckoutResult = z
             )
             .optional(),
           entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .enum([
+              "BOLETO",
+              "SOFORT",
+              "IDEAL",
+              "BANCONTACT",
+              "EPS",
+              "MYBANK",
+              "SATISPAY",
+              "BLIK",
+              "P24",
+              "GIROPAY",
+              "PIX",
+              "QR_CODE_PIX",
+              "APPLE_PAY",
+              "GOOGLE_PAY",
+              "PAYPAL",
+              "NONE",
+              "CHIP",
+              "MANUAL_ENTRY",
+              "CUSTOMER_ENTRY",
+              "MAGSTRIPE_FALLBACK",
+              "MAGSTRIPE",
+              "DIRECT_DEBIT",
+              "CONTACTLESS",
+              "MOTO",
+              "CONTACTLESS_MAGSTRIPE",
+              "N/A",
+            ])
             .describe(`Entry mode of the payment details.`)
             .optional(),
           auth_code: z
@@ -415,7 +493,7 @@ export const deactivateCheckoutResult = z
       .optional(),
     id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
     status: z
-      .enum(["PENDING", "FAILED", "PAID"])
+      .enum(["PENDING", "FAILED", "PAID", "EXPIRED"])
       .describe(`Current status of the checkout.`)
       .optional(),
     date: z
@@ -495,7 +573,19 @@ export const deactivateCheckoutResult = z
             .describe(`Current status of the transaction.`)
             .optional(),
           payment_type: z
-            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .enum([
+              "CASH",
+              "POS",
+              "ECOM",
+              "RECURRING",
+              "BITCOIN",
+              "BALANCE",
+              "MOTO",
+              "BOLETO",
+              "DIRECT_DEBIT",
+              "APM",
+              "UNKNOWN",
+            ])
             .describe(`Payment type used for the transaction.`)
             .optional(),
           installments_count: z
@@ -524,7 +614,34 @@ export const deactivateCheckoutResult = z
             )
             .optional(),
           entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .enum([
+              "BOLETO",
+              "SOFORT",
+              "IDEAL",
+              "BANCONTACT",
+              "EPS",
+              "MYBANK",
+              "SATISPAY",
+              "BLIK",
+              "P24",
+              "GIROPAY",
+              "PIX",
+              "QR_CODE_PIX",
+              "APPLE_PAY",
+              "GOOGLE_PAY",
+              "PAYPAL",
+              "NONE",
+              "CHIP",
+              "MANUAL_ENTRY",
+              "CUSTOMER_ENTRY",
+              "MAGSTRIPE_FALLBACK",
+              "MAGSTRIPE",
+              "DIRECT_DEBIT",
+              "CONTACTLESS",
+              "MOTO",
+              "CONTACTLESS_MAGSTRIPE",
+              "N/A",
+            ])
             .describe(`Entry mode of the payment details.`)
             .optional(),
           auth_code: z
@@ -602,7 +719,7 @@ export const getCheckoutResult = z
       .optional(),
     id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
     status: z
-      .enum(["PENDING", "FAILED", "PAID"])
+      .enum(["PENDING", "FAILED", "PAID", "EXPIRED"])
       .describe(`Current status of the checkout.`)
       .optional(),
     date: z
@@ -682,7 +799,19 @@ export const getCheckoutResult = z
             .describe(`Current status of the transaction.`)
             .optional(),
           payment_type: z
-            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .enum([
+              "CASH",
+              "POS",
+              "ECOM",
+              "RECURRING",
+              "BITCOIN",
+              "BALANCE",
+              "MOTO",
+              "BOLETO",
+              "DIRECT_DEBIT",
+              "APM",
+              "UNKNOWN",
+            ])
             .describe(`Payment type used for the transaction.`)
             .optional(),
           installments_count: z
@@ -711,7 +840,34 @@ export const getCheckoutResult = z
             )
             .optional(),
           entry_mode: z
-            .enum(["CUSTOMER_ENTRY", "BOLETO"])
+            .enum([
+              "BOLETO",
+              "SOFORT",
+              "IDEAL",
+              "BANCONTACT",
+              "EPS",
+              "MYBANK",
+              "SATISPAY",
+              "BLIK",
+              "P24",
+              "GIROPAY",
+              "PIX",
+              "QR_CODE_PIX",
+              "APPLE_PAY",
+              "GOOGLE_PAY",
+              "PAYPAL",
+              "NONE",
+              "CHIP",
+              "MANUAL_ENTRY",
+              "CUSTOMER_ENTRY",
+              "MAGSTRIPE_FALLBACK",
+              "MAGSTRIPE",
+              "DIRECT_DEBIT",
+              "CONTACTLESS",
+              "MOTO",
+              "CONTACTLESS_MAGSTRIPE",
+              "N/A",
+            ])
             .describe(`Entry mode of the payment details.`)
             .optional(),
           auth_code: z
@@ -849,7 +1005,7 @@ export const listCheckoutsResult = z
         .optional(),
       id: z.string().describe(`Unique ID of the checkout resource.`).optional(),
       status: z
-        .enum(["PENDING", "FAILED", "PAID"])
+        .enum(["PENDING", "FAILED", "PAID", "EXPIRED"])
         .describe(`Current status of the checkout.`)
         .optional(),
       date: z
@@ -929,7 +1085,19 @@ export const listCheckoutsResult = z
               .describe(`Current status of the transaction.`)
               .optional(),
             payment_type: z
-              .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+              .enum([
+                "CASH",
+                "POS",
+                "ECOM",
+                "RECURRING",
+                "BITCOIN",
+                "BALANCE",
+                "MOTO",
+                "BOLETO",
+                "DIRECT_DEBIT",
+                "APM",
+                "UNKNOWN",
+              ])
               .describe(`Payment type used for the transaction.`)
               .optional(),
             installments_count: z
@@ -958,7 +1126,34 @@ export const listCheckoutsResult = z
               )
               .optional(),
             entry_mode: z
-              .enum(["CUSTOMER_ENTRY", "BOLETO"])
+              .enum([
+                "BOLETO",
+                "SOFORT",
+                "IDEAL",
+                "BANCONTACT",
+                "EPS",
+                "MYBANK",
+                "SATISPAY",
+                "BLIK",
+                "P24",
+                "GIROPAY",
+                "PIX",
+                "QR_CODE_PIX",
+                "APPLE_PAY",
+                "GOOGLE_PAY",
+                "PAYPAL",
+                "NONE",
+                "CHIP",
+                "MANUAL_ENTRY",
+                "CUSTOMER_ENTRY",
+                "MAGSTRIPE_FALLBACK",
+                "MAGSTRIPE",
+                "DIRECT_DEBIT",
+                "CONTACTLESS",
+                "MOTO",
+                "CONTACTLESS_MAGSTRIPE",
+                "N/A",
+              ])
               .describe(`Entry mode of the payment details.`)
               .optional(),
             auth_code: z

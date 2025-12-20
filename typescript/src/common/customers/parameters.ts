@@ -238,7 +238,9 @@ export const listPaymentInstrumentsResult = z
                 "VISA_VPAY",
                 "UNKNOWN",
               ])
-              .describe(`Issuing card network of the payment card.`)
+              .describe(
+                `Issuing card network of the payment card used for the transaction.`,
+              )
               .optional(),
           })
           .describe(`Details of the payment card.`)

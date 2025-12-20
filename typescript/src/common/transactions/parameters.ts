@@ -73,7 +73,19 @@ export const getTransactionV2_1Result = z
       .describe(`Current status of the transaction.`)
       .optional(),
     payment_type: z
-      .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+      .enum([
+        "CASH",
+        "POS",
+        "ECOM",
+        "RECURRING",
+        "BITCOIN",
+        "BALANCE",
+        "MOTO",
+        "BOLETO",
+        "DIRECT_DEBIT",
+        "APM",
+        "UNKNOWN",
+      ])
       .describe(`Payment type used for the transaction.`)
       .optional(),
     installments_count: z
@@ -98,7 +110,34 @@ export const getTransactionV2_1Result = z
       .describe(`Amount of the tip (out of the total transaction amount).`)
       .optional(),
     entry_mode: z
-      .enum(["CUSTOMER_ENTRY", "BOLETO"])
+      .enum([
+        "BOLETO",
+        "SOFORT",
+        "IDEAL",
+        "BANCONTACT",
+        "EPS",
+        "MYBANK",
+        "SATISPAY",
+        "BLIK",
+        "P24",
+        "GIROPAY",
+        "PIX",
+        "QR_CODE_PIX",
+        "APPLE_PAY",
+        "GOOGLE_PAY",
+        "PAYPAL",
+        "NONE",
+        "CHIP",
+        "MANUAL_ENTRY",
+        "CUSTOMER_ENTRY",
+        "MAGSTRIPE_FALLBACK",
+        "MAGSTRIPE",
+        "DIRECT_DEBIT",
+        "CONTACTLESS",
+        "MOTO",
+        "CONTACTLESS_MAGSTRIPE",
+        "N/A",
+      ])
       .describe(`Entry mode of the payment details.`)
       .optional(),
     auth_code: z
@@ -177,10 +216,11 @@ export const getTransactionV2_1Result = z
     verification_method: z
       .enum([
         "none",
+        "na",
         "signature",
-        "offline pin",
-        "online pin",
-        "offline pin + signature",
+        "offline PIN",
+        "online PIN",
+        "offline PIN + signature",
         "confirmation code verified",
       ])
       .describe(`Verification method used for the transaction.`)
@@ -210,7 +250,9 @@ export const getTransactionV2_1Result = z
             "VISA_VPAY",
             "UNKNOWN",
           ])
-          .describe(`Issuing card network of the payment card.`)
+          .describe(
+            `Issuing card network of the payment card used for the transaction.`,
+          )
           .optional(),
       })
       .describe(`Details of the payment card.`)
@@ -515,7 +557,21 @@ export const listTransactionsV2_1Parameters = z.object({
     ),
   payment_types: z
     .array(
-      z.enum(["CASH", "POS", "ECOM", "BALANCE", "MOTO", "BOLETO", "UNKNOWN"]),
+      z
+        .enum([
+          "CASH",
+          "POS",
+          "ECOM",
+          "RECURRING",
+          "BITCOIN",
+          "BALANCE",
+          "MOTO",
+          "BOLETO",
+          "DIRECT_DEBIT",
+          "APM",
+          "UNKNOWN",
+        ])
+        .describe(`Payment type used for the transaction.`),
     )
     .optional()
     .describe(
@@ -608,7 +664,19 @@ export const listTransactionsV2_1Result = z
             .describe(`Current status of the transaction.`)
             .optional(),
           payment_type: z
-            .enum(["ECOM", "RECURRING", "BOLETO", "POS"])
+            .enum([
+              "CASH",
+              "POS",
+              "ECOM",
+              "RECURRING",
+              "BITCOIN",
+              "BALANCE",
+              "MOTO",
+              "BOLETO",
+              "DIRECT_DEBIT",
+              "APM",
+              "UNKNOWN",
+            ])
             .describe(`Payment type used for the transaction.`)
             .optional(),
           installments_count: z
@@ -670,7 +738,6 @@ export const listTransactionsV2_1Result = z
             .optional(),
           card_type: z
             .enum([
-              "VISA",
               "AMEX",
               "CUP",
               "DINERS",
@@ -681,6 +748,7 @@ export const listTransactionsV2_1Result = z
               "JCB",
               "MAESTRO",
               "MASTERCARD",
+              "VISA",
               "VISA_ELECTRON",
               "VISA_VPAY",
               "UNKNOWN",

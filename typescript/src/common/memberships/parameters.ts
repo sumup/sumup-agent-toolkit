@@ -45,6 +45,28 @@ Possible values are:
     .describe(
       `Filter memberships by the name of the resource the membership is in.`,
     ),
+  "resource.parent.id": z
+    .string()
+    .nullable()
+    .optional()
+    .describe(`Filter memberships by the parent of the resource the membership is in.
+When filtering by parent both \`resource.parent.id\` and \`resource.parent.type\` must be present. Pass explicit null to filter for resources without a parent.`),
+  "resource.parent.type": z
+    .string()
+    .describe(
+      `The type of the membership resource.
+Possible values are:
+* \`merchant\` - merchant account(s)
+* \`organization\` - organization(s)`,
+    )
+    .nullable()
+    .optional()
+    .describe(`Filter memberships by the parent of the resource the membership is in.
+When filtering by parent both \`resource.parent.id\` and \`resource.parent.type\` must be present. Pass explicit null to filter for resources without a parent.`),
+  roles: z
+    .array(z.string())
+    .optional()
+    .describe(`Filter the returned memberships by role.`),
 });
 
 export const listMembershipsResult = z
@@ -88,7 +110,7 @@ Possible values are:
             .optional(),
           attributes: z
             .object({})
-            .catchall(z.record(z.unknown()))
+            .catchall(z.unknown())
             .nullable()
             .describe(
               `Object attributes that are modifiable only by SumUp applications.`,
@@ -121,7 +143,7 @@ Possible values are:
                 ),
               attributes: z
                 .object({})
-                .catchall(z.record(z.unknown()))
+                .catchall(z.unknown())
                 .nullable()
                 .describe(
                   `Object attributes that are modifiable only by SumUp applications.`,

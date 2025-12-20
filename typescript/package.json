@@ -51,7 +51,7 @@
     "@langchain/core": "^1.1.0",
     "@modelcontextprotocol/sdk": "^1.23.0",
     "@openai/agents": "^0.3.3",
-    "@sumup/sdk": "^0.0.8",
+    "@sumup/sdk": "^0.0.11",
     "ai": "^5.0.103",
     "zod": "^3.25.76"
   },

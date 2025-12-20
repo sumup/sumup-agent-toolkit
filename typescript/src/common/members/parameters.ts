@@ -36,7 +36,7 @@ export const createMerchantMemberParameters = z.object({
     .optional(),
   attributes: z
     .object({})
-    .catchall(z.record(z.unknown()))
+    .catchall(z.unknown())
     .describe(
       `Object attributes that are modifiable only by SumUp applications.`,
     )
@@ -118,7 +118,7 @@ export const createMerchantMemberResult = z
       .optional(),
     attributes: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
         `Object attributes that are modifiable only by SumUp applications.`,
@@ -221,7 +221,7 @@ export const getMerchantMemberResult = z
       .optional(),
     attributes: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
         `Object attributes that are modifiable only by SumUp applications.`,
@@ -345,7 +345,7 @@ export const listMerchantMembersResult = z
             .optional(),
           attributes: z
             .object({})
-            .catchall(z.record(z.unknown()))
+            .catchall(z.unknown())
             .nullable()
             .describe(
               `Object attributes that are modifiable only by SumUp applications.`,
@@ -376,7 +376,7 @@ export const updateMerchantMemberParameters = z.object({
     .optional(),
   attributes: z
     .object({})
-    .catchall(z.record(z.unknown()))
+    .catchall(z.unknown())
     .describe(
       `Object attributes that are modifiable only by SumUp applications.`,
     )
@@ -474,7 +474,7 @@ export const updateMerchantMemberResult = z
       .optional(),
     attributes: z
       .object({})
-      .catchall(z.record(z.unknown()))
+      .catchall(z.unknown())
       .nullable()
       .describe(
         `Object attributes that are modifiable only by SumUp applications.`,

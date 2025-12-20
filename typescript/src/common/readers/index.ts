@@ -4,6 +4,7 @@ export {
   createReaderTerminateParameters,
   deleteReaderParameters,
   getReaderParameters,
+  getReaderStatusParameters,
   listReadersParameters,
   updateReaderParameters,
 } from "./parameters";
@@ -13,6 +14,7 @@ export {
   createReaderTerminate,
   deleteReader,
   getReader,
+  getReaderStatus,
   listReaders,
   updateReader,
 } from "./tools";
