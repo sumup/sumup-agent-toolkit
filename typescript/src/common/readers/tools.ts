@@ -12,6 +12,8 @@ import {
   deleteReaderResult,
   getReaderParameters,
   getReaderResult,
+  getReaderStatusParameters,
+  getReaderStatusResult,
   listReadersParameters,
   listReadersResult,
   updateReaderParameters,
@@ -135,6 +137,44 @@ export const getReader: Tool<
   },
   annotations: {
     title: `Retrieve a Reader`,
+    readOnly: true,
+    destructive: false,
+    idempotent: false,
+  },
+};
+
+export const getReaderStatus: Tool<
+  typeof getReaderStatusParameters,
+  typeof getReaderStatusResult
+> = {
+  name: "get_reader_status",
+  title: `Get a Reader Status`,
+  description: `Provides the last known status for a Reader.
+
+This endpoint allows you to retrieve updates from the connected card reader, including the current screen being displayed during the payment process and the device status (battery level, connectivity, and update state).
+
+Supported States
+
+* \`IDLE\` – Reader ready for next transaction
+* \`SELECTING_TIP\` – Waiting for tip input
+* \`WAITING_FOR_CARD\` – Awaiting card insert/tap
+* \`WAITING_FOR_PIN\` – Waiting for PIN entry
+* \`WAITING_FOR_SIGNATURE\` – Waiting for customer signature
+* \`UPDATING_FIRMWARE\` – Firmware update in progress
+
+Device Status
+
+* \`ONLINE\` – Device connected and operational
+* \`OFFLINE\` – Device disconnected (last state persisted)
+
+**Note**: If the target device is a Solo, it must be in version 3.3.39.0 or higher.`,
+  parameters: getReaderStatusParameters,
+  result: getReaderStatusResult,
+  callback: async (sumup: SumUp, { merchantCode, readerId, ...args }) => {
+    return await sumup.readers.getStatus(merchantCode, readerId, args);
+  },
+  annotations: {
+    title: `Get a Reader Status`,
     readOnly: true,
     destructive: false,
     idempotent: false,

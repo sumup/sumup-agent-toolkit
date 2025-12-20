@@ -375,7 +375,7 @@ Whether an address is valid or not depends on whether the locally required field
           .optional(),
         attributes: z
           .object({})
-          .catchall(z.record(z.unknown()))
+          .catchall(z.unknown())
           .nullable()
           .describe(
             `Object attributes that are modifiable only by SumUp applications.`,

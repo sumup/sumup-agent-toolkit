@@ -111,6 +111,7 @@ It is key-value object that can be associated with the transaction.
           )
           .optional(),
       })
+      .nullable()
       .describe(
         `Affiliate metadata for the transaction.
 It is a field that allow for integrators to track the source of the transaction.
@@ -132,10 +133,14 @@ Is is required only for some countries (e.g: Brazil).
     installments: z
       .number()
       .int()
+      .nullable()
       .describe(
         `Number of installments for the transaction.
 It may vary according to the merchant country.
 For example, in Brazil, the maximum number of installments is 12.
+
+Omit if the merchant country does support installments.
+Otherwise, the checkout will be rejected.
 `,
       )
       .optional(),
@@ -294,6 +299,52 @@ Possible values:
   .describe(
     `A physical card reader device that can accept in-person payments.`,
   );
+
+export const getReaderStatusParameters = z.object({
+  merchantCode: z.string().describe(`Merchant Code`),
+  readerId: z.string().describe(`The unique identifier of the Reader`),
+});
+
+export const getReaderStatusResult = z
+  .object({
+    data: z.object({
+      battery_level: z
+        .record(z.unknown())
+        .describe(`Battery level percentage`)
+        .optional(),
+      battery_temperature: z
+        .number()
+        .int()
+        .describe(`Battery temperature in Celsius`)
+        .optional(),
+      connection_type: z
+        .enum(["btle", "edge", "gprs", "lte", "umts", "usb", "Wi-Fi"])
+        .describe(`Type of connection used by the device`)
+        .optional(),
+      firmware_version: z
+        .string()
+        .describe(`Firmware version of the device`)
+        .optional(),
+      last_activity: z
+        .string()
+        .describe(`Timestamp of the last activity from the device`)
+        .optional(),
+      state: z
+        .enum([
+          "IDLE",
+          "SELECTING_TIP",
+          "WAITING_FOR_CARD",
+          "WAITING_FOR_PIN",
+          "WAITING_FOR_SIGNATURE",
+          "UPDATING_FIRMWARE",
+        ])
+        .describe(`Latest state of the device`)
+        .optional(),
+      status: z.enum(["ONLINE", "OFFLINE"]).describe(`Status of a device`),
+    }),
+  })
+  .passthrough()
+  .describe(`Status of a device`);
 
 export const listReadersParameters = z.object({
   merchantCode: z
