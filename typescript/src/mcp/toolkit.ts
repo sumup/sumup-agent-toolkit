@@ -189,18 +189,21 @@ class SumUpAgentToolkit extends McpServer {
   }
 
   /**
-   * Add resource_metadata to WWW-Authenticate header if not already present.
+   * Add or override resource_metadata in WWW-Authenticate header.
    */
   private _addResourceMetadata(header: string, resource: string): string {
-    // If resource_metadata already exists, don't modify
-    if (/resource_metadata\s*=/i.test(header)) {
-      return header;
+    const trimmed = header.trim();
+
+    // If resource_metadata already exists, replace it
+    if (/resource_metadata\s*=/i.test(trimmed)) {
+      return trimmed.replace(
+        /resource_metadata\s*=\s*"[^"]*"/gi,
+        `resource_metadata="${resource}"`,
+      );
     }
 
     // Add resource_metadata to the header
     // Format: Bearer error="...", resource_metadata="..."
-    const trimmed = header.trim();
-
     // If header ends with quotes, add comma and parameter
     // Otherwise just append it
     if (trimmed.endsWith('"') || trimmed.endsWith("'")) {
